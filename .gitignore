@@ -1,0 +1,6 @@
+*~
+.idea
+*.ipr
+*.iws
+target
+games/game*.xml

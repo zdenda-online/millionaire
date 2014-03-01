@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game>
+    <question>
+        <text>1+1?</text>
+        <reward>Reward</reward>
+        <answers>
+            <answer>1</answer>
+            <answer is-correct="true">2</answer>
+            <answer>3</answer>
+            <answer>4</answer>
+        </answers>
+        <answers-description>Such a hard question!</answers-description>
+    </question>
+    <question>
+        <text>1+1?</text>
+        <reward>Reward</reward>
+        <answers>
+            <answer>1</answer>
+            <answer is-correct="true">2</answer>
+            <answer>3</answer>
+            <answer>4</answer>
+        </answers>
+        <answers-description>Such a hard question!</answers-description>
+    </question>
+    <question>
+        <text>1+1?</text>
+        <reward>Reward</reward>
+        <answers>
+            <answer>1</answer>
+            <answer is-correct="true">2</answer>
+            <answer>3</answer>
+            <answer>4</answer>
+        </answers>
+        <answers-description>Such a hard question!</answers-description>
+    </question>
+    <question>
+        <text>1+1?</text>
+        <reward>Reward</reward>
+        <answers>
+            <answer>1</answer>
+            <answer is-correct="true">2</answer>
+            <answer>3</answer>
+            <answer>4</answer>
+        </answers>
+        <answers-description>Such a hard question!</answers-description>
+    </question>
+    <question>
+        <text>1+1?</text>
+        <reward>Reward</reward>
+        <answers>
+            <answer>1</answer>
+            <answer is-correct="true">2</answer>
+            <answer>3</answer>
+            <answer>4</answer>
+        </answers>
+        <answers-description>Such a hard question!</answers-description>
+    </question>
+    <question>
+        <text>1+1?</text>
+        <reward>Reward</reward>
+        <answers>
+            <answer>1</answer>
+            <answer is-correct="true">2</answer>
+            <answer>3</answer>
+            <answer>4</answer>
+        </answers>
+        <answers-description>Such a hard question!</answers-description>
+    </question>
+    <question>
+        <text>1+1?</text>
+        <reward>Reward</reward>
+        <answers>
+            <answer>1</answer>
+            <answer is-correct="true">2</answer>
+            <answer>3</answer>
+            <answer>4</answer>
+        </answers>
+        <answers-description>Such a hard question!</answers-description>
+    </question>
+    <question>
+        <text>1+1?</text>
+        <reward>Reward</reward>
+        <answers>
+            <answer>1</answer>
+            <answer is-correct="true">2</answer>
+            <answer>3</answer>
+            <answer>4</answer>
+        </answers>
+        <answers-description>Such a hard question!</answers-description>
+    </question>
+    <question>
+        <text>1+1?</text>
+        <reward>Reward</reward>
+        <answers>
+            <answer>1</answer>
+            <answer is-correct="true">2</answer>
+            <answer>3</answer>
+            <answer>4</answer>
+        </answers>
+        <answers-description>Such a hard question!</answers-description>
+    </question>
+    <question>
+        <text>1+1?</text>
+        <reward>Reward</reward>
+        <answers>
+            <answer>1</answer>
+            <answer is-correct="true">2</answer>
+            <answer>3</answer>
+            <answer>4</answer>
+        </answers>
+        <answers-description>Such a hard question!</answers-description>
+    </question>
+    <question>
+        <text>1+1?</text>
+        <reward>Reward</reward>
+        <answers>
+            <answer>1</answer>
+            <answer is-correct="true">2</answer>
+            <answer>3</answer>
+            <answer>4</answer>
+        </answers>
+        <answers-description>Such a hard question!</answers-description>
+    </question>
+    <question>
+        <text>1+1?</text>
+        <reward>Reward</reward>
+        <answers>
+            <answer>1</answer>
+            <answer is-correct="true">2</answer>
+            <answer>3</answer>
+            <answer>4</answer>
+        </answers>
+        <answers-description>Such a hard question!</answers-description>
+    </question>
+    <question>
+        <text>1+1?</text>
+        <reward>Reward</reward>
+        <answers>
+            <answer>1</answer>
+            <answer is-correct="true">2</answer>
+            <answer>3</answer>
+            <answer>4</answer>
+        </answers>
+        <answers-description>Such a hard question!</answers-description>
+    </question>
+    <question>
+        <text>1+1?</text>
+        <reward>Reward</reward>
+        <answers>
+            <answer>1</answer>
+            <answer is-correct="true">2</answer>
+            <answer>3</answer>
+            <answer>4</answer>
+        </answers>
+        <answers-description>Such a hard question!</answers-description>
+    </question>
+    <question>
+        <text>1+1?</text>
+        <reward>Reward</reward>
+        <answers>
+            <answer>1</answer>
+            <answer is-correct="true">2</answer>
+            <answer>3</answer>
+            <answer>4</answer>
+        </answers>
+        <answers-description>Such a hard question!</answers-description>
+    </question>
+</game>
