@@ -62,7 +62,7 @@ public class GameModel {
      * @return true if any question is still available, otherwise false
      */
     public boolean hasNextQuestion() {
-        return actualQuestionIdx < game.getQuestionsSize();
+        return (actualQuestionIdx + 1) < game.getQuestionsSize();
     }
 
     /**
