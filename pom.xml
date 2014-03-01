@@ -9,7 +9,10 @@
     <version>1.0-SNAPSHOT</version>
 
     <name>Millionaire game</name>
-    <description>Simple game that was inspired by TV millionaire show</description>
+    <description>Game that was developed as a gift for my family.
+        It is based on "Who Wants to Be a Millionaire?" show and allows to play it in your living room:-)
+        Printing "money-like" paper checks and proper moderator selection can provide a lot of fun.
+    </description>
     <developers>
         <developer>
             <name>Zdenek Obst</name>
@@ -47,5 +50,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
