@@ -1,4 +1,4 @@
-package cz.dix.mil.services.rnd;
+package cz.dix.mil.util;
 
 import java.util.Collection;
 

@@ -2,5 +2,6 @@
 .idea
 *.ipr
 *.iws
+*.iml
 target
 games/game*.xml
