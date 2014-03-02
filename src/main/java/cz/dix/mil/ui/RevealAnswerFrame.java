@@ -1,8 +1,6 @@
 package cz.dix.mil.ui;
 
-import cz.dix.mil.controller.AnswerListener;
 import cz.dix.mil.controller.GameController;
-import cz.dix.mil.model.game.Answer;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -14,34 +12,16 @@ import java.awt.image.BufferedImage;
  *
  * @author Zdenek Obst, zdenek.obst-at-gmail.com
  */
-public class WaitAnswerFrame extends JFrame implements AnswerListener {
+public class RevealAnswerFrame extends JFrame {
 
     private static final int WIDTH = 200;
     private static final int HEIGHT = 100;
     private final GameController controller;
 
-    public WaitAnswerFrame(GameController controller) {
+    public RevealAnswerFrame(GameController controller) {
         super();
         this.controller = controller;
         init();
-    }
-
-    /**
-     * Shows this frame.
-     *
-     * @param answer selected answer by player
-     */
-    @Override
-    public void onAnswerSelected(Answer answer) {
-        setVisible(true);
-    }
-
-    /**
-     * Hides this frame.
-     */
-    @Override
-    public void onAnswersReveal() {
-        setVisible(false);
     }
 
     private void init() {
@@ -49,15 +29,15 @@ public class WaitAnswerFrame extends JFrame implements AnswerListener {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setIconImage(new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB_PRE));
 
-        JButton continueButton = new JButton("Continue...");
+        JButton continueButton = new JButton("Reveal answer!");
         continueButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                controller.showCorrectAnswer();
+                setVisible(false);
+                controller.revealCorrectAnswer();
             }
         });
         add(continueButton);
         setLocation(0, 0);
     }
-
 }

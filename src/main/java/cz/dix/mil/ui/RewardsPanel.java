@@ -1,6 +1,6 @@
 package cz.dix.mil.ui;
 
-import cz.dix.mil.controller.GameFlowListener;
+import cz.dix.mil.controller.Refreshable;
 import cz.dix.mil.model.game.Question;
 import cz.dix.mil.model.state.GameModel;
 
@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @author Zdenek Obst, zdenek.obst-at-gmail.com
  */
-public class RewardsPanel extends JPanel implements GameFlowListener {
+public class RewardsPanel extends JPanel implements Refreshable {
 
     private static final int MARGIN = 5;
 
@@ -33,23 +33,16 @@ public class RewardsPanel extends JPanel implements GameFlowListener {
      * {@inheritDoc}
      */
     @Override
-    public void onGameStart() {
-    }
-
-    /**
-     * Changes selected reward according to the actual state of the game.
-     */
-    @Override
-    public void onNewQuestion() {
+    public void refresh() {
         int actualQuestionIdx = model.getActualQuestionIdx();
 
-        if (lastQuestionColor != null) {
+        if (actualQuestionIdx > 0) {
             rewards[actualQuestionIdx - 1].setForeground(lastQuestionColor);
             rewards[actualQuestionIdx - 1].updateUI();
             rewards[actualQuestionIdx].revalidate();
             rewards[actualQuestionIdx].repaint();
+            lastQuestionColor = rewards[actualQuestionIdx].getForeground();
         }
-        lastQuestionColor = rewards[actualQuestionIdx].getForeground();
 
         rewards[actualQuestionIdx].setForeground(Colors.REWARDS_ACTUAL_COLOR);
         rewards[actualQuestionIdx].revalidate();
@@ -68,7 +61,7 @@ public class RewardsPanel extends JPanel implements GameFlowListener {
 
         int i = questions.size() - 1;
         for (Question question : questions) {
-            JLabel label = rewardLabel(i, question.getReward());
+            JLabel label = createRewardLabel(i, question.getReward());
             label.setFont(new Font("Dialog", Font.PLAIN, 20));
             if (i == 0) {
                 label.setForeground(Colors.REWARDS_ACTUAL_COLOR);
@@ -84,7 +77,7 @@ public class RewardsPanel extends JPanel implements GameFlowListener {
         setBorder(new EmptyBorder(MARGIN, MARGIN, MARGIN, MARGIN));
     }
 
-    private JLabel rewardLabel(int index, String rewardText) {
+    private JLabel createRewardLabel(int index, String rewardText) {
         int number = index + 1;
         int spacesCount = 5 - Integer.toString(number).length();
 

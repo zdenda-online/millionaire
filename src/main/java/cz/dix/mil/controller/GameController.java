@@ -4,72 +4,45 @@ import cz.dix.mil.model.game.Answer;
 import cz.dix.mil.model.state.GameModel;
 import cz.dix.mil.model.state.Hint;
 import cz.dix.mil.model.state.PlayersProgress;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
+import cz.dix.mil.sound.SoundsPlayer;
+import cz.dix.mil.ui.GameView;
 
 /**
  * Main controller of the game that is responsible for passing events to the {@link GameModel}
- * and notifying appropriate listeners (typically UI components).
+ * and notifying appropriate UI components (GUI or sound player).
  *
  * @author Zdenek Obst, zdenek.obst-at-gmail.com
  */
 public class GameController {
 
-    private final GameModel model;
-    private final Collection<GameFlowListener> gameFlowListeners = new ArrayList<>();
-    private final Collection<AnswerListener> answerListeners = new ArrayList<>();
-    private final Collection<HintsListener> hintsListeners = new ArrayList<>();
+    private GameModel model;
+    private GameView view;
+    private SoundsPlayer soundsPlayer;
 
     public GameController(GameModel model) {
         this.model = model;
     }
 
-    /**
-     * Registers new listeners for game flow.
-     * Note that listeners' callbacks will be invoked in the same order as registered.
-     *
-     * @param listeners listeners to be registered
-     * @return this instance
-     */
-    public GameController registerGameListeners(GameFlowListener... listeners) {
-        Collections.addAll(gameFlowListeners, listeners);
-        return this;
+    public void setView(GameView view) {
+        this.view = view;
     }
 
-    /**
-     * Registers new listeners for hints.
-     * Note that listeners' callbacks will be invoked in the same order as registered.
-     *
-     * @param listeners listeners to be registered
-     * @return this instance
-     */
-    public GameController registerHintsListeners(HintsListener... listeners) {
-        Collections.addAll(hintsListeners, listeners);
-        return this;
-    }
-
-    /**
-     * Registers new listeners for answers.
-     * Note that listeners' callbacks will be invoked in the same order as registered.
-     *
-     * @param listeners listeners to be registered
-     * @return this instance
-     */
-    public GameController registerAnswerListeners(AnswerListener... listeners) {
-        Collections.addAll(answerListeners, listeners);
-        return this;
+    public void setSoundsPlayer(SoundsPlayer soundsPlayer) {
+        this.soundsPlayer = soundsPlayer;
     }
 
     /**
      * Moderator starts the new game.
      */
     public void startGame() {
-        model.toNextQuestion();
-        for (GameFlowListener listener : gameFlowListeners) {
-            listener.onGameStart();
-        }
+        soundsPlayer.startGame(new ChainedAction() {
+            @Override
+            public void toNextAction() {
+                model.toNextQuestion();
+                view.updateMainFrame();
+                view.showMainFrame();
+            }
+        });
     }
 
     /**
@@ -78,27 +51,37 @@ public class GameController {
      * @param answer answer selected by player
      */
     public void answerQuestion(Answer answer) {
+        view.disableMainFrame();
         model.answerQuestion(answer);
-        for (AnswerListener listener : answerListeners) {
-            listener.onAnswerSelected(answer);
-        }
+        view.showRevealAnswerFrame();
+        soundsPlayer.selectAnswer();
     }
 
     /**
      * Moderator shows correct answer.
      */
-    public void showCorrectAnswer() {
-        for (final AnswerListener listener : answerListeners) {
-            listener.onAnswersReveal();
-        }
-        if (PlayersProgress.IN_GAME.equals(model.getState())) {
-            if (model.hasNextQuestion()) {
-                model.toNextQuestion();
-                for (GameFlowListener listener : gameFlowListeners) {
-                    listener.onNewQuestion();
-                }
+    public void revealCorrectAnswer() {
+        view.revealAnswer(new ChainedAction() {
+            @Override
+            public void toNextAction() {
+                soundsPlayer.revealAnswer(new ChainedAction() {
+                    @Override
+                    public void toNextAction() {
+                        if (PlayersProgress.IN_GAME.equals(model.getState())) {
+                            if (model.hasNextQuestion()) {
+                                model.toNextQuestion();
+                                soundsPlayer.nextQuestion(new ChainedAction() {
+                                    @Override
+                                    public void toNextAction() {
+                                        view.updateMainFrame();
+                                    }
+                                });
+                            }
+                        }
+                    }
+                });
             }
-        }
+        });
     }
 
     /**
@@ -106,9 +89,12 @@ public class GameController {
      */
     public void useAudienceHint() {
         model.useHint(Hint.AUDIENCE);
-        for (HintsListener listener : hintsListeners) {
-            listener.onAskAudience();
-        }
+        soundsPlayer.askAudience(new ChainedAction() {
+            @Override
+            public void toNextAction() {
+                view.updateMainFrame();
+            }
+        });
     }
 
     /**
@@ -116,9 +102,12 @@ public class GameController {
      */
     public void useFiftyFiftyHint() {
         model.useHint(Hint.FIFTY_FIFTY);
-        for (HintsListener listener : hintsListeners) {
-            listener.onFiftyFifty();
-        }
+        soundsPlayer.fiftyFifty(new ChainedAction() {
+            @Override
+            public void toNextAction() {
+                view.updateMainFrame();
+            }
+        });
     }
 
     /**
@@ -126,8 +115,11 @@ public class GameController {
      */
     public void usePhoneFriendHint() {
         model.useHint(Hint.PHONE_FRIEND);
-        for (HintsListener listener : hintsListeners) {
-            listener.onPhoneFriend();
-        }
+        soundsPlayer.phoneFriend(new ChainedAction() {
+            @Override
+            public void toNextAction() {
+                view.updateMainFrame();
+            }
+        });
     }
 }

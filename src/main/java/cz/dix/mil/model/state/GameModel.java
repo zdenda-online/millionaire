@@ -102,7 +102,7 @@ public class GameModel {
      * @return true if question is checkpoint, otherwise false
      */
     public boolean isCheckpoint(Question question) {
-        return (getQuestionIdx(question) + 1) % 5 == 0;
+        return ((getQuestionIdx(question) + 1) % 5 == 0) && (getQuestionIdx(question) != 0);
     }
 
     /**

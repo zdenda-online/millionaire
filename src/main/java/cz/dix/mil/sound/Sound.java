@@ -1,5 +1,7 @@
 package cz.dix.mil.sound;
 
+import cz.dix.mil.controller.ChainedAction;
+
 import javax.sound.sampled.*;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,8 +29,8 @@ public class Sound {
     }
 
     /**
-     * Plays the sound but does not block invoking thread.
-     * If you want to block processing, use {@link #playBlocked()} instead.
+     * Plays the sound and does not block processing.
+     * If you want blocking processing, use {@link #playBlocked(ChainedAction)} instead.
      */
     public void play() {
         AudioInputStream audioIn = null;
@@ -55,16 +57,26 @@ public class Sound {
     }
 
     /**
-     * Plays the sound to the end and blocks invoking thread (by sleep) until sound is played.
-     * If you don't want to block processing, use {@link #play()} instead.
+     * Plays the sound to the end and fires given {@link ChainedAction} after the sound is played.
+     * If you don't want blocking processing, use {@link #play()} instead.
+     *
+     * @param chainedAction action to be fired after sound is played
      */
-    public void playBlocked() {
-        play();
-        try {
-            Thread.sleep(lengthSecs * 1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+    public void playBlocked(final ChainedAction chainedAction) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                play();
+                try {
+                    Thread.sleep(lengthSecs * 1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                if (chainedAction != null) {
+                    chainedAction.toNextAction();
+                }
+            }
+        }).start();
     }
 
     /**

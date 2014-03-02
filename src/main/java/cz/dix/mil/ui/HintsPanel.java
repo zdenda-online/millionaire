@@ -1,7 +1,7 @@
 package cz.dix.mil.ui;
 
 import cz.dix.mil.controller.GameController;
-import cz.dix.mil.controller.HintsListener;
+import cz.dix.mil.controller.Refreshable;
 import cz.dix.mil.model.state.GameModel;
 import cz.dix.mil.model.state.Hint;
 
@@ -16,90 +16,81 @@ import java.awt.event.ActionListener;
  *
  * @author Zdenek Obst, zdenek.obst-at-gmail.com
  */
-public class HintsPanel extends JPanel implements HintsListener {
+public class HintsPanel extends JPanel implements Refreshable {
 
     private static final int MARGIN = 5;
     private final GameModel model;
     private final GameController controller;
 
+    private JButton[] hintButtons;
+
     public HintsPanel(GameModel model, GameController controller) {
         super(new FlowLayout());
         this.model = model;
         this.controller = controller;
-        recreatePanel();
+        refresh();
     }
 
     /**
-     * {@inheritDoc}
+     * Disables all buttons with hints
      */
-    @Override
-    public void onAskAudience() {
-        recreatePanel();
+    public void disableHints() {
+        for (JButton button : hintButtons) {
+            if (button != null) {
+                for (ActionListener listener : button.getActionListeners()) {
+                    button.removeActionListener(listener);
+                }
+            }
+        }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    public void onFiftyFifty() {
-        recreatePanel();
-    }
-
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onPhoneFriend() {
-        recreatePanel();
-    }
-
-    private void recreatePanel() {
+    public void refresh() {
         removeAll();
 
+        hintButtons = new JButton[3];
         if (model.isHintAvailable(Hint.AUDIENCE)) {
-            final JButton phoneHelpButton = new JButton(new ImageIcon(getClass().getResource("/imgs/audience.jpg")));
-            phoneHelpButton.setFocusable(false);
-            phoneHelpButton.setBorder(new EmptyBorder(MARGIN, MARGIN, MARGIN, MARGIN));
-            phoneHelpButton.addActionListener(new ActionListener() {
+            ImageIcon image = new ImageIcon(getClass().getResource("/imgs/audience.jpg"));
+            hintButtons[0] = addHintButton(image, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     controller.useAudienceHint();
                 }
             });
-            add(phoneHelpButton, BorderLayout.NORTH);
 
         }
 
         if (model.isHintAvailable(Hint.FIFTY_FIFTY)) {
-            JButton fiftyFiftyButton = new JButton(new ImageIcon(getClass().getResource("/imgs/5050.jpg")));
-            fiftyFiftyButton.setFocusable(false);
-            fiftyFiftyButton.setBorder(new EmptyBorder(MARGIN, MARGIN, MARGIN, MARGIN));
-            fiftyFiftyButton.addActionListener(new ActionListener() {
+            ImageIcon image = new ImageIcon(getClass().getResource("/imgs/5050.jpg"));
+            hintButtons[1] = addHintButton(image, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     controller.useFiftyFiftyHint();
                 }
             });
-            add(fiftyFiftyButton, BorderLayout.NORTH);
 
         }
 
         if (model.isHintAvailable(Hint.PHONE_FRIEND)) {
-            final JButton audienceHelpButton = new JButton(new ImageIcon(getClass().getResource("/imgs/phone.jpg")));
-            audienceHelpButton.setFocusable(false);
-            audienceHelpButton.setBorder(new EmptyBorder(MARGIN, MARGIN, MARGIN, MARGIN));
-            audienceHelpButton.addActionListener(new ActionListener() {
+            ImageIcon image = new ImageIcon(getClass().getResource("/imgs/phone.jpg"));
+            hintButtons[2] = addHintButton(image, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     controller.usePhoneFriendHint();
                 }
             });
-            add(audienceHelpButton, BorderLayout.NORTH);
-
         }
 
         revalidate();
         repaint();
+    }
+
+    private JButton addHintButton(ImageIcon image, ActionListener actionListener) {
+        JButton audienceHelpButton = new JButton(image);
+        audienceHelpButton.setFocusable(false);
+        audienceHelpButton.setBorder(new EmptyBorder(MARGIN, MARGIN, MARGIN, MARGIN));
+        audienceHelpButton.addActionListener(actionListener);
+        add(audienceHelpButton, BorderLayout.NORTH);
+        return audienceHelpButton;
     }
 }

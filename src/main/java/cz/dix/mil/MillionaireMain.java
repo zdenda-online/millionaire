@@ -6,8 +6,7 @@ import cz.dix.mil.model.GameValidationException;
 import cz.dix.mil.model.game.Game;
 import cz.dix.mil.model.state.GameModel;
 import cz.dix.mil.sound.SoundsPlayer;
-import cz.dix.mil.ui.MainFrame;
-import cz.dix.mil.ui.WaitAnswerFrame;
+import cz.dix.mil.ui.GameView;
 
 import javax.swing.*;
 import java.io.File;
@@ -41,20 +40,11 @@ public class MillionaireMain {
         final GameModel model = new GameModel(game);
         final SoundsPlayer soundsPlayer = new SoundsPlayer(model);
         final GameController controller = new GameController(model);
+        final GameView view = new GameView(model, controller);
+        controller.setView(view);
+        controller.setSoundsPlayer(soundsPlayer);
 
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                MainFrame view = new MainFrame(model, controller);
-                WaitAnswerFrame view2 = new WaitAnswerFrame(controller);
-                view.setVisible(true);
-
-                controller.registerAnswerListeners(view2, view.getAnswersPanel(), soundsPlayer);
-                controller.registerHintsListeners(soundsPlayer, view.getHintsPanel(), view.getAnswersPanel());
-                controller.registerGameListeners(soundsPlayer, view.getQuestionsPanel(), view.getAnswersPanel(), view.getRewardsPanel());
-                controller.startGame();
-            }
-        });
+        controller.startGame();
     }
 
     private static void setupSystem() {

@@ -1,9 +1,6 @@
 package cz.dix.mil.sound;
 
-import cz.dix.mil.controller.AnswerListener;
-import cz.dix.mil.controller.GameFlowListener;
-import cz.dix.mil.controller.HintsListener;
-import cz.dix.mil.model.game.Answer;
+import cz.dix.mil.controller.ChainedAction;
 import cz.dix.mil.model.state.GameModel;
 
 /**
@@ -11,7 +8,7 @@ import cz.dix.mil.model.state.GameModel;
  *
  * @author Zdenek Obst, zdenek.obst-at-gmail.com
  */
-public class SoundsPlayer implements GameFlowListener, AnswerListener, HintsListener {
+public class SoundsPlayer {
 
     private final GameModel model;
     private final SoundsFactory soundsFactory = new SoundsFactory();
@@ -22,18 +19,24 @@ public class SoundsPlayer implements GameFlowListener, AnswerListener, HintsList
     }
 
     /**
-     * {@inheritDoc}
+     * Plays a starting sound (blocked), starts sound for easy questions and passes processing to chained action.
+     *
+     * @param chainedAction action to be fired after start sound is played
      */
-    @Override
-    public void onGameStart() {
-        playSound(soundsFactory.easyQuestion());
+    public void startGame(final ChainedAction chainedAction) {
+        soundsFactory.start().playBlocked(new ChainedAction() {
+            @Override
+            public void toNextAction() {
+                playSound(soundsFactory.easyQuestion());
+                chainedAction.toNextAction();
+            }
+        });
     }
 
     /**
-     * {@inheritDoc}
+     * In case of harder than easy questions, plays awaiting sound (until moderator reveals answers).
      */
-    @Override
-    public void onAnswerSelected(Answer answer) {
+    public void selectAnswer() {
         switch (model.getActualQuestionDifficulty()) {
             case EASY:
                 // do nothing
@@ -52,43 +55,45 @@ public class SoundsPlayer implements GameFlowListener, AnswerListener, HintsList
     }
 
     /**
-     * {@inheritDoc}
+     * Plays appropriate sounds (correct/incorrect answer or checkpoint)
+     * and passes processing to chained action.
+     *
+     * @param chainedAction action to be fired after sounds is played
      */
-    @Override
-    public void onAnswersReveal() {
+    public void revealAnswer(final ChainedAction chainedAction) {
         switch (model.getActualQuestionDifficulty()) {
             case EASY:
                 if (isAnswerCorrect()) {
-                    if (!checkCheckpoint()) {
+                    if (!checkCheckpoint(chainedAction)) {
                         pauseActualSound();
-                        soundsFactory.answerEasyCorrect().playBlocked();
+                        soundsFactory.answerEasyCorrect().playBlocked(chainedAction);
                         continueActualSound();
                     }
                 } else {
                     stopActualSound();
-                    soundsFactory.answerIncorrect().play();
+                    soundsFactory.answerIncorrect().playBlocked(chainedAction);
                 }
                 break;
             case MID:
                 if (isAnswerCorrect()) {
-                    if (!checkCheckpoint()) {
+                    if (!checkCheckpoint(chainedAction)) {
                         stopActualSound();
-                        soundsFactory.answerWaitCorrect().playBlocked();
+                        soundsFactory.answerWaitCorrect().playBlocked(chainedAction);
                     }
                 } else {
                     stopActualSound();
-                    soundsFactory.answerIncorrect().play();
+                    soundsFactory.answerIncorrect().playBlocked(chainedAction);
                 }
                 break;
             case HARD:
                 if (isAnswerCorrect()) {
-                    if (!checkCheckpoint()) {
+                    if (!checkCheckpoint(chainedAction)) {
                         stopActualSound();
-                        soundsFactory.answerWaitCorrect().playBlocked();
+                        soundsFactory.answerWaitCorrect().playBlocked(chainedAction);
                     }
                 } else {
                     stopActualSound();
-                    soundsFactory.answerIncorrect().play();
+                    soundsFactory.answerIncorrect().playBlocked(chainedAction);
                 }
                 break;
             default:
@@ -97,23 +102,34 @@ public class SoundsPlayer implements GameFlowListener, AnswerListener, HintsList
     }
 
     /**
-     * {@inheritDoc}
+     * Plays a sound for next question and passes processing to chained action.
+     *
+     * @param chainedAction action to be fired after sounds is played
      */
-    @Override
-    public void onNewQuestion() {
+    public void nextQuestion(final ChainedAction chainedAction) {
         switch (model.getActualQuestionDifficulty()) {
             case EASY:
-                // do nothing
+                chainedAction.toNextAction();
                 break;
             case MID:
                 stopActualSound();
-                soundsFactory.question().playBlocked();
-                playSound(soundsFactory.midQuestion());
+                soundsFactory.question().playBlocked(new ChainedAction() {
+                    @Override
+                    public void toNextAction() {
+                        playSound(soundsFactory.midQuestion());
+                        chainedAction.toNextAction();
+                    }
+                });
                 break;
             case HARD:
                 stopActualSound();
-                soundsFactory.question().playBlocked();
-                playSound(soundsFactory.hardQuestion());
+                soundsFactory.question().playBlocked(new ChainedAction() {
+                    @Override
+                    public void toNextAction() {
+                        playSound(soundsFactory.hardQuestion());
+                        chainedAction.toNextAction();
+                    }
+                });
                 break;
             default:
                 break;
@@ -121,35 +137,36 @@ public class SoundsPlayer implements GameFlowListener, AnswerListener, HintsList
     }
 
     /**
-     * {@inheritDoc}
+     * Plays a sound for audience hint and passes processing to chained action.
+     *
+     * @param chainedAction action to be fired after sounds is played
      */
-    @Override
-    public void onAskAudience() {
+    public void askAudience(final ChainedAction chainedAction) {
         pauseActualSound();
-        soundsFactory.askAudience().playBlocked();
-        soundsFactory.askAudienceEnd().playBlocked();
-        continueActualSound();
+        soundsFactory.askAudience().playBlocked(new ChainedAction() {
+            @Override
+            public void toNextAction() {
+                useHint(chainedAction, soundsFactory.askAudienceEnd());
+            }
+        });
     }
 
     /**
-     * {@inheritDoc}
+     * Plays a sound for 50-50 hint and passes processing to chained action.
+     *
+     * @param chainedAction action to be fired after sounds is played
      */
-    @Override
-    public void onFiftyFifty() {
-        pauseActualSound();
-        soundsFactory.fiftyFifty().playBlocked();
-        continueActualSound();
-
+    public void fiftyFifty(final ChainedAction chainedAction) {
+        useHint(chainedAction, soundsFactory.fiftyFifty());
     }
 
     /**
-     * {@inheritDoc}
+     * Plays a sound for phone friend hint and passes processing to chained action.
+     *
+     * @param chainedAction action to be fired after sounds is played
      */
-    @Override
-    public void onPhoneFriend() {
-        pauseActualSound();
-        soundsFactory.phoneFriend().playBlocked();
-        continueActualSound();
+    public void phoneFriend(final ChainedAction chainedAction) {
+        useHint(chainedAction, soundsFactory.phoneFriend());
     }
 
     /**
@@ -157,14 +174,25 @@ public class SoundsPlayer implements GameFlowListener, AnswerListener, HintsList
      *
      * @return true if actual question was checkpoint, otherwise false
      */
-    private boolean checkCheckpoint() {
+    private boolean checkCheckpoint(final ChainedAction chainedAction) {
         if (model.isCheckpoint(model.getActualQuestion())) {
             stopActualSound();
-            soundsFactory.checkpoint().playBlocked();
+            soundsFactory.checkpoint().playBlocked(chainedAction);
             return true;
         } else {
             return false;
         }
+    }
+
+    private void useHint(final ChainedAction chainedAction, Sound hintSound) {
+        pauseActualSound();
+        hintSound.playBlocked(new ChainedAction() {
+            @Override
+            public void toNextAction() {
+                continueActualSound();
+                chainedAction.toNextAction();
+            }
+        });
     }
 
     private void pauseActualSound() {

@@ -1,6 +1,8 @@
 package cz.dix.mil.ui;
 
+import cz.dix.mil.controller.ChainedAction;
 import cz.dix.mil.controller.GameController;
+import cz.dix.mil.controller.Refreshable;
 import cz.dix.mil.model.state.GameModel;
 
 import javax.swing.*;
@@ -12,7 +14,7 @@ import java.awt.image.BufferedImage;
  *
  * @author Zdenek Obst, zdenek.obst-at-gmail.com
  */
-public class MainFrame extends JFrame {
+public class MainFrame extends JFrame implements Refreshable {
 
     private final HintsPanel hintsPanel;
     private final QuestionsPanel questionsPanel;
@@ -44,19 +46,31 @@ public class MainFrame extends JFrame {
         setLocationRelativeTo(null);
     }
 
-    public HintsPanel getHintsPanel() {
-        return hintsPanel;
+    /**
+     * Disables all actions in main frame (removes all listeners).
+     */
+    public void disableActions() {
+        answersPanel.disableAnswers();
+        hintsPanel.disableHints();
     }
 
-    public QuestionsPanel getQuestionsPanel() {
-        return questionsPanel;
+    /**
+     * Reveals an answer in all required sub components and passes processing to specified chained action.
+     *
+     * @param chainedAction action to be fired after answer is revealed
+     */
+    public void revealAnswer(ChainedAction chainedAction) {
+        answersPanel.revealAnswer(chainedAction);
     }
 
-    public AnswersPanel getAnswersPanel() {
-        return answersPanel;
-    }
-
-    public RewardsPanel getRewardsPanel() {
-        return rewardsPanel;
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void refresh() {
+        hintsPanel.refresh();
+        questionsPanel.refresh();
+        answersPanel.refresh();
+        rewardsPanel.refresh();
     }
 }
