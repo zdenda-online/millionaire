@@ -26,7 +26,7 @@ public class RevealAnswerFrame extends JFrame {
 
     private void init() {
         setSize(WIDTH, HEIGHT);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         setIconImage(new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB_PRE));
 
         JButton continueButton = new JButton("Reveal answer!");

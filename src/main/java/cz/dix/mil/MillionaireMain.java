@@ -1,8 +1,8 @@
 package cz.dix.mil;
 
 import cz.dix.mil.controller.GameController;
-import cz.dix.mil.model.ModelFactory;
 import cz.dix.mil.model.GameValidationException;
+import cz.dix.mil.model.ModelFactory;
 import cz.dix.mil.model.game.Game;
 import cz.dix.mil.model.state.GameModel;
 import cz.dix.mil.sound.SoundsPlayer;

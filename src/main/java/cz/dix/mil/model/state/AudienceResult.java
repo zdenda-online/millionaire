@@ -15,17 +15,17 @@ public class AudienceResult {
     /**
      * Creates a new audience result.
      *
-     * @param peopleForA count of people that voted for A answer
-     * @param peopleForB count of people that voted for B answer
-     * @param peopleForC count of people that voted for C answer
-     * @param peopleForD count of people that voted for D answer
+     * @param countForA count of people that voted for A answer
+     * @param countForB count of people that voted for B answer
+     * @param countForC count of people that voted for C answer
+     * @param countForD count of people that voted for D answer
      */
-    public AudienceResult(int peopleForA, int peopleForB, int peopleForC, int peopleForD) {
-        int sum = peopleForA + peopleForB + peopleForC + peopleForD;
-        percentsForA = count(peopleForA, sum);
-        percentsForB = count(peopleForB, sum);
-        percentsForC = count(peopleForC, sum);
-        percentsForD = 100 - percentsForA - percentsForB - percentsForB;
+    public AudienceResult(int countForA, int countForB, int countForC, int countForD) {
+        int sum = countForA + countForB + countForC + countForD;
+        this.percentsForA = count(countForA, sum);
+        this.percentsForB = count(countForB, sum);
+        this.percentsForC = count(countForC, sum);
+        this.percentsForD = 100 - (percentsForA + percentsForB + percentsForC);
     }
 
     private int count(int value, int sum) {

@@ -87,21 +87,33 @@ public class GameController {
      * Player asks for audience hint.
      */
     public void useAudienceHint() {
+        view.disableMainFrame();
         soundsPlayer.askAudience(new ChainedAction() {
             @Override
             public void toNextAction() {
-                // show some frame and pass results from it to model
-                model.useAudience(25, 22, 10, 44);
-
-                // will be covered by updateMainFrame by adding some panel in the middle
-                System.out.println(model.getAudienceResult().getPercentsForA() + "% " +
-                        model.getAudienceResult().getPercentsForB() + "% " +
-                        model.getAudienceResult().getPercentsForC() + "% " +
-                        model.getAudienceResult().getPercentsForD() + "%");
-
-                view.updateMainFrame();
+                view.showAudienceResultFrame();
             }
         });
+    }
+
+    /**
+     * Sets data for audience hint results.
+     *
+     * @param countForA count of people that voted for A answer
+     * @param countForB count of people that voted for B answer
+     * @param countForC count of people that voted for C answer
+     * @param countForD count of people that voted for D answer
+     */
+    public void setAudienceHintResults(int countForA, int countForB, int countForC, int countForD) {
+        model.useAudience(countForA, countForB, countForC, countForD);
+
+        // will be covered by updateMainFrame by adding some panel in the middle
+        System.out.println(model.getAudienceResult().getPercentsForA() + "% " +
+                model.getAudienceResult().getPercentsForB() + "% " +
+                model.getAudienceResult().getPercentsForC() + "% " +
+                model.getAudienceResult().getPercentsForD() + "%");
+
+        view.updateMainFrame();
     }
 
     /**

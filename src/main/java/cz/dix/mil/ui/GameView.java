@@ -14,10 +14,12 @@ public class GameView {
 
     private final MainFrame mainFrame;
     private final RevealAnswerFrame revealAnswerFrame;
+    private final AudienceResultFrame audienceResultFrame;
 
     public GameView(GameModel model, GameController controller) {
         this.mainFrame = new MainFrame(model, controller);
         this.revealAnswerFrame = new RevealAnswerFrame(controller);
+        this.audienceResultFrame = new AudienceResultFrame(controller);
     }
 
     /**
@@ -46,6 +48,13 @@ public class GameView {
      */
     public void showRevealAnswerFrame() {
         revealAnswerFrame.setVisible(true);
+    }
+
+    /**
+     * Reveals frame for audience hint result.
+     */
+    public void showAudienceResultFrame() {
+        audienceResultFrame.setVisible(true);
     }
 
     /**
