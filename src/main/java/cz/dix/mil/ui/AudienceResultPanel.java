@@ -37,8 +37,6 @@ public class AudienceResultPanel extends JPanel implements Refreshable {
 
         if (model.hasAudienceResult()) {
             AudienceResult result = model.getAudienceResult();
-            removeAll();
-
             add(new AnswerResultPanel(result.getPercentsForA(), "A"));
             add(new AnswerResultPanel(result.getPercentsForB(), "B"));
             add(new AnswerResultPanel(result.getPercentsForC(), "C"));
@@ -80,8 +78,9 @@ public class AudienceResultPanel extends JPanel implements Refreshable {
 
             int rectHeight = heightOfRectangle();
             GradientPaint gp1 = new GradientPaint(0, getHeight() - rectHeight,
-                    new Color(230, 0, 230), 0, getHeight(),
-                    new Color(0, 0, 255), true);
+                    Colors.AUDIENCE_RESULT_GRADIENT1,
+                    0, getHeight(),
+                    Colors.AUDIENCE_RESULT_GRADIENT2, true);
 
             g2d.setPaint(gp1);
             g2d.fillRect(0, getHeight() - rectHeight, RECTANGLE_WIDTH, rectHeight);

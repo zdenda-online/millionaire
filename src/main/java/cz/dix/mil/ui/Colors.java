@@ -19,4 +19,7 @@ public class Colors {
     public static final Color REWARDS_DEFAULT_COLOR = new Color(255, 255, 255);
     public static final Color REWARDS_ACTUAL_COLOR = new Color(255, 150, 0);
     public static final Color REWARDS_CHECKPOINT_COLOR = new Color(255, 240, 150);
+
+    public static final Color AUDIENCE_RESULT_GRADIENT1 = new Color(230, 0, 230);
+    public static final Color AUDIENCE_RESULT_GRADIENT2 = new Color(0, 0, 255);
 }

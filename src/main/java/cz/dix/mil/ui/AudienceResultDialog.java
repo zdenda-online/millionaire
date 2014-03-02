@@ -13,14 +13,14 @@ import java.awt.image.BufferedImage;
  *
  * @author Zdenek Obst, zdenek.obst-at-gmail.com
  */
-public class AudienceResultFrame extends JFrame {
+public class AudienceResultDialog extends JDialog {
 
     private static final int WIDTH = 200;
     private static final int HEIGHT = 120;
     private final GameController controller;
 
-    public AudienceResultFrame(GameController controller) {
-        super();
+    public AudienceResultDialog(JFrame owner, GameController controller) {
+        super(owner);
         this.controller = controller;
         init();
     }

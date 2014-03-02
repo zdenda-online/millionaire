@@ -12,14 +12,14 @@ import java.awt.image.BufferedImage;
  *
  * @author Zdenek Obst, zdenek.obst-at-gmail.com
  */
-public class RevealAnswerFrame extends JFrame {
+public class RevealAnswerDialog extends JDialog {
 
     private static final int WIDTH = 200;
     private static final int HEIGHT = 100;
     private final GameController controller;
 
-    public RevealAnswerFrame(GameController controller) {
-        super();
+    public RevealAnswerDialog(JFrame owner, GameController controller) {
+        super(owner);
         this.controller = controller;
         init();
     }

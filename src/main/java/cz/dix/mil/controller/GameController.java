@@ -52,7 +52,7 @@ public class GameController {
     public void answerQuestion(Answer answer) {
         view.disableMainFrame();
         model.answerQuestion(answer);
-        view.showRevealAnswerFrame();
+        view.showRevealAnswerDialog();
         soundsPlayer.selectAnswer();
     }
 
@@ -91,7 +91,7 @@ public class GameController {
         soundsPlayer.askAudience(new ChainedAction() {
             @Override
             public void toNextAction() {
-                view.showAudienceResultFrame();
+                view.showAudienceResultDialog();
             }
         });
     }
@@ -127,6 +127,8 @@ public class GameController {
      */
     public void usePhoneFriendHint() {
         model.usePhoneFriend();
+        view.disableMainFrame();
+        view.showPhoneFriendDialog();
         soundsPlayer.phoneFriend(new ChainedAction() {
             @Override
             public void toNextAction() {
