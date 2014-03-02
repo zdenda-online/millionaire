@@ -106,13 +106,6 @@ public class GameController {
      */
     public void setAudienceHintResults(int countForA, int countForB, int countForC, int countForD) {
         model.useAudience(countForA, countForB, countForC, countForD);
-
-        // will be covered by updateMainFrame by adding some panel in the middle
-        System.out.println(model.getAudienceResult().getPercentsForA() + "% " +
-                model.getAudienceResult().getPercentsForB() + "% " +
-                model.getAudienceResult().getPercentsForC() + "% " +
-                model.getAudienceResult().getPercentsForD() + "%");
-
         view.updateMainFrame();
     }
 

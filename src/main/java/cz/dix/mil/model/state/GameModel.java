@@ -154,6 +154,15 @@ public class GameModel {
     }
 
     /**
+     * Gets a flag whether audience results are available (hint was used and data entered).
+     *
+     * @return true if audience result is available, otherwise false
+     */
+    public boolean hasAudienceResult() {
+        return audienceResult != null;
+    }
+
+    /**
      * Gets all available answers of actual question.
      * Typically returns all answers but if 50-50 was used before, returns only remaining questions.
      *

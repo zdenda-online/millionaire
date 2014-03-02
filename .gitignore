@@ -4,4 +4,5 @@
 *.iws
 *.iml
 target
+**/TestMain.java
 games/game*.xml

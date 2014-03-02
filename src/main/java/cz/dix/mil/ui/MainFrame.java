@@ -16,14 +16,19 @@ import java.awt.image.BufferedImage;
  */
 public class MainFrame extends JFrame implements Refreshable {
 
+    private final GameModel model;
+
     private final HintsPanel hintsPanel;
+    private final AudienceResultPanel audienceResultPanel;
     private final QuestionsPanel questionsPanel;
     private final AnswersPanel answersPanel;
     private final RewardsPanel rewardsPanel;
 
     public MainFrame(GameModel model, GameController controller) {
         super();
+        this.model = model;
         this.hintsPanel = new HintsPanel(model, controller);
+        this.audienceResultPanel = new AudienceResultPanel(model);
         this.questionsPanel = new QuestionsPanel(model);
         this.answersPanel = new AnswersPanel(model, controller);
         this.rewardsPanel = new RewardsPanel(model);
@@ -37,9 +42,14 @@ public class MainFrame extends JFrame implements Refreshable {
         setLayout(new BorderLayout());
         JPanel leftPanel = new JPanel(new BorderLayout());
 
+        JPanel leftInnerPanel = new JPanel(new BorderLayout());
+        leftInnerPanel.add(audienceResultPanel, BorderLayout.CENTER);
+        leftInnerPanel.add(questionsPanel, BorderLayout.SOUTH);
+
         leftPanel.add(hintsPanel, BorderLayout.NORTH);
-        leftPanel.add(questionsPanel, BorderLayout.CENTER);
+        leftPanel.add(leftInnerPanel, BorderLayout.CENTER);
         leftPanel.add(answersPanel, BorderLayout.SOUTH);
+
 
         add(leftPanel, BorderLayout.CENTER);
         add(rewardsPanel, BorderLayout.EAST);
@@ -69,6 +79,7 @@ public class MainFrame extends JFrame implements Refreshable {
     @Override
     public void refresh() {
         hintsPanel.refresh();
+        audienceResultPanel.refresh();
         questionsPanel.refresh();
         answersPanel.refresh();
         rewardsPanel.refresh();
