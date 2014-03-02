@@ -1,9 +1,6 @@
 package cz.dix.mil.ui;
 
-import cz.dix.mil.controller.AnswerListener;
-import cz.dix.mil.controller.GameController;
-import cz.dix.mil.controller.GameFlowListener;
-import cz.dix.mil.controller.HintsListener;
+import cz.dix.mil.controller.*;
 import cz.dix.mil.model.game.Answer;
 import cz.dix.mil.model.state.GameModel;
 
@@ -68,8 +65,33 @@ public class AnswersPanel extends JPanel implements GameFlowListener, AnswerList
     @Override
     public void onAnswersReveal() {
         disableButtons();
-        correctAnswerButton.setBackground(Colors.CORRECT_ANSWER_BACKGROUND);
-        correctAnswerButton.setForeground(Colors.CORRECT_ANSWER_TEXT);
+
+        final JButton appliedButton = correctAnswerButton;
+        final Color originalBackground = correctAnswerButton.getBackground();
+        final Color originalForeground = correctAnswerButton.getForeground();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    appliedButton.setBackground(Colors.CORRECT_ANSWER_BACKGROUND);
+                    appliedButton.setForeground(Colors.CORRECT_ANSWER_TEXT);
+                    Thread.sleep(250);
+                    appliedButton.setBackground(originalBackground);
+                    appliedButton.setForeground(originalForeground);
+                    Thread.sleep(250);
+                    appliedButton.setBackground(Colors.CORRECT_ANSWER_BACKGROUND);
+                    appliedButton.setForeground(Colors.CORRECT_ANSWER_TEXT);
+                    Thread.sleep(250);
+                    appliedButton.setBackground(originalBackground);
+                    appliedButton.setForeground(originalForeground);
+                    Thread.sleep(250);
+                    appliedButton.setBackground(Colors.CORRECT_ANSWER_BACKGROUND);
+                    appliedButton.setForeground(Colors.CORRECT_ANSWER_TEXT);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     /**

@@ -27,7 +27,8 @@ public class Sound {
     }
 
     /**
-     * Plays the sound but does NOT block invoking thread.
+     * Plays the sound but does not block invoking thread.
+     * If you want to block processing, use {@link #playBlocked()} instead.
      */
     public void play() {
         AudioInputStream audioIn = null;
@@ -55,6 +56,7 @@ public class Sound {
 
     /**
      * Plays the sound to the end and blocks invoking thread (by sleep) until sound is played.
+     * If you don't want to block processing, use {@link #play()} instead.
      */
     public void playBlocked() {
         play();
@@ -63,12 +65,11 @@ public class Sound {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        stop();
     }
 
     /**
      * Pauses this sound.
-     * Fire {@link #continuePlaying()} if you want to continue.
+     * Fire {@link #continuePlaying()} if you want to continue where you paused.
      */
     public void pausePlaying() {
         if (clip != null && clip.isRunning()) {

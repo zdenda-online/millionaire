@@ -38,18 +38,23 @@ public class MillionaireMain {
             System.exit(3);
         }
 
-        GameModel model = new GameModel(game);
-        SoundsPlayer soundsPlayer = new SoundsPlayer(model);
-        GameController controller = new GameController(model);
-        MainFrame view = new MainFrame(model, controller);
-        WaitAnswerFrame view2 = new WaitAnswerFrame(controller);
+        final GameModel model = new GameModel(game);
+        final SoundsPlayer soundsPlayer = new SoundsPlayer(model);
+        final GameController controller = new GameController(model);
 
-        controller.registerAnswerListeners(view2, view.getAnswersPanel(), soundsPlayer);
-        controller.registerHintsListeners(soundsPlayer, view.getHintsPanel(), view.getAnswersPanel());
-        controller.registerGameListeners(soundsPlayer, view.getQuestionsPanel(), view.getAnswersPanel(), view.getRewardsPanel());
-        controller.startGame();
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                MainFrame view = new MainFrame(model, controller);
+                WaitAnswerFrame view2 = new WaitAnswerFrame(controller);
+                view.setVisible(true);
 
-        view.setVisible(true);
+                controller.registerAnswerListeners(view2, view.getAnswersPanel(), soundsPlayer);
+                controller.registerHintsListeners(soundsPlayer, view.getHintsPanel(), view.getAnswersPanel());
+                controller.registerGameListeners(soundsPlayer, view.getQuestionsPanel(), view.getAnswersPanel(), view.getRewardsPanel());
+                controller.startGame();
+            }
+        });
     }
 
     private static void setupSystem() {

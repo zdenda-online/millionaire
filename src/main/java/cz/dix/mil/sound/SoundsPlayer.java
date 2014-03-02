@@ -66,7 +66,7 @@ public class SoundsPlayer implements GameFlowListener, AnswerListener, HintsList
                     }
                 } else {
                     stopActualSound();
-                    soundsFactory.answerIncorrect().playBlocked();
+                    soundsFactory.answerIncorrect().play();
                 }
                 break;
             case MID:
@@ -77,7 +77,7 @@ public class SoundsPlayer implements GameFlowListener, AnswerListener, HintsList
                     }
                 } else {
                     stopActualSound();
-                    soundsFactory.answerIncorrect().playBlocked();
+                    soundsFactory.answerIncorrect().play();
                 }
                 break;
             case HARD:
@@ -88,7 +88,7 @@ public class SoundsPlayer implements GameFlowListener, AnswerListener, HintsList
                     }
                 } else {
                     stopActualSound();
-                    soundsFactory.answerIncorrect().playBlocked();
+                    soundsFactory.answerIncorrect().play();
                 }
                 break;
             default:

@@ -2,8 +2,8 @@ package cz.dix.mil.controller;
 
 import cz.dix.mil.model.game.Answer;
 import cz.dix.mil.model.state.GameModel;
-import cz.dix.mil.model.state.PlayersProgress;
 import cz.dix.mil.model.state.Hint;
+import cz.dix.mil.model.state.PlayersProgress;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -88,7 +88,7 @@ public class GameController {
      * Moderator shows correct answer.
      */
     public void showCorrectAnswer() {
-        for (AnswerListener listener : answerListeners) {
+        for (final AnswerListener listener : answerListeners) {
             listener.onAnswersReveal();
         }
         if (PlayersProgress.IN_GAME.equals(model.getState())) {
