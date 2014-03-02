@@ -39,5 +39,6 @@ public class RevealAnswerFrame extends JFrame {
         });
         add(continueButton);
         setLocation(0, 0);
+        setResizable(false);
     }
 }

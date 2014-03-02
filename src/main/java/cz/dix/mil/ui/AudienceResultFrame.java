@@ -15,7 +15,7 @@ import java.awt.image.BufferedImage;
  */
 public class AudienceResultFrame extends JFrame {
 
-    private static final int WIDTH = 210;
+    private static final int WIDTH = 200;
     private static final int HEIGHT = 120;
     private final GameController controller;
 
@@ -64,5 +64,6 @@ public class AudienceResultFrame extends JFrame {
         add(answersPanel, BorderLayout.CENTER);
         add(submitButton, BorderLayout.SOUTH);
         setLocationRelativeTo(null);
+        setResizable(false);
     }
 }

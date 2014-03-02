@@ -16,7 +16,8 @@ import java.awt.image.BufferedImage;
  */
 public class MainFrame extends JFrame implements Refreshable {
 
-    private final GameModel model;
+    private static final int WIDTH = 1200;
+    private static final int HEIGHT = 500;
 
     private final HintsPanel hintsPanel;
     private final AudienceResultPanel audienceResultPanel;
@@ -26,7 +27,6 @@ public class MainFrame extends JFrame implements Refreshable {
 
     public MainFrame(GameModel model, GameController controller) {
         super();
-        this.model = model;
         this.hintsPanel = new HintsPanel(model, controller);
         this.audienceResultPanel = new AudienceResultPanel(model);
         this.questionsPanel = new QuestionsPanel(model);
@@ -36,7 +36,7 @@ public class MainFrame extends JFrame implements Refreshable {
     }
 
     private void init() {
-        setSize(1200, 500);
+        setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setIconImage(new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB_PRE));
         setLayout(new BorderLayout());
@@ -54,6 +54,7 @@ public class MainFrame extends JFrame implements Refreshable {
         add(leftPanel, BorderLayout.CENTER);
         add(rewardsPanel, BorderLayout.EAST);
         setLocationRelativeTo(null);
+        setResizable(false);
     }
 
     /**

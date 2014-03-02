@@ -14,32 +14,36 @@ import java.awt.*;
  */
 public class AudienceResultPanel extends JPanel implements Refreshable {
 
+    private static final int COLUMNS_GAP = 20;
+    private static final int RECTANGLE_WIDTH = 70;
+    private static final int RECTANGLE_HEIGHT = 200;
+    private static final int COL_WIDTH = RECTANGLE_WIDTH;
+    private static final int COL_HEIGHT = RECTANGLE_HEIGHT + 30;
+
     private final GameModel model;
 
     public AudienceResultPanel(GameModel model) {
         this.model = model;
-        setLayout(new GridLayout(1, 4));
+        FlowLayout layout = new FlowLayout(FlowLayout.CENTER, COLUMNS_GAP, 0);
+        setLayout(layout);
     }
 
+    /**
+     * Refreshes panel according to the results of audience voting.
+     */
     @Override
     public void refresh() {
-        if (!model.hasAudienceResult()) {
-            return; // nothing to do
-        }
-
-        AudienceResult result = model.getAudienceResult();
         removeAll();
 
-        add(new AnswerResultPanel(10));
-        add(new AnswerResultPanel(30));
-        add(new AnswerResultPanel(10));
-        add(new AnswerResultPanel(50));
+        if (model.hasAudienceResult()) {
+            AudienceResult result = model.getAudienceResult();
+            removeAll();
 
-
-//        add(new JLabel("A=" + result.getPercentsForA() + "% " +
-//                "B=" + result.getPercentsForB() + "% " +
-//                "C=" + result.getPercentsForC() + "% " +
-//                "D=" + result.getPercentsForD() + "%"));
+            add(new AnswerResultPanel(result.getPercentsForA(), "A"));
+            add(new AnswerResultPanel(result.getPercentsForB(), "B"));
+            add(new AnswerResultPanel(result.getPercentsForC(), "C"));
+            add(new AnswerResultPanel(result.getPercentsForD(), "D"));
+        }
 
         revalidate();
         repaint();
@@ -47,43 +51,30 @@ public class AudienceResultPanel extends JPanel implements Refreshable {
 
     private static class AnswerResultPanel extends JPanel {
 
-        private final int percents;
-
-        private AnswerResultPanel(int percents) {
-            this.percents = percents;
-            init();
-        }
-
-        private void init() {
-            setLayout(new BorderLayout());
+        private AnswerResultPanel(int percents, String letter) {
+            setLayout(new BorderLayout(10, 10));
+            setPreferredSize(new Dimension(COL_WIDTH, COL_HEIGHT));
             add(new ResultRectangle(percents), BorderLayout.CENTER);
-            add(new JLabel(percents + "%"), BorderLayout.SOUTH);
+
+            JLabel label = new JLabel(letter + ": " + percents + "%");
+            label.setFont(new Font("Dialog", Font.BOLD, 15));
+            add(label, BorderLayout.SOUTH);
         }
     }
 
     private static class ResultRectangle extends JPanel {
 
-        private static final int WIDTH = 50;
         private final int percents;
 
         private ResultRectangle(int percents) {
             super();
-            this.percents = percents;
             setLayout(new BorderLayout());
+            setPreferredSize(new Dimension(RECTANGLE_WIDTH, RECTANGLE_HEIGHT));
+            this.percents = percents;
         }
 
         @Override
         protected void paintComponent(Graphics g) {
-//            super.paintComponent(g);
-//            Graphics2D g2d = (Graphics2D) g;
-//
-//            GradientPaint gp1 = new GradientPaint(0, getHeight() - percents,
-//                    new Color(230, 0, 230), 0, getHeight(),
-//                    new Color(0, 0, 255), true);
-//
-//            g2d.setPaint(gp1);
-//            g2d.fillRect(0, getHeight() - percents, WIDTH, percents);
-
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g;
 
@@ -93,7 +84,7 @@ public class AudienceResultPanel extends JPanel implements Refreshable {
                     new Color(0, 0, 255), true);
 
             g2d.setPaint(gp1);
-            g2d.fillRect(0, getHeight() - rectHeight, WIDTH, rectHeight);
+            g2d.fillRect(0, getHeight() - rectHeight, RECTANGLE_WIDTH, rectHeight);
         }
 
         private int heightOfRectangle() {
