@@ -137,7 +137,7 @@ public class GameModel {
      * Uses phone friend hint.
      */
     public void usePhoneFriend() {
-        availableHints.remove(Hint.FIFTY_FIFTY);
+        availableHints.remove(Hint.PHONE_FRIEND);
     }
 
     /**

@@ -22,7 +22,6 @@ public class RewardsPanel extends JPanel implements Refreshable {
 
     private JLabel[] rewards;
     private final GameModel model;
-    private Color lastQuestionColor = Colors.REWARDS_DEFAULT_COLOR; // first question
 
     public RewardsPanel(GameModel model) {
         this.model = model;
@@ -35,18 +34,12 @@ public class RewardsPanel extends JPanel implements Refreshable {
     @Override
     public void refresh() {
         int actualQuestionIdx = model.getActualQuestionIdx();
+        int previousQuestionIdx = actualQuestionIdx - 1;
 
-        if (actualQuestionIdx > 0) {
-            rewards[actualQuestionIdx - 1].setForeground(lastQuestionColor);
-            rewards[actualQuestionIdx - 1].updateUI();
-            rewards[actualQuestionIdx].revalidate();
-            rewards[actualQuestionIdx].repaint();
-            lastQuestionColor = rewards[actualQuestionIdx].getForeground();
+        if (previousQuestionIdx >= 0) {
+            rewards[previousQuestionIdx].setForeground(getDefaultColor(previousQuestionIdx));
         }
-
         rewards[actualQuestionIdx].setForeground(Colors.REWARDS_ACTUAL_COLOR);
-        rewards[actualQuestionIdx].revalidate();
-        rewards[actualQuestionIdx].repaint();
 
         revalidate();
         repaint();
@@ -65,16 +58,23 @@ public class RewardsPanel extends JPanel implements Refreshable {
             label.setFont(new Font("Dialog", Font.PLAIN, 20));
             if (i == 0) {
                 label.setForeground(Colors.REWARDS_ACTUAL_COLOR);
-            } else if (model.isCheckpoint(question)) {
-                label.setForeground(Colors.REWARDS_CHECKPOINT_COLOR);
             } else {
-                label.setForeground(Colors.REWARDS_DEFAULT_COLOR);
+                label.setForeground(getDefaultColor(i));
             }
             add(label);
             this.rewards[i--] = label;
         }
 
         setBorder(new EmptyBorder(MARGIN, MARGIN, MARGIN, MARGIN));
+    }
+
+    private Color getDefaultColor(int questionIdx) {
+        if (questionIdx != 0 && (questionIdx + 1) % 5 == 0) {
+            return Colors.REWARDS_CHECKPOINT_COLOR;
+        } else {
+            return Colors.REWARDS_DEFAULT_COLOR;
+        }
+
     }
 
     private JLabel createRewardLabel(int index, String rewardText) {
