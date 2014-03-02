@@ -2,7 +2,6 @@ package cz.dix.mil.controller;
 
 import cz.dix.mil.model.game.Answer;
 import cz.dix.mil.model.state.GameModel;
-import cz.dix.mil.model.state.Hint;
 import cz.dix.mil.model.state.PlayersProgress;
 import cz.dix.mil.sound.SoundsPlayer;
 import cz.dix.mil.ui.GameView;
@@ -88,10 +87,18 @@ public class GameController {
      * Player asks for audience hint.
      */
     public void useAudienceHint() {
-        model.useHint(Hint.AUDIENCE);
         soundsPlayer.askAudience(new ChainedAction() {
             @Override
             public void toNextAction() {
+                // show some frame and pass results from it to model
+                model.useAudience(25, 22, 10, 44);
+
+                // will be covered by updateMainFrame by adding some panel in the middle
+                System.out.println(model.getAudienceResult().getPercentsForA() + "% " +
+                        model.getAudienceResult().getPercentsForB() + "% " +
+                        model.getAudienceResult().getPercentsForC() + "% " +
+                        model.getAudienceResult().getPercentsForD() + "%");
+
                 view.updateMainFrame();
             }
         });
@@ -101,7 +108,7 @@ public class GameController {
      * Player asks for 50-50 hint.
      */
     public void useFiftyFiftyHint() {
-        model.useHint(Hint.FIFTY_FIFTY);
+        model.useFiftyFifty();
         soundsPlayer.fiftyFifty(new ChainedAction() {
             @Override
             public void toNextAction() {
@@ -114,7 +121,7 @@ public class GameController {
      * Player asks for phone friend hint.
      */
     public void usePhoneFriendHint() {
-        model.useHint(Hint.PHONE_FRIEND);
+        model.usePhoneFriend();
         soundsPlayer.phoneFriend(new ChainedAction() {
             @Override
             public void toNextAction() {

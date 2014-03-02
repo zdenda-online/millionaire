@@ -1,7 +1,7 @@
 package cz.dix.mil;
 
 import cz.dix.mil.controller.GameController;
-import cz.dix.mil.model.GameFactory;
+import cz.dix.mil.model.ModelFactory;
 import cz.dix.mil.model.GameValidationException;
 import cz.dix.mil.model.game.Game;
 import cz.dix.mil.model.state.GameModel;
@@ -29,7 +29,7 @@ public class MillionaireMain {
             System.out.println("Given game file does exist in " + gameFile.getAbsoluteFile());
             System.exit(2);
         }
-        Game game = GameFactory.newGame(gameFile);
+        Game game = ModelFactory.newGame(gameFile);
         try {
             game.validate();
         } catch (GameValidationException e) {

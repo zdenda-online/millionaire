@@ -64,7 +64,7 @@ public class SoundsPlayer {
         switch (model.getActualQuestionDifficulty()) {
             case EASY:
                 if (isAnswerCorrect()) {
-                    if (!checkCheckpoint(chainedAction)) {
+                    if (isOrdinaryQuestion(chainedAction)) {
                         pauseActualSound();
                         soundsFactory.answerEasyCorrect().playBlocked(chainedAction);
                         continueActualSound();
@@ -76,7 +76,7 @@ public class SoundsPlayer {
                 break;
             case MID:
                 if (isAnswerCorrect()) {
-                    if (!checkCheckpoint(chainedAction)) {
+                    if (isOrdinaryQuestion(chainedAction)) {
                         stopActualSound();
                         soundsFactory.answerWaitCorrect().playBlocked(chainedAction);
                     }
@@ -87,7 +87,7 @@ public class SoundsPlayer {
                 break;
             case HARD:
                 if (isAnswerCorrect()) {
-                    if (!checkCheckpoint(chainedAction)) {
+                    if (isOrdinaryQuestion(chainedAction)) {
                         stopActualSound();
                         soundsFactory.answerWaitCorrect().playBlocked(chainedAction);
                     }
@@ -170,17 +170,17 @@ public class SoundsPlayer {
     }
 
     /**
-     * Checks whether the question is checkpoint and plays its sound if yes.
+     * Checks whether the question is ordinary (is not checkpoint) and plays checkpoint sound if not.
      *
-     * @return true if actual question was checkpoint, otherwise false
+     * @return true if actual question is ordinary, otherwise false
      */
-    private boolean checkCheckpoint(final ChainedAction chainedAction) {
+    private boolean isOrdinaryQuestion(final ChainedAction chainedAction) {
         if (model.isCheckpoint(model.getActualQuestion())) {
             stopActualSound();
             soundsFactory.checkpoint().playBlocked(chainedAction);
-            return true;
-        } else {
             return false;
+        } else {
+            return true;
         }
     }
 

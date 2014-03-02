@@ -10,11 +10,11 @@ import javax.xml.bind.Unmarshaller;
 import java.io.File;
 
 /**
- * Factory that is able to create new games from various sources.
+ * Factory that is able to create objects of the model.
  *
  * @author Zdenek Obst, zdenek.obst-at-gmail.com
  */
-public class GameFactory {
+public class ModelFactory {
 
     /**
      * Creates a new game from the game file.

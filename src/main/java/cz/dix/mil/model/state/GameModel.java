@@ -26,6 +26,7 @@ public class GameModel {
     private Answer removedAnswer1 = null;
     private Answer removedAnswer2 = null;
     private PlayersProgress playersProgress = PlayersProgress.BEFORE_GAME;
+    private AudienceResult audienceResult;
 
     public GameModel(Game game) {
         this.game = game;
@@ -69,12 +70,9 @@ public class GameModel {
      * Moves game to the next question while it clears previously stored data about answer.
      */
     public void toNextQuestion() {
-        selectedAnswer = null;
-        removedAnswer1 = null;
-        removedAnswer2 = null;
-        playersProgress = PlayersProgress.IN_GAME;
+        clearQuestionData();
         if (!hasNextQuestion()) {
-            throw new IllegalArgumentException("No more questions in the comp");
+            throw new IllegalArgumentException("No more questions in the game");
         }
         actualQuestionIdx++;
     }
@@ -116,16 +114,43 @@ public class GameModel {
     }
 
     /**
-     * Sets specified hint as used and updates available answers {@link #getAvailableAnswers()}
-     * if hint is 50-50.
-     *
-     * @param hint hint to be used
+     * Uses 50-50 hint and updates available answers {@link #getAvailableAnswers()}.
      */
-    public void useHint(Hint hint) {
-        availableHints.remove(hint);
-        if (Hint.FIFTY_FIFTY.equals(hint)) {
-            useFiftyFifty();
+    public void useFiftyFifty() {
+        availableHints.remove(Hint.FIFTY_FIFTY);
+
+        while (true) {
+            int idx = (int) (Math.random() * ((double) getActualQuestion().getAnswers().size()));
+            Answer answer = getActualQuestion().getAnswers().get(idx);
+            if (!answer.isCorrect()) {
+                if (removedAnswer1 == null) {
+                    removedAnswer1 = answer;
+                } else if (!removedAnswer1.equals(answer)) {
+                    removedAnswer2 = answer;
+                    break;
+                }
+            }
         }
+    }
+
+    /**
+     * Uses phone friend hint.
+     */
+    public void usePhoneFriend() {
+        availableHints.remove(Hint.FIFTY_FIFTY);
+    }
+
+    /**
+     * Uses audience hint and updates {@link #getAudienceResult()} results.
+     *
+     * @param peopleForA people that voted for A answer
+     * @param peopleForB people that voted for B answer
+     * @param peopleForC people that voted for C answer
+     * @param peopleForD people that voted for D answer
+     */
+    public void useAudience(int peopleForA, int peopleForB, int peopleForC, int peopleForD) {
+        availableHints.remove(Hint.AUDIENCE);
+        audienceResult = new AudienceResult(peopleForA, peopleForB, peopleForC, peopleForD);
     }
 
     /**
@@ -178,19 +203,13 @@ public class GameModel {
         return actualQuestionIdx;
     }
 
-    private void useFiftyFifty() {
-        while (true) {
-            int idx = (int) (Math.random() * ((double) getActualQuestion().getAnswers().size()));
-            Answer answer = getActualQuestion().getAnswers().get(idx);
-            if (!answer.isCorrect()) {
-                if (removedAnswer1 == null) {
-                    removedAnswer1 = answer;
-                } else if (!removedAnswer1.equals(answer)) {
-                    removedAnswer2 = answer;
-                    break;
-                }
-            }
-        }
+    /**
+     * Gets result of audience hint.
+     *
+     * @return results of audience hint
+     */
+    public AudienceResult getAudienceResult() {
+        return audienceResult;
     }
 
     private int getQuestionIdx(Question question) {
@@ -202,5 +221,13 @@ public class GameModel {
             idx++;
         }
         throw new IllegalArgumentException("Question is not covered by this model");
+    }
+
+    private void clearQuestionData() {
+        selectedAnswer = null;
+        removedAnswer1 = null;
+        removedAnswer2 = null;
+        playersProgress = PlayersProgress.IN_GAME;
+        audienceResult = null;
     }
 }

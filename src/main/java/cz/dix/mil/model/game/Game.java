@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * Game is a simple aggregator of questions.
- * It is static representation of the comp itself but it does not contain any runtime data
+ * It is static representation of the game itself but it does not contain any runtime data
  *
  * @author Zdenek Obst
  */
