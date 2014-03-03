@@ -1,20 +1,22 @@
-package cz.dix.mil.sound;
+package cz.dix.mil.controller;
 
-import cz.dix.mil.controller.ChainedAction;
 import cz.dix.mil.model.state.GameModel;
+import cz.dix.mil.sound.Sound;
+import cz.dix.mil.sound.SoundsFactory;
+import cz.dix.mil.sound.jmf.JmsSoundsFactory;
 
 /**
- * Component that is responsible for playing appropriate sounds for given events.
+ * Controller that is responsible for playing appropriate sounds for game events.
  *
  * @author Zdenek Obst, zdenek.obst-at-gmail.com
  */
-public class SoundsPlayer {
+public class SoundsController {
 
     private final GameModel model;
-    private final SoundsFactory soundsFactory = new SoundsFactory();
-    private Sound playedSound;
+    private final SoundsFactory soundsFactory = new JmsSoundsFactory();
+    private Sound actualSound;
 
-    public SoundsPlayer(GameModel model) {
+    public SoundsController(GameModel model) {
         this.model = model;
     }
 
@@ -24,10 +26,10 @@ public class SoundsPlayer {
      * @param chainedAction action to be fired after start sound is played
      */
     public void startGame(final ChainedAction chainedAction) {
-        soundsFactory.start().playBlocked(new ChainedAction() {
+        soundsFactory.start().play(new ChainedAction() {
             @Override
             public void toNextAction() {
-                playSound(soundsFactory.easyQuestion());
+                playLoopedAndStoreSound(soundsFactory.easyQuestion());
                 chainedAction.toNextAction();
             }
         });
@@ -43,11 +45,16 @@ public class SoundsPlayer {
                 break;
             case MID:
                 stopActualSound();
-                playSound(soundsFactory.answerWait());
+                playAndStoreSoundChained(soundsFactory.answerWaitStart(), new ChainedAction() {
+                    @Override
+                    public void toNextAction() {
+                        playLoopedAndStoreSound(soundsFactory.answerWaitContinue());
+                    }
+                });
                 break;
             case HARD:
                 stopActualSound();
-                playSound(soundsFactory.answerWait());
+                playAndStoreSound(soundsFactory.answerWaitStart());
                 break;
             default:
                 break;
@@ -66,34 +73,34 @@ public class SoundsPlayer {
                 if (isAnswerCorrect()) {
                     if (isOrdinaryQuestion(chainedAction)) {
                         pauseActualSound();
-                        soundsFactory.answerEasyCorrect().playBlocked(chainedAction);
+                        soundsFactory.answerEasyCorrect().play(chainedAction);
                         continueActualSound();
                     }
                 } else {
                     stopActualSound();
-                    soundsFactory.answerIncorrect().playBlocked(chainedAction);
+                    soundsFactory.answerIncorrect().play(chainedAction);
                 }
                 break;
             case MID:
                 if (isAnswerCorrect()) {
                     if (isOrdinaryQuestion(chainedAction)) {
                         stopActualSound();
-                        soundsFactory.answerWaitCorrect().playBlocked(chainedAction);
+                        soundsFactory.answerWaitCorrect().play(chainedAction);
                     }
                 } else {
                     stopActualSound();
-                    soundsFactory.answerIncorrect().playBlocked(chainedAction);
+                    soundsFactory.answerIncorrect().play(chainedAction);
                 }
                 break;
             case HARD:
                 if (isAnswerCorrect()) {
                     if (isOrdinaryQuestion(chainedAction)) {
                         stopActualSound();
-                        soundsFactory.answerWaitCorrect().playBlocked(chainedAction);
+                        soundsFactory.answerWaitCorrect().play(chainedAction);
                     }
                 } else {
                     stopActualSound();
-                    soundsFactory.answerIncorrect().playBlocked(chainedAction);
+                    soundsFactory.answerIncorrect().play(chainedAction);
                 }
                 break;
             default:
@@ -113,20 +120,20 @@ public class SoundsPlayer {
                 break;
             case MID:
                 stopActualSound();
-                soundsFactory.question().playBlocked(new ChainedAction() {
+                soundsFactory.question().play(new ChainedAction() {
                     @Override
                     public void toNextAction() {
-                        playSound(soundsFactory.midQuestion());
+                        playLoopedAndStoreSound(soundsFactory.midQuestion());
                         chainedAction.toNextAction();
                     }
                 });
                 break;
             case HARD:
                 stopActualSound();
-                soundsFactory.question().playBlocked(new ChainedAction() {
+                soundsFactory.question().play(new ChainedAction() {
                     @Override
                     public void toNextAction() {
-                        playSound(soundsFactory.hardQuestion());
+                        playLoopedAndStoreSound(soundsFactory.hardQuestion());
                         chainedAction.toNextAction();
                     }
                 });
@@ -143,7 +150,7 @@ public class SoundsPlayer {
      */
     public void askAudience(final ChainedAction chainedAction) {
         pauseActualSound();
-        soundsFactory.askAudience().playBlocked(new ChainedAction() {
+        soundsFactory.askAudience().play(new ChainedAction() {
             @Override
             public void toNextAction() {
                 useHint(chainedAction, soundsFactory.askAudienceEnd());
@@ -177,7 +184,7 @@ public class SoundsPlayer {
     private boolean isOrdinaryQuestion(final ChainedAction chainedAction) {
         if (model.isCheckpoint(model.getActualQuestion())) {
             stopActualSound();
-            soundsFactory.checkpoint().playBlocked(chainedAction);
+            soundsFactory.checkpoint().play(chainedAction);
             return false;
         } else {
             return true;
@@ -186,7 +193,7 @@ public class SoundsPlayer {
 
     private void useHint(final ChainedAction chainedAction, Sound hintSound) {
         pauseActualSound();
-        hintSound.playBlocked(new ChainedAction() {
+        hintSound.play(new ChainedAction() {
             @Override
             public void toNextAction() {
                 continueActualSound();
@@ -196,27 +203,38 @@ public class SoundsPlayer {
     }
 
     private void pauseActualSound() {
-        if (playedSound != null) {
-            playedSound.pausePlaying();
+        if (actualSound != null) {
+            actualSound.pausePlaying();
         }
     }
 
     private void stopActualSound() {
-        if (playedSound != null) {
-            playedSound.stop();
+        if (actualSound != null) {
+            actualSound.stop();
         }
     }
 
     private void continueActualSound() {
-        if (playedSound != null) {
-            playedSound.continuePlaying();
+        if (actualSound != null) {
+            actualSound.continuePlaying();
         }
     }
 
-    private void playSound(Sound sound) {
-        playedSound = sound;
-        playedSound.play();
+    private void playAndStoreSound(Sound sound) {
+        actualSound = sound;
+        actualSound.play();
     }
+
+    private void playLoopedAndStoreSound(Sound sound) {
+        actualSound = sound;
+        actualSound.playLooped();
+    }
+
+    private void playAndStoreSoundChained(Sound sound, ChainedAction chainedAction) {
+        actualSound = sound;
+        actualSound.play(chainedAction);
+    }
+
 
     private boolean isAnswerCorrect() {
         return model.getSelectedAnswer().isCorrect();

@@ -1,11 +1,11 @@
 package cz.dix.mil;
 
 import cz.dix.mil.controller.GameController;
+import cz.dix.mil.controller.SoundsController;
 import cz.dix.mil.model.GameValidationException;
 import cz.dix.mil.model.ModelFactory;
 import cz.dix.mil.model.game.Game;
 import cz.dix.mil.model.state.GameModel;
-import cz.dix.mil.sound.SoundsPlayer;
 import cz.dix.mil.ui.GameView;
 
 import javax.swing.*;
@@ -38,11 +38,9 @@ public class MillionaireMain {
         }
 
         final GameModel model = new GameModel(game);
-        final SoundsPlayer soundsPlayer = new SoundsPlayer(model);
         final GameController controller = new GameController(model);
         final GameView view = new GameView(model, controller);
         controller.setView(view);
-        controller.setSoundsPlayer(soundsPlayer);
 
         controller.startGame();
     }

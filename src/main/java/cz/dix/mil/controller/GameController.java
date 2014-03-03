@@ -3,38 +3,37 @@ package cz.dix.mil.controller;
 import cz.dix.mil.model.game.Answer;
 import cz.dix.mil.model.state.GameModel;
 import cz.dix.mil.model.state.PlayersProgress;
-import cz.dix.mil.sound.SoundsPlayer;
 import cz.dix.mil.ui.GameView;
 
 /**
  * Main controller of the game that is responsible for passing events to the {@link GameModel}
- * and notifying appropriate UI components (GUI or sound player).
+ * and notifying appropriate UI components.
+ * </p>
+ * It also controls {@link SoundsController} that is responsible for playing sounds.
  *
  * @author Zdenek Obst, zdenek.obst-at-gmail.com
+ * @see SoundsController
  */
 public class GameController {
 
-    private GameModel model;
+    private final GameModel model;
+    private final SoundsController soundsController;
     private GameView view;
-    private SoundsPlayer soundsPlayer;
 
     public GameController(GameModel model) {
         this.model = model;
+        this.soundsController = new SoundsController(model);
     }
 
     public void setView(GameView view) {
         this.view = view;
     }
 
-    public void setSoundsPlayer(SoundsPlayer soundsPlayer) {
-        this.soundsPlayer = soundsPlayer;
-    }
-
     /**
      * Moderator starts the new game.
      */
     public void startGame() {
-        soundsPlayer.startGame(new ChainedAction() {
+        soundsController.startGame(new ChainedAction() {
             @Override
             public void toNextAction() {
                 model.toNextQuestion();
@@ -53,7 +52,7 @@ public class GameController {
         view.disableMainFrame();
         model.answerQuestion(answer);
         view.showRevealAnswerDialog();
-        soundsPlayer.selectAnswer();
+        soundsController.selectAnswer();
     }
 
     /**
@@ -63,13 +62,13 @@ public class GameController {
         view.revealAnswer(new ChainedAction() {
             @Override
             public void toNextAction() {
-                soundsPlayer.revealAnswer(new ChainedAction() {
+                soundsController.revealAnswer(new ChainedAction() {
                     @Override
                     public void toNextAction() {
                         if (PlayersProgress.IN_GAME.equals(model.getState())) {
                             if (model.hasNextQuestion()) {
                                 model.toNextQuestion();
-                                soundsPlayer.nextQuestion(new ChainedAction() {
+                                soundsController.nextQuestion(new ChainedAction() {
                                     @Override
                                     public void toNextAction() {
                                         view.updateMainFrame();
@@ -88,7 +87,7 @@ public class GameController {
      */
     public void useAudienceHint() {
         view.disableMainFrame();
-        soundsPlayer.askAudience(new ChainedAction() {
+        soundsController.askAudience(new ChainedAction() {
             @Override
             public void toNextAction() {
                 view.showAudienceResultDialog();
@@ -114,7 +113,7 @@ public class GameController {
      */
     public void useFiftyFiftyHint() {
         model.useFiftyFifty();
-        soundsPlayer.fiftyFifty(new ChainedAction() {
+        soundsController.fiftyFifty(new ChainedAction() {
             @Override
             public void toNextAction() {
                 view.updateMainFrame();
@@ -129,7 +128,7 @@ public class GameController {
         model.usePhoneFriend();
         view.disableMainFrame();
         view.showPhoneFriendDialog();
-        soundsPlayer.phoneFriend(new ChainedAction() {
+        soundsController.phoneFriend(new ChainedAction() {
             @Override
             public void toNextAction() {
                 view.updateMainFrame();

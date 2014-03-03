@@ -1,71 +1,118 @@
 package cz.dix.mil.sound;
 
-import java.io.InputStream;
-
 /**
- * Factory for {@link Sound} instances.
+ * Factory for sounds of the game.
  *
  * @author Zdenek Obst, zdenek.obst-at-gmail.com
  */
-public class SoundsFactory {
+public interface SoundsFactory {
 
-    private InputStream stream(String fileName) {
-        return getClass().getResourceAsStream("/sounds/" + fileName);
-    }
+    /**
+     * Creates a new sound for initial entering.
+     *
+     * @return sound for entering
+     */
+    Sound start();
 
-    public Sound start() {
-        return new Sound(stream("start.wav"), false, 9);
-    }
 
-    public Sound question() {
-        return new Sound(stream("question.wav"), false, 3);
-    }
+    /**
+     * Creates a new background sound for easy questions.
+     *
+     * @return sound for easy questions
+     */
+    Sound easyQuestion();
 
-    public Sound easyQuestion() {
-        return new Sound(stream("easy-questions.wav"), true, 167);
-    }
+    /**
+     * Creates a new initial sound when harder than easy question.
+     *
+     * @return initial question sound
+     */
+    Sound question();
 
-    public Sound midQuestion() {
-        return new Sound(stream("mid-question.wav"), true, 128);
-    }
+    /**
+     * Creates a new background sound for mid questions.
+     *
+     * @return sound for mid questions
+     */
+    Sound midQuestion();
 
-    public Sound hardQuestion() {
-        return new Sound(stream("hard-question.wav"), true, 160);
-    }
+    /**
+     * Creates a new background sound for hard questions.
+     *
+     * @return sound for hard questions
+     */
+    Sound hardQuestion();
 
-    public Sound answerWait() {
-        return new Sound(stream("answer-wait.wav"), true, 19);
-    }
+    /**
+     * Creates a new background sound for the time when answer is selected but still awaits moderator approval.
+     * It is used at the beginning and should not be repeated
+     *
+     * @return sound for waiting on answer (start)
+     */
+    Sound answerWaitStart();
 
-    public Sound answerEasyCorrect() {
-        return new Sound(stream("answer-easy-correct.wav"), false, 1);
-    }
+    /**
+     * Creates a new background sound for the time when answer is selected but still awaits moderator approval.
+     * It is used after {@link #answerWaitStart()} ends up if needed.
+     *
+     * @return sound for waiting on answer
+     */
+    Sound answerWaitContinue();
 
-    public Sound answerWaitCorrect() {
-        return new Sound(stream("answer-wait-correct.wav"), false, 3);
-    }
 
-    public Sound answerIncorrect() {
-        return new Sound(stream("answer-incorrect.wav"), false, 3);
-    }
+    /**
+     * Creates a new sound when easy question was answered correctly.
+     *
+     * @return sound for easy question answered correctly
+     */
+    Sound answerEasyCorrect();
 
-    public Sound checkpoint() {
-        return new Sound(stream("checkpoint.wav"), false, 5);
-    }
+    /**
+     * Creates a new sound when question that was waiting moderators approval was answered correctly.
+     *
+     * @return sound for awaited question answered correctly
+     */
+    Sound answerWaitCorrect();
 
-    public Sound askAudience() {
-        return new Sound(stream("ask-audience.wav"), false, 10);
-    }
+    /**
+     * Creates a new sound when questions was answered incorrectly.
+     *
+     * @return sound for question answered incorrectly
+     */
+    Sound answerIncorrect();
 
-    public Sound askAudienceEnd() {
-        return new Sound(stream("ask-audience-end.wav"), false, 1);
-    }
+    /**
+     * Creates a new sound when player reaches checkpoint.
+     *
+     * @return sound for checkpoint
+     */
+    Sound checkpoint();
 
-    public Sound fiftyFifty() {
-        return new Sound(stream("fifty-fifty.wav"), false, 1);
-    }
+    /**
+     * Crates a new sound when hint for asking audience is on.
+     *
+     * @return sound for audience hint
+     */
+    Sound askAudience();
 
-    public Sound phoneFriend() {
-        return new Sound(stream("phone-help.wav"), false, 31);
-    }
+    /**
+     * Crates a new sound when audience voting is over
+     *
+     * @return sound for audience voting is over
+     */
+    Sound askAudienceEnd();
+
+    /**
+     * Crates a new sound when 50-50 hint is on.
+     *
+     * @return sound for 50-50 hint
+     */
+    Sound fiftyFifty();
+
+    /**
+     * Crates a new sound when phone friend hint is on.
+     *
+     * @return sound for 50-50 hint
+     */
+    Sound phoneFriend();
 }
