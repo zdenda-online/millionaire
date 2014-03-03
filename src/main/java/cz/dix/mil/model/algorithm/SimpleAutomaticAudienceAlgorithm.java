@@ -26,7 +26,7 @@ public class SimpleAutomaticAudienceAlgorithm implements AutomaticAudienceAlgori
                 break;
             case MID:
                 // incorrect 7 - 27 => avg. 17, correct: 19 - 79 => avg. 49
-                res = generate(question, 7, 30);
+                res = generate(question, 7, 27);
                 break;
             case HARD:
                 // incorrect 15 - 30 => avg. 22,5, correct: 10 - 55 => avg. 32,5
