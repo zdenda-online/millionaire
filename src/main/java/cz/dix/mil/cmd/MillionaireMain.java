@@ -38,6 +38,8 @@ public class MillionaireMain {
         final GameSettings settings = new GameSettings();
         settings.setAutomaticAudience(true); // set by some parameter from args in future (e.g. -m)
 
+        // WHAT IF 50-50 was used, change automatic audience
+
         final GameModel model = new GameModel(game);
         final GameController controller = new GameController(model, settings);
         final GameView view = new GameView(model, controller);
