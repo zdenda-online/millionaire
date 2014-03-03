@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
 /**
- * Frame for submitting results of audience voting (hint).
+ * Dialog for submitting results of audience voting (hint).
  *
  * @author Zdenek Obst, zdenek.obst-at-gmail.com
  */

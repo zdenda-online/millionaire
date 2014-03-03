@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
 /**
- * Frame that is shown when answer is selected and allows moderator to do some disguise talks.
+ * Dialog that is shown when answer is selected and allows moderator to do some disguise talks.
  *
  * @author Zdenek Obst, zdenek.obst-at-gmail.com
  */

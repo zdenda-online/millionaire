@@ -1,5 +1,6 @@
 package cz.dix.mil.controller;
 
+import cz.dix.mil.cmd.GameSettings;
 import cz.dix.mil.model.game.Answer;
 import cz.dix.mil.model.state.GameModel;
 import cz.dix.mil.model.state.PlayersProgress;
@@ -16,12 +17,14 @@ import cz.dix.mil.ui.GameView;
  */
 public class GameController {
 
+    private final GameSettings settings;
     private final GameModel model;
     private final SoundsController soundsController;
     private GameView view;
 
-    public GameController(GameModel model) {
+    public GameController(GameModel model, GameSettings settings) {
         this.model = model;
+        this.settings = settings;
         this.soundsController = new SoundsController(model);
     }
 
@@ -87,10 +90,17 @@ public class GameController {
      */
     public void useAudienceHint() {
         view.disableMainFrame();
+        view.showAudienceVotingDialog();
         soundsController.askAudience(new ChainedAction() {
             @Override
             public void toNextAction() {
-                view.showAudienceResultDialog();
+                view.hideAudienceVotingDialog();
+                if (settings.isAutomaticAudience()) {
+                    model.generateAudienceResults();
+                    view.updateMainFrame();
+                } else {
+                    view.showAudienceResultDialog();
+                }
             }
         });
     }
@@ -104,7 +114,7 @@ public class GameController {
      * @param countForD count of people that voted for D answer
      */
     public void setAudienceHintResults(int countForA, int countForB, int countForC, int countForD) {
-        model.useAudience(countForA, countForB, countForC, countForD);
+        model.setAudienceResults(countForA, countForB, countForC, countForD);
         view.updateMainFrame();
     }
 

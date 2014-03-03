@@ -1,4 +1,4 @@
-package cz.dix.mil.util;
+package cz.dix.mil.model.algorithm;
 
 import java.util.ArrayList;
 import java.util.Collection;

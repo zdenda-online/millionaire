@@ -1,7 +1,6 @@
-package cz.dix.mil;
+package cz.dix.mil.cmd;
 
 import cz.dix.mil.controller.GameController;
-import cz.dix.mil.controller.SoundsController;
 import cz.dix.mil.model.GameValidationException;
 import cz.dix.mil.model.ModelFactory;
 import cz.dix.mil.model.game.Game;
@@ -36,9 +35,11 @@ public class MillionaireMain {
             System.out.println("Game file is not valid due to: " + e.getMessage());
             System.exit(3);
         }
+        final GameSettings settings = new GameSettings();
+        settings.setAutomaticAudience(true);
 
         final GameModel model = new GameModel(game);
-        final GameController controller = new GameController(model);
+        final GameController controller = new GameController(model, settings);
         final GameView view = new GameView(model, controller);
         controller.setView(view);
 

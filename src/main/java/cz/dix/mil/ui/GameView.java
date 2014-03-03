@@ -14,12 +14,14 @@ public class GameView {
 
     private final MainFrame mainFrame;
     private final RevealAnswerDialog revealAnswerDialog;
+    private final AudienceVotingDialog audienceVotingDialog;
     private final AudienceResultDialog audienceResultDialog;
     private final PhoneFriendDialog phoneFriendDialog;
 
     public GameView(GameModel model, GameController controller) {
         this.mainFrame = new MainFrame(model, controller);
         this.revealAnswerDialog = new RevealAnswerDialog(mainFrame, controller);
+        this.audienceVotingDialog = new AudienceVotingDialog(mainFrame);
         this.audienceResultDialog = new AudienceResultDialog(mainFrame, controller);
         this.phoneFriendDialog = new PhoneFriendDialog(mainFrame);
     }
@@ -66,6 +68,20 @@ public class GameView {
      */
     public void showAudienceResultDialog() {
         audienceResultDialog.setVisible(true);
+    }
+
+    /**
+     * Reveals dialog when audience is voting.
+     */
+    public void showAudienceVotingDialog() {
+        audienceVotingDialog.setVisible(true);
+    }
+
+    /**
+     * Destroys dialog when audience voting is finished.
+     */
+    public void hideAudienceVotingDialog() {
+        audienceVotingDialog.dispose();
     }
 
     /**

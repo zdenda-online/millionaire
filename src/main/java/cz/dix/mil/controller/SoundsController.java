@@ -15,6 +15,7 @@ public class SoundsController {
     private final GameModel model;
     private final SoundsFactory soundsFactory = new JmsSoundsFactory();
     private Sound actualSound;
+    private boolean stopSound = false;
 
     public SoundsController(GameModel model) {
         this.model = model;
@@ -45,10 +46,13 @@ public class SoundsController {
                 break;
             case MID:
                 stopActualSound();
+                stopSound = false;
                 playAndStoreSoundChained(soundsFactory.answerWaitStart(), new ChainedAction() {
                     @Override
                     public void toNextAction() {
-                        playLoopedAndStoreSound(soundsFactory.answerWaitContinue());
+                        if (!stopSound) { // avoid situation when answerStart did not finish and answer was revealed
+                            playLoopedAndStoreSound(soundsFactory.answerWaitContinue());
+                        }
                     }
                 });
                 break;
@@ -68,6 +72,7 @@ public class SoundsController {
      * @param chainedAction action to be fired after sounds is played
      */
     public void revealAnswer(final ChainedAction chainedAction) {
+        stopSound = true;
         switch (model.getActualQuestionDifficulty()) {
             case EASY:
                 if (isAnswerCorrect()) {

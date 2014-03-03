@@ -17,7 +17,7 @@ import java.awt.image.BufferedImage;
 public class MainFrame extends JFrame implements Refreshable {
 
     private static final int WIDTH = 1200;
-    private static final int HEIGHT = 500;
+    private static final int HEIGHT = 550;
 
     private final HintsPanel hintsPanel;
     private final AudienceResultPanel audienceResultPanel;

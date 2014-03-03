@@ -1,5 +1,7 @@
 package cz.dix.mil.model.state;
 
+import cz.dix.mil.model.algorithm.AutomaticAudienceAlgorithm;
+import cz.dix.mil.model.algorithm.SimpleAutomaticAudienceAlgorithm;
 import cz.dix.mil.model.game.Answer;
 import cz.dix.mil.model.game.Game;
 import cz.dix.mil.model.game.Question;
@@ -19,6 +21,7 @@ import java.util.List;
 public class GameModel {
 
     private final Game game;
+    private final AutomaticAudienceAlgorithm automaticAudienceAlgorithm = new SimpleAutomaticAudienceAlgorithm();
     private int actualQuestionIdx = -1;
     private Collection<Hint> availableHints = new ArrayList<>(Arrays.asList(Hint.values()));
 
@@ -141,16 +144,26 @@ public class GameModel {
     }
 
     /**
-     * Uses audience hint and updates {@link #getAudienceResult()} results.
+     * Uses audience hint and updates values according to given values.
+     * Use {@link #getAudienceResult()} to retrieve it.
      *
      * @param peopleForA people that voted for A answer
      * @param peopleForB people that voted for B answer
      * @param peopleForC people that voted for C answer
      * @param peopleForD people that voted for D answer
      */
-    public void useAudience(int peopleForA, int peopleForB, int peopleForC, int peopleForD) {
+    public void setAudienceResults(int peopleForA, int peopleForB, int peopleForC, int peopleForD) {
         availableHints.remove(Hint.AUDIENCE);
         audienceResult = new AudienceResult(peopleForA, peopleForB, peopleForC, peopleForD);
+    }
+
+    /**
+     * Uses audience hint and generates values according to automatic algorithm results.
+     * Use {@link #getAudienceResult()} to retrieve it.
+     */
+    public void generateAudienceResults() {
+        availableHints.remove(Hint.AUDIENCE);
+        audienceResult = automaticAudienceAlgorithm.count(getActualQuestion(), getActualQuestionDifficulty());
     }
 
     /**
