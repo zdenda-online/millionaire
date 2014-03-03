@@ -36,7 +36,7 @@ public class MillionaireMain {
             System.exit(3);
         }
         final GameSettings settings = new GameSettings();
-        settings.setAutomaticAudience(true);
+        settings.setAutomaticAudience(true); // set by some parameter from args in future (e.g. -m)
 
         final GameModel model = new GameModel(game);
         final GameController controller = new GameController(model, settings);
