@@ -46,7 +46,8 @@ public class SimpleAutomaticAudienceAlgorithm implements AutomaticAudienceAlgori
             if (answer.isCorrect()) {
                 correctIdx = i;
             } else {
-                res[i] = incorrectMin + random.nextInt(incorrectMax - incorrectMin);
+                int randomAdd = random.nextInt(incorrectMax - incorrectMin);
+                res[i] = incorrectMin + randomAdd;
             }
             i++;
         }

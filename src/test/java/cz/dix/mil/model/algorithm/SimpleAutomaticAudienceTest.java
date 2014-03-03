@@ -33,7 +33,7 @@ public class SimpleAutomaticAudienceTest {
     private void test(Question q, QuestionDifficulty difficulty, int incorrectMin, int incorrectMax) {
         for (int testRunNo = 1; testRunNo <= TEST_RUNS; testRunNo++) {
             System.out.println("Running " + difficulty + " question test #" + testRunNo);
-            AudienceResult res = alg.count(q, QuestionDifficulty.EASY);
+            AudienceResult res = alg.count(q, difficulty);
             int correctMin = (100 - (3 * incorrectMax));
             int correctMax = (100 - (3 * incorrectMin));
             System.out.println("Testing " + res + "  incorrect: <" + incorrectMin + "," + incorrectMax + ">, " +
