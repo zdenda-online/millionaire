@@ -36,11 +36,11 @@ public class SimpleAutomaticAudienceTest {
             AudienceResult res = alg.count(q, QuestionDifficulty.EASY);
             int correctMin = (100 - (3 * incorrectMax));
             int correctMax = (100 - (3 * incorrectMin));
-            System.out.println("Testing incorrect <" + incorrectMin + "," + incorrectMax + ">, " +
+            System.out.println("Testing " + res + "  incorrect: <" + incorrectMin + "," + incorrectMax + ">, " +
                     "correct: <" + correctMin + "," + correctMax + ">");
             Assert.assertTrue(res.getPercentsForA() >= incorrectMin && res.getPercentsForA() <= incorrectMax);
+            Assert.assertTrue(res.getPercentsForB() >= incorrectMin && res.getPercentsForB() <= incorrectMax);
             Assert.assertTrue(res.getPercentsForC() >= incorrectMin && res.getPercentsForC() <= incorrectMax);
-            Assert.assertTrue(res.getPercentsForD() >= incorrectMin && res.getPercentsForD() <= incorrectMax);
             Assert.assertTrue(res.getPercentsForD() >= correctMin && res.getPercentsForD() <= correctMax);
         }
     }

@@ -68,4 +68,13 @@ public class AudienceResult {
     public int getPercentsForD() {
         return percentsForD;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return "A=" + getPercentsForA() + "%, B=" + getPercentsForB() +
+                "%, C=" + getPercentsForC() + "%, D=" + getPercentsForD() + "%";
+    }
 }
