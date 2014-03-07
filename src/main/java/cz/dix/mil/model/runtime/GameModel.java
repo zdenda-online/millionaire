@@ -142,14 +142,11 @@ public class GameModel {
      * Uses audience hint and updates values according to given values.
      * Use {@link #getAudienceResult()} to retrieve it.
      *
-     * @param peopleForA people that voted for A answer
-     * @param peopleForB people that voted for B answer
-     * @param peopleForC people that voted for C answer
-     * @param peopleForD people that voted for D answer
+     * @param counts counts of votes for each answer
      */
-    public void setAudienceResults(int peopleForA, int peopleForB, int peopleForC, int peopleForD) {
+    public void setAudienceResults(int[] counts) {
         availableHints.remove(Hint.AUDIENCE);
-        audienceResult = new AudienceResult(peopleForA, peopleForB, peopleForC, peopleForD);
+        audienceResult = new AudienceResult(counts);
     }
 
     /**

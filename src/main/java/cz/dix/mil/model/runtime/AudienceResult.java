@@ -16,7 +16,7 @@ public class AudienceResult {
      *
      * @param counts counts (number of votes) for answers
      */
-    public AudienceResult(int... counts) {
+    public AudienceResult(int[] counts) {
         this.percents = new int[counts.length];
         int sum = sum(counts);
 

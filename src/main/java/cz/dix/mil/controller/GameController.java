@@ -115,13 +115,10 @@ public class GameController {
     /**
      * Sets data for audience hint results.
      *
-     * @param countForA count of people that voted for A answer
-     * @param countForB count of people that voted for B answer
-     * @param countForC count of people that voted for C answer
-     * @param countForD count of people that voted for D answer
+     * @param counts counts for each answer
      */
-    public void setAudienceHintResults(int countForA, int countForB, int countForC, int countForD) {
-        model.setAudienceResults(countForA, countForB, countForC, countForD);
+    public void setAudienceHintResults(int[] counts) {
+        model.setAudienceResults(counts);
         view.updateMainFrame();
     }
 

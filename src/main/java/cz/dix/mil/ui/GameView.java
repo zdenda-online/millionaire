@@ -23,7 +23,7 @@ public class GameView {
         this.mainFrame = new MainFrame(model, controller);
         this.revealAnswerDialog = new RevealAnswerDialog(mainFrame, controller);
         this.audienceVotingDialog = new AudienceVotingDialog(mainFrame);
-        this.audienceResultDialog = new AudienceResultDialog(mainFrame, controller);
+        this.audienceResultDialog = new AudienceResultDialog(mainFrame, model, controller);
         this.phoneFriendDialog = new PhoneFriendDialog(mainFrame);
         this.finalRewardDialog = new FinalRewardDialog(mainFrame, model);
     }

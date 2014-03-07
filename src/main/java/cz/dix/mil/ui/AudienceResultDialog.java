@@ -1,6 +1,7 @@
 package cz.dix.mil.ui;
 
 import cz.dix.mil.controller.GameController;
+import cz.dix.mil.model.runtime.GameModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,12 +18,13 @@ public class AudienceResultDialog extends JDialog {
 
     private static final int WIDTH = 200;
     private static final int HEIGHT = 120;
+    private final GameModel model;
     private final GameController controller;
 
-    public AudienceResultDialog(JFrame owner, GameController controller) {
+    public AudienceResultDialog(JFrame owner, GameModel model, GameController controller) {
         super(owner);
+        this.model = model;
         this.controller = controller;
-        init();
     }
 
     private void init() {
@@ -30,33 +32,24 @@ public class AudienceResultDialog extends JDialog {
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         setIconImage(new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB_PRE));
 
+        int questionsCount = model.getActualQuestion().getAnswers().size();
         JPanel answersPanel = new JPanel(new FlowLayout());
-        answersPanel.add(new JLabel("A"));
-        final JSpinner aSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
-        answersPanel.add(aSpinner);
-
-        answersPanel.add(new JLabel("B"));
-        final JSpinner bSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
-        answersPanel.add(bSpinner);
-
-        answersPanel.add(new JLabel("C"));
-        final JSpinner cSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
-        answersPanel.add(cSpinner);
-
-        answersPanel.add(new JLabel("D"));
-        final JSpinner dSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
-        answersPanel.add(dSpinner);
+        final JSpinner[] spinners = new JSpinner[questionsCount];
+        int charNo = 65;
+        for (int i = 0; i < questionsCount; i++) {
+            char letter = (char) (charNo + i);
+            answersPanel.add(new JLabel(String.valueOf(letter)));
+            JSpinner spinner = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
+            answersPanel.add(spinner);
+            spinners[i] = spinner;
+        }
 
         JButton submitButton = new JButton("Submit results");
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 dispose();
-                controller.setAudienceHintResults(
-                        (int) aSpinner.getValue(),
-                        (int) bSpinner.getValue(),
-                        (int) cSpinner.getValue(),
-                        (int) dSpinner.getValue());
+                controller.setAudienceHintResults(getSpinnerValues(spinners));
             }
         });
 
@@ -65,5 +58,19 @@ public class AudienceResultDialog extends JDialog {
         add(submitButton, BorderLayout.SOUTH);
         setLocationRelativeTo(null);
         setResizable(false);
+    }
+
+    @Override
+    public void setVisible(boolean visible) {
+        init();
+        super.setVisible(visible);
+    }
+
+    private int[] getSpinnerValues(JSpinner[] spinners) {
+        int[] out = new int[spinners.length];
+        for (int i = 0; i < spinners.length; i++) {
+            out[i] = (int) spinners[i].getValue();
+        }
+        return out;
     }
 }
