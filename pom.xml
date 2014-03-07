@@ -77,14 +77,15 @@
                     <configurationDirectory>games</configurationDirectory>
                     <copyConfigurationDirectory>true</copyConfigurationDirectory>
                     <includeConfigurationDirectoryInClasspath>false</includeConfigurationDirectoryInClasspath>
-                    <assembleDirectory>${project.build.directory}/millionaire</assembleDirectory>
+                    <assembleDirectory>${project.build.directory}/${project.artifactId}</assembleDirectory>
+                    <extraJvmArguments>-Xms256m -Xmx512m</extraJvmArguments>
                     <platforms>
                         <platform>windows</platform>
                         <platform>unix</platform>
                     </platforms>
                     <programs>
                         <program>
-                            <id>millionare</id>
+                            <id>${project.artifactId}</id>
                             <mainClass>cz.dix.mil.cmd.MillionaireMain</mainClass>
                         </program>
                     </programs>
