@@ -1,8 +1,9 @@
 package cz.dix.mil.model.algorithm;
 
-import cz.dix.mil.model.game.Question;
-import cz.dix.mil.model.state.AudienceResult;
+import cz.dix.mil.model.game.Answer;
 import cz.dix.mil.model.state.QuestionDifficulty;
+
+import java.util.List;
 
 /**
  * Used for automatic audience results
@@ -14,9 +15,9 @@ public interface AutomaticAudienceAlgorithm {
     /**
      * Counts results of automatic audience voting.
      *
-     * @param question question for which to generated
-     * @param difficulty difficulty of question
-     * @return result of voting
+     * @param possibleAnswers possible answers for voting
+     * @param difficulty      difficulty of question
+     * @return result of voting (counts for each vote corresponding to given answers)
      */
-    AudienceResult count(Question question, QuestionDifficulty difficulty);
+    int[] count(List<Answer> possibleAnswers, QuestionDifficulty difficulty);
 }

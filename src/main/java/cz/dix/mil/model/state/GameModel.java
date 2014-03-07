@@ -117,7 +117,7 @@ public class GameModel {
     }
 
     /**
-     * Uses 50-50 hint and updates available answers {@link #getAvailableAnswers()}.
+     * Uses 50-50 hint and updates available answers, see {@link #isAnswerAvailable(Answer)}}.
      */
     public void useFiftyFifty() {
         availableHints.remove(Hint.FIFTY_FIFTY);
@@ -163,7 +163,8 @@ public class GameModel {
      */
     public void generateAudienceResults() {
         availableHints.remove(Hint.AUDIENCE);
-        audienceResult = automaticAudienceAlgorithm.count(getActualQuestion(), getActualQuestionDifficulty());
+        int[] res = automaticAudienceAlgorithm.count(getPossibleAnswers(), getActualQuestionDifficulty());
+        audienceResult = createAudienceResult(res);
     }
 
     /**
@@ -176,16 +177,13 @@ public class GameModel {
     }
 
     /**
-     * Gets all available answers of actual question.
-     * Typically returns all answers but if 50-50 was used before, returns only remaining questions.
+     * Checks whether given answer is available (was not removed by 50-50 hint).
      *
-     * @return available answers of actual question
+     * @param answer answer to be checked
+     * @return true if answer is available, otherwise false
      */
-    public Collection<Answer> getAvailableAnswers() {
-        Collection<Answer> availableAnswers = new ArrayList<>(getActualQuestion().getAnswers());
-        availableAnswers.remove(removedAnswer1);
-        availableAnswers.remove(removedAnswer2);
-        return availableAnswers;
+    public boolean isAnswerAvailable(Answer answer) {
+        return !answer.equals(removedAnswer1) && !answer.equals(removedAnswer2);
     }
 
     /**
@@ -251,5 +249,27 @@ public class GameModel {
         removedAnswer2 = null;
         playersProgress = PlayersProgress.IN_GAME;
         audienceResult = null;
+    }
+
+    private List<Answer> getPossibleAnswers() {
+        List<Answer> out = new ArrayList<>();
+        for (Answer answer : getActualQuestion().getAnswers()) {
+            if (isAnswerAvailable(answer)) {
+                out.add(answer);
+            }
+        }
+        return out;
+    }
+
+    private AudienceResult createAudienceResult(int[] availAnswersCount) {
+        List<Answer> allAnswers = getActualQuestion().getAnswers();
+        int[] percents = new int[allAnswers.size()];
+        int allIdx = 0;
+        int availIdx = 0;
+        for (Answer answer : allAnswers) {
+            int p = isAnswerAvailable(answer) ? availAnswersCount[availIdx++] : 0;
+            percents[allIdx++] = p;
+        }
+        return new AudienceResult(percents);
     }
 }

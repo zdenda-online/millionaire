@@ -1,5 +1,7 @@
 package cz.dix.mil.model.state;
 
+import java.util.Arrays;
+
 /**
  * Represents results of audience hint.
  *
@@ -7,25 +9,30 @@ package cz.dix.mil.model.state;
  */
 public class AudienceResult {
 
-    private int percentsForA;
-    private int percentsForB;
-    private int percentsForC;
-    private int percentsForD;
+    private int[] percents;
 
     /**
      * Creates a new audience result.
      *
-     * @param countForA count of people that voted for A answer
-     * @param countForB count of people that voted for B answer
-     * @param countForC count of people that voted for C answer
-     * @param countForD count of people that voted for D answer
+     * @param counts counts (number of votes) for answers
      */
-    public AudienceResult(int countForA, int countForB, int countForC, int countForD) {
-        int sum = countForA + countForB + countForC + countForD;
-        this.percentsForA = count(countForA, sum);
-        this.percentsForB = count(countForB, sum);
-        this.percentsForC = count(countForC, sum);
-        this.percentsForD = 100 - (percentsForA + percentsForB + percentsForC);
+    public AudienceResult(int... counts) {
+        this.percents = new int[counts.length];
+        int sum = sum(counts);
+
+        // last question is rest from 100%
+        for (int i = 0; i < counts.length - 1; i++) {
+            percents[i] = count(counts[i], sum);
+        }
+        percents[counts.length - 1] = 100 - sum(percents);
+    }
+
+    private int sum(int[] values) {
+        int sum = 0;
+        for (int value : values) {
+            sum += value;
+        }
+        return sum;
     }
 
     private int count(int value, int sum) {
@@ -34,39 +41,22 @@ public class AudienceResult {
     }
 
     /**
-     * Gets a percents of people who voted for A answer.
+     * Gets a percents of people who voted for I-th answer.
      *
-     * @return percents for A answer
+     * @param idx index of answer (starting at 0)
+     * @return percents for I-th answer
      */
-    public int getPercentsForA() {
-        return percentsForA;
+    public int getPercents(int idx) {
+        return percents[idx];
     }
 
     /**
-     * Gets a percents of people who voted for B answer.
+     * Gets a count of answers (percents).
      *
-     * @return percents for B answer
+     * @return count of answers
      */
-    public int getPercentsForB() {
-        return percentsForB;
-    }
-
-    /**
-     * Gets a percents of people who voted for C answer.
-     *
-     * @return percents for C answer
-     */
-    public int getPercentsForC() {
-        return percentsForC;
-    }
-
-    /**
-     * Gets a percents of people who voted for D answer.
-     *
-     * @return percents for D answer
-     */
-    public int getPercentsForD() {
-        return percentsForD;
+    public int getPercentsSize() {
+        return percents.length;
     }
 
     /**
@@ -74,7 +64,6 @@ public class AudienceResult {
      */
     @Override
     public String toString() {
-        return "A=" + getPercentsForA() + "%, B=" + getPercentsForB() +
-                "%, C=" + getPercentsForC() + "%, D=" + getPercentsForD() + "%";
+        return Arrays.toString(percents);
     }
 }

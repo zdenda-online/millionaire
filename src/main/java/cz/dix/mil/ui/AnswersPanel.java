@@ -22,7 +22,6 @@ public class AnswersPanel extends JPanel implements Refreshable {
     private static final int MARGIN = 5;
     private static final int BUTTONS_WIDTH = 200;
     private static final int BUTTONS_HEIGHT = 40;
-    private final String[] LETTERS = {"A", "B", "C", "D"};
     private final GameModel model;
     private final GameController controller;
 
@@ -45,7 +44,7 @@ public class AnswersPanel extends JPanel implements Refreshable {
         answerButtons = new JButton[4];
         for (final Answer answer : model.getActualQuestion().getAnswers()) {
             JPanel oneAnswerPanel = new JPanel(new BorderLayout());
-            if (model.getAvailableAnswers().contains(answer)) {
+            if (model.isAnswerAvailable(answer)) {
                 final JButton answerButton = new JButton(answer.getText());
                 if (answer.isCorrect()) {
                     correctAnswerButton = answerButton;
@@ -62,7 +61,8 @@ public class AnswersPanel extends JPanel implements Refreshable {
                         controller.answerQuestion(answer);
                     }
                 });
-                JLabel letterLabel = new JLabel(LETTERS[i] + ") ");
+                char letter = (char) (65 + i);
+                JLabel letterLabel = new JLabel(letter + ") ");
                 letterLabel.setFont(new Font("Dialog", Font.PLAIN, 20));
                 oneAnswerPanel.add(letterLabel, BorderLayout.WEST);
                 oneAnswerPanel.add(answerButton, BorderLayout.CENTER);

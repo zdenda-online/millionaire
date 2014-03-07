@@ -1,11 +1,13 @@
 package cz.dix.mil.model.algorithm;
 
 import cz.dix.mil.model.game.Answer;
-import cz.dix.mil.model.game.Question;
-import cz.dix.mil.model.state.AudienceResult;
 import cz.dix.mil.model.state.QuestionDifficulty;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Tests implementation of {@link SimpleAutomaticAudienceAlgorithm}.
@@ -14,34 +16,62 @@ import org.junit.Test;
  */
 public class SimpleAutomaticAudienceTest {
 
-    private static final int TEST_RUNS = 1000;
+    private static final int TEST_RUNS = 10000;
     private static SimpleAutomaticAudienceAlgorithm alg = new SimpleAutomaticAudienceAlgorithm();
 
     @Test
-    public void testMultipleTimes() {
-        Question q = new Question("", "", "",
-                new Answer("A", false),
-                new Answer("B", false),
-                new Answer("C", false),
-                new Answer("D", true));
-
-        test(q, QuestionDifficulty.EASY, 0, 30);
-        test(q, QuestionDifficulty.MID, 7, 27);
-        test(q, QuestionDifficulty.HARD, 15, 30);
+    public void testFourAnswers() {
+        List<Answer> answers = genAnswers(4);
+        test(answers, QuestionDifficulty.EASY, 0, 20);
+        test(answers, QuestionDifficulty.MID, 7, 23);
+        test(answers, QuestionDifficulty.HARD, 15, 27);
     }
 
-    private void test(Question q, QuestionDifficulty difficulty, int incorrectMin, int incorrectMax) {
+    @Test
+    public void testTwoAnswers() {
+        List<Answer> answers = genAnswers(2);
+        test(answers, QuestionDifficulty.EASY, 0, 30);
+        test(answers, QuestionDifficulty.MID, 20, 40);
+        test(answers, QuestionDifficulty.HARD, 30, 55);
+    }
+
+    private void test(List<Answer> answers, QuestionDifficulty difficulty, int incorrectMin, int incorrectMax) {
+        int lowestIncorrect = Integer.MAX_VALUE;
+        int highestIncorrect = Integer.MIN_VALUE;
+        int lowestCorrect = Integer.MAX_VALUE;
+        int highestCorrect = Integer.MIN_VALUE;
+
         for (int testRunNo = 1; testRunNo <= TEST_RUNS; testRunNo++) {
-            System.out.println("Running " + difficulty + " question test #" + testRunNo);
-            AudienceResult res = alg.count(q, difficulty);
-            int correctMin = (100 - (3 * incorrectMax));
-            int correctMax = (100 - (3 * incorrectMin));
-            System.out.println("Testing " + res + "  incorrect: <" + incorrectMin + "," + incorrectMax + ">, " +
+            int[] res = alg.count(answers, difficulty);
+            int correctMin = (100 - ((answers.size() - 1) * incorrectMax));
+            int correctMax = (100 - ((answers.size() - 1) * incorrectMin));
+
+
+            for (int i = 0; i < answers.size() - 1; i++) {
+                Assert.assertTrue(res[i] >= incorrectMin && res[i] <= incorrectMax);
+                lowestIncorrect = lowestIncorrect > res[i] ? res[i] : lowestIncorrect;
+                highestIncorrect = highestIncorrect < res[i] ? res[i] : highestIncorrect;
+            }
+            int lastRes = res[answers.size() - 1];
+            Assert.assertTrue(lastRes >= correctMin && lastRes <= correctMax);
+            lowestCorrect = lowestCorrect > lastRes ? lastRes : lowestCorrect;
+            highestCorrect = highestCorrect < lastRes ? lastRes : highestCorrect;
+
+            System.out.println(difficulty + ": " + Arrays.toString(res) + "  incorrect: <" + incorrectMin + "," + incorrectMax + ">, " +
                     "correct: <" + correctMin + "," + correctMax + ">");
-            Assert.assertTrue(res.getPercentsForA() >= incorrectMin && res.getPercentsForA() <= incorrectMax);
-            Assert.assertTrue(res.getPercentsForB() >= incorrectMin && res.getPercentsForB() <= incorrectMax);
-            Assert.assertTrue(res.getPercentsForC() >= incorrectMin && res.getPercentsForC() <= incorrectMax);
-            Assert.assertTrue(res.getPercentsForD() >= correctMin && res.getPercentsForD() <= correctMax);
         }
+        System.out.println("Min/Max incorrect: " + lowestIncorrect + "/" + highestIncorrect + ", correct: "
+                + lowestCorrect + "/" + highestCorrect);
+    }
+
+    private static List<Answer> genAnswers(int count) {
+        List<Answer> out = new ArrayList<>();
+        for (int i = 0; i < count - 1; i++) {
+            char letter = (char) (65 + i);
+            out.add(new Answer(String.valueOf(letter), false));
+        }
+        char letter = (char) (65 + count - 1);
+        out.add(new Answer(String.valueOf(letter), true));
+        return out;
     }
 }
