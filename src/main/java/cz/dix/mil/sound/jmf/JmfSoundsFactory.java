@@ -11,7 +11,7 @@ import java.io.InputStream;
  *
  * @author Zdenek Obst, zdenek.obst-at-gmail.com
  */
-public class JmsSoundsFactory implements SoundsFactory {
+public class JmfSoundsFactory implements SoundsFactory {
 
     private InputStream stream(String fileName) {
         return new BufferedInputStream(getClass().getResourceAsStream("/sounds/" + fileName));

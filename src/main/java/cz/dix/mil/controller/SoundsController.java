@@ -3,7 +3,7 @@ package cz.dix.mil.controller;
 import cz.dix.mil.model.runtime.GameModel;
 import cz.dix.mil.sound.Sound;
 import cz.dix.mil.sound.SoundsFactory;
-import cz.dix.mil.sound.jmf.JmsSoundsFactory;
+import cz.dix.mil.sound.jmf.JmfSoundsFactory;
 
 /**
  * Controller that is responsible for playing appropriate sounds for game events.
@@ -13,7 +13,7 @@ import cz.dix.mil.sound.jmf.JmsSoundsFactory;
 public class SoundsController {
 
     private final GameModel model;
-    private final SoundsFactory soundsFactory = new JmsSoundsFactory();
+    private final SoundsFactory soundsFactory = new JmfSoundsFactory();
     private Sound actualSound;
     private boolean isAnswerRevealed = false;
 
