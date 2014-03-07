@@ -17,6 +17,7 @@ public class Answer {
     private boolean isCorrect;
 
     public Answer() {
+        // for JAXB
     }
 
     public Answer(String text, boolean isCorrect) {

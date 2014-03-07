@@ -22,6 +22,7 @@ public class Game {
     private List<Question> questions;
 
     public Game() {
+        // for JAXB
     }
 
     public Game(List<Question> questions) {

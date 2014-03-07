@@ -1,6 +1,6 @@
 package cz.dix.mil.controller;
 
-import cz.dix.mil.cmd.GameSettings;
+import cz.dix.mil.cmd.CmdOptions;
 import cz.dix.mil.model.game.Answer;
 import cz.dix.mil.model.state.GameModel;
 import cz.dix.mil.model.state.PlayersProgress;
@@ -17,12 +17,12 @@ import cz.dix.mil.ui.GameView;
  */
 public class GameController {
 
-    private final GameSettings settings;
+    private final CmdOptions settings;
     private final GameModel model;
     private final SoundsController soundsController;
     private GameView view;
 
-    public GameController(GameModel model, GameSettings settings) {
+    public GameController(GameModel model, CmdOptions settings) {
         this.model = model;
         this.settings = settings;
         this.soundsController = new SoundsController(model);
@@ -95,11 +95,11 @@ public class GameController {
             @Override
             public void toNextAction() {
                 view.hideAudienceVotingDialog();
-                if (settings.isAutomaticAudience()) {
+                if (settings.isManualAudience()) {
+                    view.showAudienceResultDialog();
+                } else {
                     model.generateAudienceResults();
                     view.updateMainFrame();
-                } else {
-                    view.showAudienceResultDialog();
                 }
             }
         });

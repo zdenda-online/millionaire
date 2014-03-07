@@ -26,6 +26,7 @@ public class Question {
     private String answersDescription;
 
     public Question() {
+        // for JAXB
     }
 
     public Question(String text, String reward, String answersDescription, Answer... answers) {

@@ -1,5 +1,6 @@
 package cz.dix.mil.cmd;
 
+import com.beust.jcommander.JCommander;
 import cz.dix.mil.controller.GameController;
 import cz.dix.mil.model.GameValidationException;
 import cz.dix.mil.model.ModelFactory;
@@ -8,7 +9,6 @@ import cz.dix.mil.model.state.GameModel;
 import cz.dix.mil.ui.GameView;
 
 import javax.swing.*;
-import java.io.File;
 
 /**
  * Main class of the millionaire game.
@@ -19,29 +19,24 @@ public class MillionaireMain {
 
     public static void main(String[] args) throws InterruptedException {
         setupSystem();
-        if (args == null || args.length != 1) {
-            System.out.println("Expecting one argument with path to game XML file");
-            System.exit(1);
+        final CmdOptions options = new CmdOptions();
+        JCommander cmd = new JCommander(options, args);
+
+        if (options.isHelp()) {
+            cmd.usage();
+            System.exit(0);
         }
-        File gameFile = new File(args[0]);
-        if (!gameFile.exists()) {
-            System.out.println("Given game file does exist in " + gameFile.getAbsoluteFile());
-            System.exit(2);
-        }
-        Game game = ModelFactory.newGame(gameFile);
+
+        Game game = ModelFactory.newGame(options.getGameFile());
         try {
             game.validate();
         } catch (GameValidationException e) {
             System.out.println("Game file is not valid due to: " + e.getMessage());
             System.exit(3);
         }
-        final GameSettings settings = new GameSettings();
-        settings.setAutomaticAudience(true); // set by some parameter from args in future (e.g. -m)
-
-        // WHAT IF 50-50 was used, change automatic audience
 
         final GameModel model = new GameModel(game);
-        final GameController controller = new GameController(model, settings);
+        final GameController controller = new GameController(model, options);
         final GameView view = new GameView(model, controller);
         controller.setView(view);
 
