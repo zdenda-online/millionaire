@@ -17,7 +17,7 @@ public interface Sound {
     void play();
 
     /**
-     * Plays the sound from beginning to the end and then starts again.
+     * Plays the sound in infinite loop.
      * Note that this method does not allow to chain any action when sound is play.
      * If you need to do some specific action when sound is finished, use {@link #play(ChainedAction)} instead.
      */
@@ -45,8 +45,13 @@ public interface Sound {
 
     /**
      * Stops playing this sound.
-     * Note that the sound cannot be continued.
-     * Consider using {@link #pausePlaying()} if you want this functionality.
+     * Note that the sound cannot be continued by {@link #continuePlaying()} but must be played from the beginning
+     * by one of play method.
      */
     void stop();
+
+    /**
+     * Releases all resources that are connected to this sound.
+     */
+    void close();
 }

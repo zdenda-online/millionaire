@@ -109,7 +109,7 @@ public class JmfSoundsFactory implements SoundsFactory {
      * {@inheritDoc}
      */
     @Override
-    public Sound askAudience() {
+    public Sound audience() {
         return new JmfSound(stream("ask-audience.wav"));
     }
 
@@ -117,7 +117,7 @@ public class JmfSoundsFactory implements SoundsFactory {
      * {@inheritDoc}
      */
     @Override
-    public Sound askAudienceEnd() {
+    public Sound audienceEnd() {
         return new JmfSound(stream("ask-audience-end.wav"));
     }
 

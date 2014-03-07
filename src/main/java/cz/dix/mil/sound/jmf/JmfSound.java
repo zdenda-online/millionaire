@@ -14,17 +14,33 @@ import java.io.InputStream;
  */
 public class JmfSound implements Sound {
 
-    private final InputStream is;
+    private static final int NOT_PAUSED_POSITION = -1;
+
     private Clip clip;
-    private long lengthMillis;
-    private int pausePosition = -1;
+    private int pausePosition = NOT_PAUSED_POSITION;
     private boolean isLooping = false;
+    private boolean isStopped = false;
 
     public JmfSound(InputStream is) {
         if (is == null) {
             throw new IllegalArgumentException("Given input stream is null!");
         }
-        this.is = is;
+        AudioInputStream audioIn = null;
+        try {
+            audioIn = AudioSystem.getAudioInputStream(is);
+            clip = AudioSystem.getClip();
+            clip.open(audioIn);
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (audioIn != null) {
+                try {
+                    audioIn.close();
+                } catch (IOException e) {
+                    e.printStackTrace(); // should not happen
+                }
+            }
+        }
     }
 
     /**
@@ -32,7 +48,7 @@ public class JmfSound implements Sound {
      */
     @Override
     public void play() {
-        play(false, null);
+        play(false, null, 0);
     }
 
     /**
@@ -40,7 +56,7 @@ public class JmfSound implements Sound {
      */
     @Override
     public void playLooped() {
-        play(true, null);
+        play(true, null, 0);
     }
 
     /**
@@ -48,39 +64,33 @@ public class JmfSound implements Sound {
      */
     @Override
     public void play(final ChainedAction chainedAction) {
-        play(false, chainedAction);
+        play(false, chainedAction, 0);
     }
 
-    private void play(final boolean isLooping, final ChainedAction chainedAction) {
+    private void play(final boolean isLooping, final ChainedAction chainedAction, int playFrom) {
+        this.isLooping = isLooping;
+        this.isStopped = false;
+        this.pausePosition = NOT_PAUSED_POSITION;
+
+        clip.flush();
+        clip.setFramePosition(playFrom);
+
         new Thread(new Runnable() {
             @Override
             public void run() {
-                JmfSound.this.isLooping = isLooping;
-                AudioInputStream audioIn = null;
-                try {
-                    audioIn = AudioSystem.getAudioInputStream(is);
-                    clip = AudioSystem.getClip();
-                    clip.open(audioIn);
-                    lengthMillis = clip.getMicrosecondLength() / 1000;
-                    if (isLooping) {
-                        clip.loop(Clip.LOOP_CONTINUOUSLY);
-                    } else {
-                        clip.start();
-                    }
-                    if (chainedAction != null) {
+                long lengthMillis = clip.getMicrosecondLength() / 1000;
+                if (isLooping) {
+                    clip.loop(Clip.LOOP_CONTINUOUSLY);
+                } else {
+                    clip.start();
+                }
+                if (chainedAction != null) {
+                    try {
                         Thread.sleep(lengthMillis);
-                        chainedAction.toNextAction();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
                     }
-                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e) {
-                    throw new RuntimeException(e);
-                } finally {
-                    if (audioIn != null) {
-                        try {
-                            audioIn.close();
-                        } catch (IOException e) {
-                            e.printStackTrace(); // should not happen
-                        }
-                    }
+                    chainedAction.toNextAction();
                 }
             }
         }).start();
@@ -91,10 +101,8 @@ public class JmfSound implements Sound {
      */
     @Override
     public void pausePlaying() {
-        if (clip != null && clip.isRunning()) {
-            pausePosition = clip.getFramePosition();
-            clip.stop();
-        }
+        pausePosition = clip.getFramePosition();
+        clip.stop();
     }
 
     /**
@@ -102,17 +110,13 @@ public class JmfSound implements Sound {
      */
     @Override
     public void continuePlaying() {
-        if (pausePosition == -1) {
+        if (pausePosition == NOT_PAUSED_POSITION) {
             throw new RuntimeException("Sound is not paused!");
         }
-        if (clip != null) {
-            clip.setFramePosition(pausePosition);
-            if (isLooping) {
-                clip.loop(Clip.LOOP_CONTINUOUSLY);
-            } else {
-                clip.start();
-            }
+        if (isStopped) {
+            throw new RuntimeException("Sound is stopped and cannot be continued, use play instead");
         }
+        play(isLooping, null, pausePosition);
     }
 
     /**
@@ -120,8 +124,15 @@ public class JmfSound implements Sound {
      */
     @Override
     public void stop() {
-        if (clip != null && clip.isRunning()) {
-            clip.stop();
-        }
+        isStopped = true;
+        clip.stop();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void close() {
+        clip.close();
     }
 }

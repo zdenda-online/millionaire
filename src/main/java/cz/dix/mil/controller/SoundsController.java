@@ -1,6 +1,7 @@
 package cz.dix.mil.controller;
 
 import cz.dix.mil.model.runtime.GameModel;
+import cz.dix.mil.sound.CachedSoundsFactory;
 import cz.dix.mil.sound.Sound;
 import cz.dix.mil.sound.SoundsFactory;
 import cz.dix.mil.sound.jmf.JmfSoundsFactory;
@@ -13,7 +14,7 @@ import cz.dix.mil.sound.jmf.JmfSoundsFactory;
 public class SoundsController {
 
     private final GameModel model;
-    private final SoundsFactory soundsFactory = new JmfSoundsFactory();
+    private final SoundsFactory soundsFactory = new CachedSoundsFactory(new JmfSoundsFactory());
     private Sound actualSound;
     private boolean isAnswerRevealed = false;
 
@@ -51,8 +52,8 @@ public class SoundsController {
                 playAndStoreSoundChained(soundsFactory.answerWaitStart(), new ChainedAction() {
                     @Override
                     public void toNextAction() {
-                        stopActualSound();
                         if (!isAnswerRevealed) { // avoid situation when answerStart did not finish and answer was revealed
+                            stopActualSound();
                             playLoopedAndStoreSound(soundsFactory.answerWaitContinue());
                         }
                     }
@@ -143,10 +144,10 @@ public class SoundsController {
      */
     public void askAudience(final ChainedAction chainedAction) {
         pauseActualSound();
-        soundsFactory.askAudience().play(new ChainedAction() {
+        soundsFactory.audience().play(new ChainedAction() {
             @Override
             public void toNextAction() {
-                useHint(chainedAction, soundsFactory.askAudienceEnd());
+                useHint(chainedAction, soundsFactory.audienceEnd());
             }
         });
     }
@@ -157,6 +158,7 @@ public class SoundsController {
      * @param chainedAction action to be fired after sounds is played
      */
     public void fiftyFifty(final ChainedAction chainedAction) {
+        pauseActualSound();
         useHint(chainedAction, soundsFactory.fiftyFifty());
     }
 
@@ -166,6 +168,7 @@ public class SoundsController {
      * @param chainedAction action to be fired after sounds is played
      */
     public void phoneFriend(final ChainedAction chainedAction) {
+        pauseActualSound();
         useHint(chainedAction, soundsFactory.phoneFriend());
     }
 
@@ -185,7 +188,6 @@ public class SoundsController {
     }
 
     private void useHint(final ChainedAction chainedAction, Sound hintSound) {
-        pauseActualSound();
         hintSound.play(new ChainedAction() {
             @Override
             public void toNextAction() {
@@ -223,6 +225,14 @@ public class SoundsController {
         actualSound.play(chainedAction);
     }
 
+    private void closeOnBackground(final Sound sound) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                sound.close();
+            }
+        }).start();
+    }
 
     private boolean isAnswerCorrect() {
         return model.getSelectedAnswer().isCorrect();

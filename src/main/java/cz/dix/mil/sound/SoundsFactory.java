@@ -93,14 +93,14 @@ public interface SoundsFactory {
      *
      * @return sound for audience hint
      */
-    Sound askAudience();
+    Sound audience();
 
     /**
      * Crates a new sound when audience voting is over
      *
      * @return sound for audience voting is over
      */
-    Sound askAudienceEnd();
+    Sound audienceEnd();
 
     /**
      * Crates a new sound when 50-50 hint is on.
