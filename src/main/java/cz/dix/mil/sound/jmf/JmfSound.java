@@ -32,7 +32,7 @@ public class JmfSound implements Sound {
      */
     @Override
     public void play() {
-        play(false);
+        play(false, null);
     }
 
     /**
@@ -40,34 +40,7 @@ public class JmfSound implements Sound {
      */
     @Override
     public void playLooped() {
-        play(true);
-    }
-
-    private void play(boolean isLooping) {
-        this.isLooping = isLooping;
-        AudioInputStream audioIn = null;
-        try {
-            audioIn = AudioSystem.getAudioInputStream(is);
-            clip = AudioSystem.getClip();
-            clip.open(audioIn);
-            lengthMillis = clip.getMicrosecondLength() / 1000;
-            if (isLooping) {
-                clip.loop(Clip.LOOP_CONTINUOUSLY);
-            } else {
-                clip.start();
-            }
-        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (audioIn != null) {
-                try {
-                    audioIn.close();
-                } catch (IOException e) {
-                    e.printStackTrace(); // should not happen
-                }
-            }
-        }
-
+        play(true, null);
     }
 
     /**
@@ -75,17 +48,39 @@ public class JmfSound implements Sound {
      */
     @Override
     public void play(final ChainedAction chainedAction) {
+        play(false, chainedAction);
+    }
+
+    private void play(final boolean isLooping, final ChainedAction chainedAction) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                play();
+                JmfSound.this.isLooping = isLooping;
+                AudioInputStream audioIn = null;
                 try {
-                    Thread.sleep(lengthMillis);
-                } catch (InterruptedException e) {
+                    audioIn = AudioSystem.getAudioInputStream(is);
+                    clip = AudioSystem.getClip();
+                    clip.open(audioIn);
+                    lengthMillis = clip.getMicrosecondLength() / 1000;
+                    if (isLooping) {
+                        clip.loop(Clip.LOOP_CONTINUOUSLY);
+                    } else {
+                        clip.start();
+                    }
+                    if (chainedAction != null) {
+                        Thread.sleep(lengthMillis);
+                        chainedAction.toNextAction();
+                    }
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e) {
                     throw new RuntimeException(e);
-                }
-                if (chainedAction != null) {
-                    chainedAction.toNextAction();
+                } finally {
+                    if (audioIn != null) {
+                        try {
+                            audioIn.close();
+                        } catch (IOException e) {
+                            e.printStackTrace(); // should not happen
+                        }
+                    }
                 }
             }
         }).start();

@@ -1,4 +1,4 @@
-package cz.dix.mil.model.state;
+package cz.dix.mil.model.runtime;
 
 import java.util.Arrays;
 

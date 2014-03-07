@@ -3,7 +3,7 @@ package cz.dix.mil.ui;
 import cz.dix.mil.controller.ChainedAction;
 import cz.dix.mil.controller.GameController;
 import cz.dix.mil.controller.Refreshable;
-import cz.dix.mil.model.state.GameModel;
+import cz.dix.mil.model.runtime.GameModel;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,4 +1,4 @@
-package cz.dix.mil.model.state;
+package cz.dix.mil.model.runtime;
 
 import cz.dix.mil.model.algorithm.AutomaticAudienceAlgorithm;
 import cz.dix.mil.model.algorithm.SimpleAutomaticAudienceAlgorithm;
@@ -175,7 +175,7 @@ public class GameModel {
             case AFTER_INCORRECT_ANSWER:
                 Question checkpointQuestion = null;
                 int idx = actualQuestionIdx - 1;
-                while (idx >= 0) {
+                while (idx >= 0 && checkpointQuestion == null) {
                     Question q = game.getQuestion(idx);
                     if (isCheckpoint(q)) {
                         checkpointQuestion = q;

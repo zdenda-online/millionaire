@@ -2,7 +2,7 @@ package cz.dix.mil.controller;
 
 import cz.dix.mil.cmd.CmdOptions;
 import cz.dix.mil.model.game.Answer;
-import cz.dix.mil.model.state.GameModel;
+import cz.dix.mil.model.runtime.GameModel;
 import cz.dix.mil.ui.GameView;
 
 /**

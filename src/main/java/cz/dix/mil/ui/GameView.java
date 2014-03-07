@@ -2,7 +2,7 @@ package cz.dix.mil.ui;
 
 import cz.dix.mil.controller.ChainedAction;
 import cz.dix.mil.controller.GameController;
-import cz.dix.mil.model.state.GameModel;
+import cz.dix.mil.model.runtime.GameModel;
 
 /**
  * Represents all components of the view.

@@ -1,4 +1,4 @@
-package cz.dix.mil.model.state;
+package cz.dix.mil.model.runtime;
 
 /**
  * Type of the hint.

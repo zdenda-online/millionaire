@@ -1,6 +1,6 @@
 package cz.dix.mil.controller;
 
-import cz.dix.mil.model.state.GameModel;
+import cz.dix.mil.model.runtime.GameModel;
 import cz.dix.mil.sound.Sound;
 import cz.dix.mil.sound.SoundsFactory;
 import cz.dix.mil.sound.jmf.JmsSoundsFactory;
@@ -211,11 +211,6 @@ public class SoundsController {
         if (actualSound != null) {
             actualSound.continuePlaying();
         }
-    }
-
-    private void playAndStoreSound(Sound sound) {
-        actualSound = sound;
-        actualSound.play();
     }
 
     private void playLoopedAndStoreSound(Sound sound) {

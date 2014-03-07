@@ -1,8 +1,8 @@
 package cz.dix.mil.ui;
 
 import cz.dix.mil.controller.Refreshable;
-import cz.dix.mil.model.state.AudienceResult;
-import cz.dix.mil.model.state.GameModel;
+import cz.dix.mil.model.runtime.AudienceResult;
+import cz.dix.mil.model.runtime.GameModel;
 
 import javax.swing.*;
 import java.awt.*;

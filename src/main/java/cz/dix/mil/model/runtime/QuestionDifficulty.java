@@ -1,4 +1,4 @@
-package cz.dix.mil.model.state;
+package cz.dix.mil.model.runtime;
 
 /**
  * Difficulty of the question.

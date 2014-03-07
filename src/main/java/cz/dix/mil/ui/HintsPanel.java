@@ -2,8 +2,8 @@ package cz.dix.mil.ui;
 
 import cz.dix.mil.controller.GameController;
 import cz.dix.mil.controller.Refreshable;
-import cz.dix.mil.model.state.GameModel;
-import cz.dix.mil.model.state.Hint;
+import cz.dix.mil.model.runtime.GameModel;
+import cz.dix.mil.model.runtime.Hint;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

@@ -1,7 +1,7 @@
 package cz.dix.mil.model.algorithm;
 
 import cz.dix.mil.model.game.Answer;
-import cz.dix.mil.model.state.QuestionDifficulty;
+import cz.dix.mil.model.runtime.QuestionDifficulty;
 import org.junit.Assert;
 import org.junit.Test;
 
