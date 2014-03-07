@@ -78,7 +78,7 @@
                     <copyConfigurationDirectory>true</copyConfigurationDirectory>
                     <includeConfigurationDirectoryInClasspath>false</includeConfigurationDirectoryInClasspath>
                     <assembleDirectory>${project.build.directory}/${project.artifactId}</assembleDirectory>
-                    <extraJvmArguments>-Xms256m -Xmx512m</extraJvmArguments>
+                    <extraJvmArguments>-Xms128m -Xmx256m</extraJvmArguments>
                     <platforms>
                         <platform>windows</platform>
                         <platform>unix</platform>
