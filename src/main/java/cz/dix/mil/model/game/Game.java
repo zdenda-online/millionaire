@@ -34,7 +34,7 @@ public class Game {
         }
         for (Question question : questions) {
             List<Answer> answers = question.getAnswers();
-            if (answers == null || answers.size() != 4) {
+            if (answers == null || answers.size() != 4) { // remove check for 4 answers?, simple audience won't work!
                 throw new GameValidationException("Every question must contain four answers!");
             }
 
@@ -53,14 +53,30 @@ public class Game {
         }
     }
 
-    public int getQuestionsSize() {
+    /**
+     * Gets a count of all questions.
+     *
+     * @return count of questions
+     */
+    public int getQuestionsCount() {
         return questions.size();
     }
 
+    /**
+     * Gets a question under given index.
+     *
+     * @param questionIdx index of question
+     * @return question of game
+     */
     public Question getQuestion(int questionIdx) {
         return questions.get(questionIdx);
     }
 
+    /**
+     * Gets all questions of the game.
+     *
+     * @return all questions
+     */
     public List<Question> getQuestions() {
         return questions;
     }

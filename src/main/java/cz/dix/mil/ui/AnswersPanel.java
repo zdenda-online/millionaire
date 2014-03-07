@@ -11,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 /**
  * Panel with possible 4 answers of the question.
@@ -41,8 +42,9 @@ public class AnswersPanel extends JPanel implements Refreshable {
     public void refresh() {
         removeAll();
         int i = 0;
-        answerButtons = new JButton[4];
-        for (final Answer answer : model.getActualQuestion().getAnswers()) {
+        List<Answer> allAnswers = model.getActualQuestion().getAnswers();
+        answerButtons = new JButton[allAnswers.size()];
+        for (final Answer answer : allAnswers) {
             JPanel oneAnswerPanel = new JPanel(new BorderLayout());
             if (model.isAnswerAvailable(answer)) {
                 final JButton answerButton = new JButton(answer.getText());

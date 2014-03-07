@@ -68,7 +68,7 @@ public class GameController {
                 soundsController.revealAnswer(new ChainedAction() {
                     @Override
                     public void toNextAction() {
-                        if (PlayersProgress.IN_GAME.equals(model.getState())) {
+                        if (PlayersProgress.IN_GAME.equals(model.getPlayerProgress())) {
                             if (model.hasNextQuestion()) {
                                 model.toNextQuestion();
                                 soundsController.nextQuestion(new ChainedAction() {

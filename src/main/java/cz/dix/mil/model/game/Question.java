@@ -49,18 +49,38 @@ public class Question {
         Collections.addAll(this.answers, answers);
     }
 
+    /**
+     * Gets a text of the question.
+     *
+     * @return text of question
+     */
     public String getText() {
         return text;
     }
 
+    /**
+     * Gets all answers of the question.
+     *
+     * @return all answers of question
+     */
     public List<Answer> getAnswers() {
         return answers;
     }
 
+    /**
+     * Gets a name of reward of the question.
+     *
+     * @return name of reward
+     */
     public String getReward() {
         return reward;
     }
 
+    /**
+     * Gets a description to answers (may be used by moderator?).
+     *
+     * @return description to answers
+     */
     public String getAnswersDescription() {
         return answersDescription;
     }

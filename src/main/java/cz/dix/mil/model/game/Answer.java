@@ -24,11 +24,21 @@ public class Answer {
         this.text = text;
     }
 
-    public boolean isCorrect() {
-        return isCorrect;
-    }
-
+    /**
+     * Gets a text of the answer.
+     *
+     * @return text of answer
+     */
     public String getText() {
         return text;
+    }
+
+    /**
+     * Gets a flag whether answer is correct.
+     *
+     * @return true if answer is correct, otherwise false
+     */
+    public boolean isCorrect() {
+        return isCorrect;
     }
 }

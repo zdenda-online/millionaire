@@ -6,10 +6,7 @@ import cz.dix.mil.model.game.Answer;
 import cz.dix.mil.model.game.Game;
 import cz.dix.mil.model.game.Question;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * Represents whole model of the game.
@@ -26,8 +23,7 @@ public class GameModel {
     private Collection<Hint> availableHints = new ArrayList<>(Arrays.asList(Hint.values()));
 
     private Answer selectedAnswer = null;
-    private Answer removedAnswer1 = null;
-    private Answer removedAnswer2 = null;
+    private Set<Answer> removedAnswers = new HashSet<>();
     private PlayersProgress playersProgress = PlayersProgress.BEFORE_GAME;
     private AudienceResult audienceResult;
 
@@ -66,7 +62,7 @@ public class GameModel {
      * @return true if any question is still available, otherwise false
      */
     public boolean hasNextQuestion() {
-        return (actualQuestionIdx + 1) < game.getQuestionsSize();
+        return (actualQuestionIdx + 1) < game.getQuestionsCount();
     }
 
     /**
@@ -122,15 +118,14 @@ public class GameModel {
     public void useFiftyFifty() {
         availableHints.remove(Hint.FIFTY_FIFTY);
 
-        while (true) {
-            int idx = (int) (Math.random() * ((double) getActualQuestion().getAnswers().size()));
-            Answer answer = getActualQuestion().getAnswers().get(idx);
-            if (!answer.isCorrect()) {
-                if (removedAnswer1 == null) {
-                    removedAnswer1 = answer;
-                } else if (!removedAnswer1.equals(answer)) {
-                    removedAnswer2 = answer;
-                    break;
+        List<Answer> allAnswers = getActualQuestion().getAnswers();
+
+        while (removedAnswers.size() < (allAnswers.size() / 2)) {
+            int randomIdx = (int) (Math.random() * ((double) allAnswers.size()));
+            Answer randomAnswer = getActualQuestion().getAnswers().get(randomIdx);
+            if (!randomAnswer.isCorrect()) {
+                if (!removedAnswers.contains(randomAnswer)) {
+                    removedAnswers.add(randomAnswer);
                 }
             }
         }
@@ -183,7 +178,7 @@ public class GameModel {
      * @return true if answer is available, otherwise false
      */
     public boolean isAnswerAvailable(Answer answer) {
-        return !answer.equals(removedAnswer1) && !answer.equals(removedAnswer2);
+        return !removedAnswers.contains(answer);
     }
 
     /**
@@ -200,7 +195,7 @@ public class GameModel {
      *
      * @return progress of player
      */
-    public PlayersProgress getState() {
+    public PlayersProgress getPlayerProgress() {
         return playersProgress;
     }
 
@@ -245,8 +240,7 @@ public class GameModel {
 
     private void clearQuestionData() {
         selectedAnswer = null;
-        removedAnswer1 = null;
-        removedAnswer2 = null;
+        removedAnswers.clear();
         playersProgress = PlayersProgress.IN_GAME;
         audienceResult = null;
     }
