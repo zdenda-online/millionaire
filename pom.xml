@@ -6,22 +6,30 @@
 
     <groupId>cz.dix</groupId>
     <artifactId>millionaire</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 
     <name>Millionaire game</name>
-    <description>Game that was developed as a gift for my family.
+    <description>
+        Game that was developed as a gift for my family.
         It is based on "Who Wants to Be a Millionaire?" show and allows to play it in your living room:-)
         Printing "money-like" paper checks and proper moderator selection can provide a lot of fun.
     </description>
+
     <developers>
         <developer>
             <name>Zdenek Obst</name>
             <email>zdenek.obst-at-gmail.com</email>
         </developer>
     </developers>
+    <scm>
+        <url>git@github.com:d1x/millionaire.git</url>
+        <connection>scm:git:git@github.com:d1x/millionaire.git</connection>
+        <developerConnection>scm:git:git@github.com:d1x/millionaire.git</developerConnection>
+    </scm>
 
     <properties>
         <project.build.encoding>UTF-8</project.build.encoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
@@ -60,6 +68,36 @@
                     <source>1.7</source>
                     <target>1.7</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>appassembler-maven-plugin</artifactId>
+                <version>1.7</version>
+                <configuration>
+                    <configurationDirectory>games</configurationDirectory>
+                    <copyConfigurationDirectory>true</copyConfigurationDirectory>
+                    <includeConfigurationDirectoryInClasspath>false</includeConfigurationDirectoryInClasspath>
+                    <assembleDirectory>${project.build.directory}/millionaire</assembleDirectory>
+                    <platforms>
+                        <platform>windows</platform>
+                        <platform>unix</platform>
+                    </platforms>
+                    <programs>
+                        <program>
+                            <id>millionare</id>
+                            <mainClass>cz.dix.mil.cmd.MillionaireMain</mainClass>
+                        </program>
+                    </programs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>appassembler</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>assemble</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

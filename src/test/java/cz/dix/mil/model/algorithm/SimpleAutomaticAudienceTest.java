@@ -6,7 +6,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -57,8 +56,8 @@ public class SimpleAutomaticAudienceTest {
             lowestCorrect = lowestCorrect > lastRes ? lastRes : lowestCorrect;
             highestCorrect = highestCorrect < lastRes ? lastRes : highestCorrect;
 
-            System.out.println(difficulty + ": " + Arrays.toString(res) + "  incorrect: <" + incorrectMin + "," + incorrectMax + ">, " +
-                    "correct: <" + correctMin + "," + correctMax + ">");
+//            System.out.println(difficulty + ": " + Arrays.toString(res) + "  incorrect: <" + incorrectMin + "," + incorrectMax + ">, " +
+//                    "correct: <" + correctMin + "," + correctMax + ">");
         }
         System.out.println("Min/Max incorrect: " + lowestIncorrect + "/" + highestIncorrect + ", correct: "
                 + lowestCorrect + "/" + highestCorrect);

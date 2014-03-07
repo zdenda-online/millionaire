@@ -3,6 +3,7 @@ package cz.dix.mil.sound.jmf;
 import cz.dix.mil.sound.Sound;
 import cz.dix.mil.sound.SoundsFactory;
 
+import java.io.BufferedInputStream;
 import java.io.InputStream;
 
 /**
@@ -13,7 +14,7 @@ import java.io.InputStream;
 public class JmsSoundsFactory implements SoundsFactory {
 
     private InputStream stream(String fileName) {
-        return getClass().getResourceAsStream("/sounds/" + fileName);
+        return new BufferedInputStream(getClass().getResourceAsStream("/sounds/" + fileName));
     }
 
     /**

@@ -1,6 +1,7 @@
 package cz.dix.mil.cmd;
 
 import com.beust.jcommander.JCommander;
+import com.beust.jcommander.ParameterException;
 import cz.dix.mil.controller.GameController;
 import cz.dix.mil.model.GameValidationException;
 import cz.dix.mil.model.ModelFactory;
@@ -17,10 +18,18 @@ import javax.swing.*;
  */
 public class MillionaireMain {
 
+    private static final boolean IS_WIN = System.getProperty("os.name").toLowerCase().contains("win");
+
     public static void main(String[] args) throws InterruptedException {
-        setupSystem();
-        final CmdOptions options = new CmdOptions();
-        JCommander cmd = new JCommander(options, args);
+        CmdOptions options = new CmdOptions();
+        JCommander cmd = null;
+        try {
+            cmd = new JCommander(options, args);
+            cmd.setProgramName("millionaire." + (IS_WIN ? "bat" : "sh"));
+        } catch (ParameterException e) {
+            System.out.println(e.getMessage() + "\nFor more information use -h for help");
+            System.exit(1);
+        }
 
         if (options.isHelp()) {
             cmd.usage();
@@ -35,9 +44,10 @@ public class MillionaireMain {
             System.exit(3);
         }
 
-        final GameModel model = new GameModel(game);
-        final GameController controller = new GameController(model, options);
-        final GameView view = new GameView(model, controller);
+        setupSystem();
+        GameModel model = new GameModel(game);
+        GameController controller = new GameController(model, options);
+        GameView view = new GameView(model, controller);
         controller.setView(view);
 
         controller.startGame();
