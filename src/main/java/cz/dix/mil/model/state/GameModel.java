@@ -40,10 +40,10 @@ public class GameModel {
         selectedAnswer = answer;
         if (selectedAnswer.isCorrect()) {
             if (!hasNextQuestion()) {
-                playersProgress = PlayersProgress.AFTER_GAME; // you won
+                playersProgress = PlayersProgress.WON_GAME;
             }
         } else {
-            playersProgress = PlayersProgress.AFTER_GAME; // you return checkpoint or get nothing
+            playersProgress = PlayersProgress.AFTER_INCORRECT_ANSWER;
         }
     }
 
@@ -160,6 +160,39 @@ public class GameModel {
         availableHints.remove(Hint.AUDIENCE);
         int[] res = automaticAudienceAlgorithm.count(getPossibleAnswers(), getActualQuestionDifficulty());
         audienceResult = createAudienceResult(res);
+    }
+
+    /**
+     * Gets player's final reward according if he/she gave up, answered incorrectly or won game.
+     *
+     * @return final reward of player
+     */
+    public String getFinalReward() {
+        switch (playersProgress) {
+            case GAVE_UP:
+            case WON_GAME:
+                return getActualQuestion().getReward();
+            case AFTER_INCORRECT_ANSWER:
+                Question checkpointQuestion = null;
+                int idx = actualQuestionIdx - 1;
+                while (idx >= 0) {
+                    Question q = game.getQuestion(idx);
+                    if (isCheckpoint(q)) {
+                        checkpointQuestion = q;
+                    }
+                    idx--;
+                }
+
+                if (checkpointQuestion != null) {
+                    return checkpointQuestion.getReward();
+                } else {
+                    return "Nothing";
+                }
+            default:
+                System.out.println("Game is in incorrect state, please contact authors.");
+                System.exit(27);
+                return null; // never happens
+        }
     }
 
     /**

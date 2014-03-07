@@ -17,6 +17,7 @@ public class GameView {
     private final AudienceVotingDialog audienceVotingDialog;
     private final AudienceResultDialog audienceResultDialog;
     private final PhoneFriendDialog phoneFriendDialog;
+    private final FinalRewardDialog finalRewardDialog;
 
     public GameView(GameModel model, GameController controller) {
         this.mainFrame = new MainFrame(model, controller);
@@ -24,6 +25,7 @@ public class GameView {
         this.audienceVotingDialog = new AudienceVotingDialog(mainFrame);
         this.audienceResultDialog = new AudienceResultDialog(mainFrame, controller);
         this.phoneFriendDialog = new PhoneFriendDialog(mainFrame);
+        this.finalRewardDialog = new FinalRewardDialog(mainFrame, model);
     }
 
     /**
@@ -89,5 +91,12 @@ public class GameView {
      */
     public void showPhoneFriendDialog() {
         phoneFriendDialog.startCountdown();
+    }
+
+    /**
+     * Reveals dialog with final reward (game is over).
+     */
+    public void showFinalRewardDialog() {
+        finalRewardDialog.setVisible(true);
     }
 }

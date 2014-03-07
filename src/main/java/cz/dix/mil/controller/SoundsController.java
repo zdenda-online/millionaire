@@ -15,7 +15,7 @@ public class SoundsController {
     private final GameModel model;
     private final SoundsFactory soundsFactory = new JmsSoundsFactory();
     private Sound actualSound;
-    private boolean stopSound = false;
+    private boolean isAnswerRevealed = false;
 
     public SoundsController(GameModel model) {
         this.model = model;
@@ -45,20 +45,18 @@ public class SoundsController {
                 // do nothing
                 break;
             case MID:
+            case HARD:
                 stopActualSound();
-                stopSound = false;
+                isAnswerRevealed = false;
                 playAndStoreSoundChained(soundsFactory.answerWaitStart(), new ChainedAction() {
                     @Override
                     public void toNextAction() {
-                        if (!stopSound) { // avoid situation when answerStart did not finish and answer was revealed
+                        stopActualSound();
+                        if (!isAnswerRevealed) { // avoid situation when answerStart did not finish and answer was revealed
                             playLoopedAndStoreSound(soundsFactory.answerWaitContinue());
                         }
                     }
                 });
-                break;
-            case HARD:
-                stopActualSound();
-                playAndStoreSound(soundsFactory.answerWaitStart());
                 break;
             default:
                 break;
@@ -72,7 +70,7 @@ public class SoundsController {
      * @param chainedAction action to be fired after sounds is played
      */
     public void revealAnswer(final ChainedAction chainedAction) {
-        stopSound = true;
+        isAnswerRevealed = true;
         switch (model.getActualQuestionDifficulty()) {
             case EASY:
                 if (isAnswerCorrect()) {
@@ -87,16 +85,6 @@ public class SoundsController {
                 }
                 break;
             case MID:
-                if (isAnswerCorrect()) {
-                    if (isOrdinaryQuestion(chainedAction)) {
-                        stopActualSound();
-                        soundsFactory.answerWaitCorrect().play(chainedAction);
-                    }
-                } else {
-                    stopActualSound();
-                    soundsFactory.answerIncorrect().play(chainedAction);
-                }
-                break;
             case HARD:
                 if (isAnswerCorrect()) {
                     if (isOrdinaryQuestion(chainedAction)) {

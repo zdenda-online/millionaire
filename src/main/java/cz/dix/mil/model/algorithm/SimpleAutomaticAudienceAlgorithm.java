@@ -8,6 +8,7 @@ import java.util.Random;
 
 /**
  * Simple implementation of automatic audience.
+ * Note that it can be used only for classical type of game where every question has 4 answers.
  *
  * @author Zdenek Obst, zdenek.obst-at-gmail.com
  */

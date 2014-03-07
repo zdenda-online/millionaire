@@ -137,7 +137,7 @@
         </answers-description>
     </question>
     <question>
-        <text>What is a formal name of Nitroglycerin?</text>
+        <text>What is the formal name of Nitroglycerin?</text>
         <reward>$250,000</reward>
         <answers>
             <answer is-correct="true">1,2,3-trinitroxypropane</answer>

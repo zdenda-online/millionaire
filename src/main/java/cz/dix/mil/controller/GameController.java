@@ -3,7 +3,6 @@ package cz.dix.mil.controller;
 import cz.dix.mil.cmd.CmdOptions;
 import cz.dix.mil.model.game.Answer;
 import cz.dix.mil.model.state.GameModel;
-import cz.dix.mil.model.state.PlayersProgress;
 import cz.dix.mil.ui.GameView;
 
 /**
@@ -68,16 +67,24 @@ public class GameController {
                 soundsController.revealAnswer(new ChainedAction() {
                     @Override
                     public void toNextAction() {
-                        if (PlayersProgress.IN_GAME.equals(model.getPlayerProgress())) {
-                            if (model.hasNextQuestion()) {
-                                model.toNextQuestion();
-                                soundsController.nextQuestion(new ChainedAction() {
-                                    @Override
-                                    public void toNextAction() {
-                                        view.updateMainFrame();
-                                    }
-                                });
-                            }
+                        switch (model.getPlayerProgress()) {
+                            case IN_GAME:
+                                if (model.hasNextQuestion()) {
+                                    model.toNextQuestion();
+                                    soundsController.nextQuestion(new ChainedAction() {
+                                        @Override
+                                        public void toNextAction() {
+                                            view.updateMainFrame();
+                                        }
+                                    });
+                                }
+                                break;
+                            case GAVE_UP:
+                            case AFTER_INCORRECT_ANSWER:
+                            case WON_GAME:
+                            default:
+                                view.showFinalRewardDialog();
+                                break;
                         }
                     }
                 });

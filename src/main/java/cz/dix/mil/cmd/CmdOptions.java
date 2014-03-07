@@ -16,7 +16,7 @@ public class CmdOptions {
             description = "Path to the XML game file")
     private File gameFile;
     @Parameter(names = {"-m", "--manual-audience"}, required = false,
-            description = "Allows manual audience (moderator can input results of voting)")
+            description = "Allows manual audience (moderator must insert results of voting)")
     private boolean isManualAudience = false;
     @Parameter(names = {"-h", "--help"}, help = true,
             description = "Displays help")

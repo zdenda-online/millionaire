@@ -18,7 +18,17 @@ public enum PlayersProgress {
     IN_GAME,
 
     /**
-     * Player is no longer playing (answered incorrectly, ended game or answered top question).
+     * Player is no longer playing because he/she gave up
      */
-    AFTER_GAME
+    GAVE_UP,
+
+    /**
+     * Player is no longer playing because he/she answered incorrectly.
+     */
+    AFTER_INCORRECT_ANSWER,
+
+    /**
+     * Player is no longer playing because he/she answered all questions!
+     */
+    WON_GAME
 }
