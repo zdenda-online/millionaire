@@ -40,9 +40,14 @@ public class MainFrame extends JFrame implements Refreshable {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setIconImage(new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB_PRE));
         setLayout(new BorderLayout());
+
+        JPanel background = new BackgroundPanel(new ImageIcon(getClass().getResource("/imgs/background.png")).getImage());
+
         JPanel leftPanel = new JPanel(new BorderLayout());
 
         JPanel leftInnerPanel = new JPanel(new BorderLayout());
+        leftInnerPanel.setBackground(new Color(0, 0, 0, 0));
+        leftInnerPanel.setOpaque(false);
         leftInnerPanel.add(audienceResultPanel, BorderLayout.CENTER);
         leftInnerPanel.add(questionsPanel, BorderLayout.SOUTH);
 
@@ -50,8 +55,10 @@ public class MainFrame extends JFrame implements Refreshable {
         leftPanel.add(leftInnerPanel, BorderLayout.CENTER);
         leftPanel.add(answersPanel, BorderLayout.SOUTH);
 
-        add(leftPanel, BorderLayout.CENTER);
-        add(rewardsPanel, BorderLayout.EAST);
+        background.add(leftPanel, BorderLayout.CENTER);
+        background.add(rewardsPanel, BorderLayout.EAST);
+        add(background);
+
         setLocationRelativeTo(null);
         setResizable(false);
     }

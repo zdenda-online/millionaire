@@ -53,6 +53,7 @@ public class RewardsPanel extends JPanel implements Refreshable {
         Collections.reverse(questions);
 
         setLayout(new GridLayout(questions.size(), 1));
+        setBackground(new Color(0, 0, 0, 0));
         rewards = new JLabel[questions.size()];
 
         int i = questions.size() - 1;

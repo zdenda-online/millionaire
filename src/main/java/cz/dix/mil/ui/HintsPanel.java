@@ -28,6 +28,9 @@ public class HintsPanel extends JPanel implements Refreshable {
         super(new FlowLayout());
         this.model = model;
         this.controller = controller;
+
+        setOpaque(false);
+        setBackground(new Color(0, 0, 0, 0));
         refresh();
     }
 
@@ -86,11 +89,13 @@ public class HintsPanel extends JPanel implements Refreshable {
     }
 
     private JButton addHintButton(ImageIcon image, ActionListener actionListener) {
-        JButton audienceHelpButton = new JButton(image);
-        audienceHelpButton.setFocusable(false);
-        audienceHelpButton.setBorder(new EmptyBorder(MARGIN, MARGIN, MARGIN, MARGIN));
-        audienceHelpButton.addActionListener(actionListener);
-        add(audienceHelpButton, BorderLayout.NORTH);
-        return audienceHelpButton;
+        JButton hintButton = new JButton(image);
+        hintButton.setFocusable(false);
+        hintButton.setBorder(new EmptyBorder(MARGIN, MARGIN, MARGIN, MARGIN));
+        hintButton.addActionListener(actionListener);
+        hintButton.setBackground(new Color(0, 0, 0, 0));
+        hintButton.setOpaque(false);
+        add(hintButton, BorderLayout.NORTH);
+        return hintButton;
     }
 }

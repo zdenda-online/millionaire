@@ -36,6 +36,7 @@ public class AnswersPanel extends JPanel implements Refreshable {
         super(new GridLayout(2, 2, MARGIN, MARGIN));
         this.model = model;
         this.controller = controller;
+        setBackground(new Color(0, 0, 0, 0));
     }
 
     /**
@@ -49,6 +50,7 @@ public class AnswersPanel extends JPanel implements Refreshable {
         answerButtons = new AnswerButton[allAnswers.size()];
         for (final Answer answer : allAnswers) {
             JPanel oneAnswerPanel = new JPanel(new BorderLayout());
+            oneAnswerPanel.setBackground(new Color(0, 0, 0, 0));
             if (model.isAnswerAvailable(answer)) {
                 final AnswerButton answerButton = new AnswerButton(answer.getText());
                 if (answer.isCorrect()) {
@@ -66,6 +68,7 @@ public class AnswersPanel extends JPanel implements Refreshable {
                 char letter = (char) (65 + i);
                 JLabel letterLabel = new JLabel(letter + ") ");
                 letterLabel.setFont(skin.defaultFont());
+                letterLabel.setOpaque(false);
                 letterLabel.setForeground(skin.defaultTextColor());
                 oneAnswerPanel.add(letterLabel, BorderLayout.WEST);
                 oneAnswerPanel.add(answerButton, BorderLayout.CENTER);

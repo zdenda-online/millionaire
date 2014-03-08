@@ -2,6 +2,8 @@ package cz.dix.mil.ui;
 
 import cz.dix.mil.controller.Refreshable;
 import cz.dix.mil.model.runtime.GameModel;
+import cz.dix.mil.ui.skin.Skin;
+import cz.dix.mil.ui.skin.SkinManager;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -15,6 +17,8 @@ import java.awt.*;
 public class QuestionsPanel extends JPanel implements Refreshable {
 
     private static final int QUESTION_MARGIN = 30;
+    private Skin skin = SkinManager.getSkin();
+
     private final JLabel questionLabel = new JLabel();
     private final GameModel model;
 
@@ -27,9 +31,10 @@ public class QuestionsPanel extends JPanel implements Refreshable {
     }
 
     private void init() {
-        questionLabel.setText("Here will be question");
-        questionLabel.setFont(new Font("Dialog", Font.PLAIN, 20));
-        questionLabel.setForeground(QUESTION_COLOR);
+        setOpaque(false);
+        setBackground(new Color(0, 0, 0, 0));
+        questionLabel.setFont(skin.defaultFont());
+        questionLabel.setForeground(skin.questionTextColor());
         questionLabel.setBorder(new EmptyBorder(QUESTION_MARGIN, QUESTION_MARGIN, QUESTION_MARGIN, QUESTION_MARGIN));
         add(questionLabel);
     }

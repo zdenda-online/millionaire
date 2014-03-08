@@ -45,6 +45,14 @@ public class DefaultSkin implements Skin {
      * {@inheritDoc}
      */
     @Override
+    public Color questionTextColor() {
+        return new Color(255, 220, 0);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Color answerButtonBorderColor() {
         return new Color(255, 220, 0);
     }
@@ -54,7 +62,7 @@ public class DefaultSkin implements Skin {
      */
     @Override
     public Gradient answerButtonDefaultGradient() {
-        return new Gradient(new Color(70, 0, 150), new Color(0, 0, 100));
+        return new Gradient(new Color(20, 20, 150), new Color(70, 0, 100));
     }
 
     /**
