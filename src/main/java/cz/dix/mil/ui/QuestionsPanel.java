@@ -18,6 +18,8 @@ public class QuestionsPanel extends JPanel implements Refreshable {
     private final JLabel questionLabel = new JLabel();
     private final GameModel model;
 
+    private static final Color QUESTION_COLOR = new Color(255, 220, 0);
+
     public QuestionsPanel(GameModel model) {
         super(new BorderLayout());
         this.model = model;
@@ -27,6 +29,7 @@ public class QuestionsPanel extends JPanel implements Refreshable {
     private void init() {
         questionLabel.setText("Here will be question");
         questionLabel.setFont(new Font("Dialog", Font.PLAIN, 20));
+        questionLabel.setForeground(QUESTION_COLOR);
         questionLabel.setBorder(new EmptyBorder(QUESTION_MARGIN, QUESTION_MARGIN, QUESTION_MARGIN, QUESTION_MARGIN));
         add(questionLabel);
     }

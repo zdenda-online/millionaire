@@ -1,5 +1,8 @@
 package cz.dix.mil.ui;
 
+import cz.dix.mil.ui.skin.Skin;
+import cz.dix.mil.ui.skin.SkinManager;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,6 +18,7 @@ public class PhoneFriendDialog extends JDialog {
 
     private static final int WIDTH = 100;
     private static final int HEIGHT = 100;
+    private Skin skin = SkinManager.getSkin();
 
     private Timer timer;
     private int remainingSecs = 29;
@@ -32,8 +36,8 @@ public class PhoneFriendDialog extends JDialog {
         setIconImage(new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB_PRE));
         setLayout(new BorderLayout());
 
-        remainingLabel.setFont(new Font("Dialog", Font.BOLD, 26));
-        remainingLabel.setForeground(Colors.PHONE_FRIEND_COUNTDOWN);
+        remainingLabel.setForeground(skin.phoneFriendCountdownText());
+        remainingLabel.setFont(skin.largerFont());
         remainingLabel.setHorizontalAlignment(SwingConstants.CENTER);
         remainingLabel.setVerticalAlignment(SwingConstants.CENTER);
         add(remainingLabel, BorderLayout.CENTER);

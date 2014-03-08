@@ -1,6 +1,8 @@
 package cz.dix.mil.ui;
 
 import cz.dix.mil.model.runtime.GameModel;
+import cz.dix.mil.ui.skin.Skin;
+import cz.dix.mil.ui.skin.SkinManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +17,8 @@ public class FinalRewardDialog extends JDialog {
 
     private static final int WIDTH = 300;
     private static final int HEIGHT = 70;
+    private Skin skin = SkinManager.getSkin();
+
     private final GameModel model;
     private final JLabel rewardLabel = new JLabel();
 
@@ -30,8 +34,8 @@ public class FinalRewardDialog extends JDialog {
         setIconImage(new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB_PRE));
         setLayout(new BorderLayout());
 
-        rewardLabel.setForeground(Colors.AUDIENCE_VOTING_TEXT);
-        rewardLabel.setFont(new Font("Dialog", Font.PLAIN, 20));
+        rewardLabel.setForeground(skin.audienceVotingText());
+        rewardLabel.setFont(skin.defaultFont());
         rewardLabel.setHorizontalAlignment(SwingConstants.CENTER);
         rewardLabel.setVerticalAlignment(SwingConstants.CENTER);
         add(rewardLabel);

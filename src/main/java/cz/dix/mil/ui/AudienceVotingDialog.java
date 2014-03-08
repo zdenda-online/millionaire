@@ -1,5 +1,8 @@
 package cz.dix.mil.ui;
 
+import cz.dix.mil.ui.skin.Skin;
+import cz.dix.mil.ui.skin.SkinManager;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -13,6 +16,7 @@ public class AudienceVotingDialog extends JDialog {
 
     private static final int WIDTH = 250;
     private static final int HEIGHT = 70;
+    private Skin skin = SkinManager.getSkin();
 
     public AudienceVotingDialog(JFrame owner) {
         super(owner);
@@ -26,8 +30,8 @@ public class AudienceVotingDialog extends JDialog {
         setLayout(new BorderLayout());
 
         JLabel label = new JLabel("Audience is voting...");
-        label.setForeground(Colors.AUDIENCE_VOTING_TEXT);
-        label.setFont(new Font("Dialog", Font.PLAIN, 20));
+        label.setForeground(skin.audienceVotingText());
+        label.setFont(skin.defaultFont());
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setVerticalAlignment(SwingConstants.CENTER);
         add(label);

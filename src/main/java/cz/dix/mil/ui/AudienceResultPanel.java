@@ -3,6 +3,9 @@ package cz.dix.mil.ui;
 import cz.dix.mil.controller.Refreshable;
 import cz.dix.mil.model.runtime.AudienceResult;
 import cz.dix.mil.model.runtime.GameModel;
+import cz.dix.mil.ui.skin.Gradient;
+import cz.dix.mil.ui.skin.Skin;
+import cz.dix.mil.ui.skin.SkinManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,6 +22,8 @@ public class AudienceResultPanel extends JPanel implements Refreshable {
     private static final int RECTANGLE_HEIGHT = 200;
     private static final int COL_WIDTH = RECTANGLE_WIDTH;
     private static final int COL_HEIGHT = RECTANGLE_HEIGHT + 30;
+
+    private Skin skin = SkinManager.getSkin();
 
     private final GameModel model;
 
@@ -47,7 +52,7 @@ public class AudienceResultPanel extends JPanel implements Refreshable {
         repaint();
     }
 
-    private static class AnswerResultPanel extends JPanel {
+    private class AnswerResultPanel extends JPanel {
 
         private AnswerResultPanel(int percents, String letter) {
             setLayout(new BorderLayout(10, 10));
@@ -55,12 +60,13 @@ public class AudienceResultPanel extends JPanel implements Refreshable {
             add(new ResultRectangle(percents), BorderLayout.CENTER);
 
             JLabel label = new JLabel(letter + ": " + percents + "%");
-            label.setFont(new Font("Dialog", Font.BOLD, 15));
+            label.setFont(skin.smallerFont());
+            label.setForeground(skin.audienceResultTextColor());
             add(label, BorderLayout.SOUTH);
         }
     }
 
-    private static class ResultRectangle extends JPanel {
+    private class ResultRectangle extends JPanel {
 
         private final int percents;
 
@@ -77,10 +83,9 @@ public class AudienceResultPanel extends JPanel implements Refreshable {
             Graphics2D g2d = (Graphics2D) g;
 
             int rectHeight = heightOfRectangle();
+            Gradient grad = skin.audienceResultColumn();
             GradientPaint gp1 = new GradientPaint(0, getHeight() - rectHeight,
-                    Colors.AUDIENCE_RESULT_GRADIENT1,
-                    0, getHeight(),
-                    Colors.AUDIENCE_RESULT_GRADIENT2, true);
+                    grad.color1, 0, getHeight(), grad.color2, true);
 
             g2d.setPaint(gp1);
             g2d.fillRect(0, getHeight() - rectHeight, RECTANGLE_WIDTH, rectHeight);

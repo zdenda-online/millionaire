@@ -3,6 +3,8 @@ package cz.dix.mil.ui;
 import cz.dix.mil.controller.Refreshable;
 import cz.dix.mil.model.game.Question;
 import cz.dix.mil.model.runtime.GameModel;
+import cz.dix.mil.ui.skin.Skin;
+import cz.dix.mil.ui.skin.SkinManager;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -19,6 +21,7 @@ import java.util.List;
 public class RewardsPanel extends JPanel implements Refreshable {
 
     private static final int MARGIN = 5;
+    private Skin skin = SkinManager.getSkin();
 
     private JLabel[] rewards;
     private final GameModel model;
@@ -39,7 +42,7 @@ public class RewardsPanel extends JPanel implements Refreshable {
         if (previousQuestionIdx >= 0) {
             rewards[previousQuestionIdx].setForeground(getDefaultColor(previousQuestionIdx));
         }
-        rewards[actualQuestionIdx].setForeground(Colors.REWARDS_ACTUAL_COLOR);
+        rewards[actualQuestionIdx].setForeground(skin.rewardActualText());
 
         revalidate();
         repaint();
@@ -55,9 +58,9 @@ public class RewardsPanel extends JPanel implements Refreshable {
         int i = questions.size() - 1;
         for (Question question : questions) {
             JLabel label = createRewardLabel(i, question.getReward());
-            label.setFont(new Font("Dialog", Font.PLAIN, 20));
+            label.setFont(skin.defaultFont());
             if (i == 0) {
-                label.setForeground(Colors.REWARDS_ACTUAL_COLOR);
+                label.setForeground(skin.rewardActualText());
             } else {
                 label.setForeground(getDefaultColor(i));
             }
@@ -70,9 +73,9 @@ public class RewardsPanel extends JPanel implements Refreshable {
 
     private Color getDefaultColor(int questionIdx) {
         if (questionIdx != 0 && (questionIdx + 1) % 5 == 0) {
-            return Colors.REWARDS_CHECKPOINT_COLOR;
+            return skin.rewardCheckpointText();
         } else {
-            return Colors.REWARDS_DEFAULT_COLOR;
+            return skin.rewardDefaultText();
         }
 
     }

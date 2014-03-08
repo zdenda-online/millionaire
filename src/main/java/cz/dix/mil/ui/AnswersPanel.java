@@ -5,6 +5,8 @@ import cz.dix.mil.controller.GameController;
 import cz.dix.mil.controller.Refreshable;
 import cz.dix.mil.model.game.Answer;
 import cz.dix.mil.model.runtime.GameModel;
+import cz.dix.mil.ui.skin.Skin;
+import cz.dix.mil.ui.skin.SkinManager;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -14,7 +16,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 /**
- * Panel with possible 4 answers of the question.
+ * Panel with possible answers to the question.
  *
  * @author Zdenek Obst, zdenek.obst-at-gmail.com
  */
@@ -25,9 +27,10 @@ public class AnswersPanel extends JPanel implements Refreshable {
     private static final int BUTTONS_HEIGHT = 40;
     private final GameModel model;
     private final GameController controller;
+    private Skin skin = SkinManager.getSkin();
 
-    private JButton correctAnswerButton;
-    private JButton[] answerButtons;
+    private AnswerButton correctAnswerButton;
+    private AnswerButton[] answerButtons;
 
     public AnswersPanel(GameModel model, GameController controller) {
         super(new GridLayout(2, 2, MARGIN, MARGIN));
@@ -43,29 +46,27 @@ public class AnswersPanel extends JPanel implements Refreshable {
         removeAll();
         int i = 0;
         List<Answer> allAnswers = model.getActualQuestion().getAnswers();
-        answerButtons = new JButton[allAnswers.size()];
+        answerButtons = new AnswerButton[allAnswers.size()];
         for (final Answer answer : allAnswers) {
             JPanel oneAnswerPanel = new JPanel(new BorderLayout());
             if (model.isAnswerAvailable(answer)) {
-                final JButton answerButton = new JButton(answer.getText());
+                final AnswerButton answerButton = new AnswerButton(answer.getText());
                 if (answer.isCorrect()) {
                     correctAnswerButton = answerButton;
                 }
                 answerButtons[i] = answerButton;
-                answerButton.setFont(new Font("Dialog", Font.PLAIN, 20));
-                answerButton.setFocusable(false);
                 answerButton.setPreferredSize(new Dimension(BUTTONS_WIDTH, BUTTONS_HEIGHT));
                 answerButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        answerButton.setBackground(Colors.SELECTED_ANSWER_BACKGROUND);
-                        answerButton.setForeground(Colors.SELECTED_ANSWER_TEXT);
+                        answerButton.setButtonState(AnswerButton.ButtonState.SELECTED_ANSWER);
                         controller.answerQuestion(answer);
                     }
                 });
                 char letter = (char) (65 + i);
                 JLabel letterLabel = new JLabel(letter + ") ");
-                letterLabel.setFont(new Font("Dialog", Font.PLAIN, 20));
+                letterLabel.setFont(skin.defaultFont());
+                letterLabel.setForeground(skin.defaultTextColor());
                 oneAnswerPanel.add(letterLabel, BorderLayout.WEST);
                 oneAnswerPanel.add(answerButton, BorderLayout.CENTER);
             } else {
@@ -98,27 +99,26 @@ public class AnswersPanel extends JPanel implements Refreshable {
      * Disables all buttons and changes color of button that corresponds to yjr correct answer.
      */
     public void revealAnswer(ChainedAction chainedAction) {
-        final JButton appliedButton = correctAnswerButton;
-        final Color originalBackground = correctAnswerButton.getBackground();
-        final Color originalForeground = correctAnswerButton.getForeground();
+        final AnswerButton appliedButton = correctAnswerButton;
+        final AnswerButton.ButtonState originalType = appliedButton.getButtonState();
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    appliedButton.setBackground(Colors.CORRECT_ANSWER_BACKGROUND);
-                    appliedButton.setForeground(Colors.CORRECT_ANSWER_TEXT);
+                    appliedButton.setButtonState(AnswerButton.ButtonState.CORRECT_ANSWER);
+                    appliedButton.repaint();
                     Thread.sleep(250);
-                    appliedButton.setBackground(originalBackground);
-                    appliedButton.setForeground(originalForeground);
+                    appliedButton.setButtonState(originalType);
+                    appliedButton.repaint();
                     Thread.sleep(250);
-                    appliedButton.setBackground(Colors.CORRECT_ANSWER_BACKGROUND);
-                    appliedButton.setForeground(Colors.CORRECT_ANSWER_TEXT);
+                    appliedButton.setButtonState(AnswerButton.ButtonState.CORRECT_ANSWER);
+                    appliedButton.repaint();
                     Thread.sleep(250);
-                    appliedButton.setBackground(originalBackground);
-                    appliedButton.setForeground(originalForeground);
+                    appliedButton.setButtonState(originalType);
+                    appliedButton.repaint();
                     Thread.sleep(250);
-                    appliedButton.setBackground(Colors.CORRECT_ANSWER_BACKGROUND);
-                    appliedButton.setForeground(Colors.CORRECT_ANSWER_TEXT);
+                    appliedButton.setButtonState(AnswerButton.ButtonState.CORRECT_ANSWER);
+                    appliedButton.repaint();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

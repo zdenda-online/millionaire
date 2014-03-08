@@ -8,6 +8,8 @@ import cz.dix.mil.model.ModelFactory;
 import cz.dix.mil.model.game.Game;
 import cz.dix.mil.model.runtime.GameModel;
 import cz.dix.mil.ui.GameView;
+import cz.dix.mil.ui.skin.DefaultSkin;
+import cz.dix.mil.ui.skin.SkinManager;
 
 import javax.swing.*;
 
@@ -55,6 +57,7 @@ public class MillionaireMain {
 
     private static void setupSystem() {
         try {
+            SkinManager.setSkin(new DefaultSkin());
             UIManager.setLookAndFeel("com.jtattoo.plaf.hifi.HiFiLookAndFeel");
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
             e.printStackTrace();
