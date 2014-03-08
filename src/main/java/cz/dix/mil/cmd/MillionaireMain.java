@@ -25,7 +25,7 @@ public class MillionaireMain {
         JCommander cmd = null;
         try {
             cmd = new JCommander(options, args);
-            cmd.setProgramName("millionaire" + (IS_WIN ? ".bat" : ""));
+            cmd.setProgramName("millionaire" + (IS_WIN ? ".bat" : ".sh"));
         } catch (ParameterException e) {
             System.out.println(e.getMessage() + "\nFor more information use -h for help");
             System.exit(1);

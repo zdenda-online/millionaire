@@ -74,15 +74,23 @@
                 <artifactId>appassembler-maven-plugin</artifactId>
                 <version>1.7</version>
                 <configuration>
+                    <repositoryName>lib</repositoryName>
+                    <repositoryLayout>flat</repositoryLayout>
+                    <configurationSourceDirectory>src/main/games</configurationSourceDirectory>
                     <configurationDirectory>games</configurationDirectory>
                     <copyConfigurationDirectory>true</copyConfigurationDirectory>
                     <includeConfigurationDirectoryInClasspath>false</includeConfigurationDirectoryInClasspath>
                     <assembleDirectory>${project.build.directory}/${project.artifactId}</assembleDirectory>
                     <extraJvmArguments>-Xms128m -Xmx256m</extraJvmArguments>
+                    <showConsoleWindow>false</showConsoleWindow>
                     <platforms>
-                        <platform>windows</platform>
                         <platform>unix</platform>
+                        <platform>windows</platform>
                     </platforms>
+                    <binFileExtensions>
+                        <unix>.sh</unix>
+                        <windows>.bat</windows>
+                    </binFileExtensions>
                     <programs>
                         <program>
                             <id>${project.artifactId}</id>
