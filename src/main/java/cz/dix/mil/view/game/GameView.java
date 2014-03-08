@@ -3,8 +3,8 @@ package cz.dix.mil.view.game;
 import cz.dix.mil.controller.ChainedAction;
 import cz.dix.mil.controller.GameController;
 import cz.dix.mil.model.runtime.GameModel;
-import cz.dix.mil.view.game.hint.ManualAudienceResultDialog;
 import cz.dix.mil.view.game.hint.AudienceVotingDialog;
+import cz.dix.mil.view.game.hint.ManualAudienceResultDialog;
 import cz.dix.mil.view.game.hint.PhoneFriendDialog;
 import cz.dix.mil.view.game.question.RevealAnswerDialog;
 import cz.dix.mil.view.game.reward.FinalRewardDialog;
@@ -17,6 +17,7 @@ import cz.dix.mil.view.game.reward.FinalRewardDialog;
  */
 public class GameView {
 
+    private final GameStartFrame gameStartFrame;
     private final GameMainFrame gameMainFrame;
     private final RevealAnswerDialog revealAnswerDialog;
     private final AudienceVotingDialog audienceVotingDialog;
@@ -25,12 +26,27 @@ public class GameView {
     private final FinalRewardDialog finalRewardDialog;
 
     public GameView(GameModel model, GameController controller) {
+        this.gameStartFrame = new GameStartFrame(model);
         this.gameMainFrame = new GameMainFrame(model, controller);
         this.revealAnswerDialog = new RevealAnswerDialog(gameMainFrame, controller);
         this.audienceVotingDialog = new AudienceVotingDialog(gameMainFrame);
         this.manualAudienceResultDialog = new ManualAudienceResultDialog(gameMainFrame, model, controller);
         this.phoneFriendDialog = new PhoneFriendDialog(gameMainFrame);
         this.finalRewardDialog = new FinalRewardDialog(gameMainFrame, model);
+    }
+
+    /**
+     * Shows start frame when starting sound plays.
+     */
+    public void showStartFrame() {
+        gameStartFrame.setVisible(true);
+    }
+
+    /**
+     * Disposes starts frame when starting sound is ended.
+     */
+    public void disposeStartFrame() {
+        gameStartFrame.dispose();
     }
 
     /**
@@ -85,9 +101,9 @@ public class GameView {
     }
 
     /**
-     * Destroys dialog when audience voting is finished.
+     * Disposes dialog when audience voting is finished.
      */
-    public void hideAudienceVotingDialog() {
+    public void disposeAudienceVotingDialog() {
         audienceVotingDialog.dispose();
     }
 

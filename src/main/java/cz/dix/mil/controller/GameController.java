@@ -46,9 +46,11 @@ public class GameController {
      * Starts the whole game by playing introduction sound and showing main frame.
      */
     public void startGame() {
+        view.showStartFrame();
         soundsController.startGame(new ChainedAction() {
             @Override
             public void toNextAction() {
+                view.disposeStartFrame();
                 model.toNextQuestion();
                 view.updateMainFrame();
                 view.showMainFrame();
@@ -112,7 +114,7 @@ public class GameController {
         soundsController.askAudience(new ChainedAction() {
             @Override
             public void toNextAction() {
-                view.hideAudienceVotingDialog();
+                view.disposeAudienceVotingDialog();
                 if (settings.isRealAudience()) {
                     view.showAudienceResultDialog();
                 } else {

@@ -30,7 +30,7 @@ public class FinalRewardDialog extends JDialog {
     private void init() {
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setIconImage(new ImageIcon(getClass().getResource("/imgs/folder.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/imgs/icon.png")).getImage());
         setLayout(new BorderLayout());
         setLocationRelativeTo(null);
         setResizable(false);
