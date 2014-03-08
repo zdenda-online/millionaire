@@ -5,7 +5,6 @@ import cz.dix.mil.controller.GameController;
 import cz.dix.mil.controller.Refreshable;
 import cz.dix.mil.model.game.Answer;
 import cz.dix.mil.model.runtime.GameModel;
-import cz.dix.mil.view.game.question.AnswerButton;
 import cz.dix.mil.view.skin.Skin;
 import cz.dix.mil.view.skin.SkinManager;
 
@@ -38,6 +37,10 @@ public class AnswersPanel extends JPanel implements Refreshable {
         super(new GridLayout(2, 2, BUTTONS_MARGIN, BUTTONS_MARGIN));
         this.model = model;
         this.controller = controller;
+
+        setOpaque(false);
+        setBackground(new Color(0, 0, 0, 0));
+        setBorder(new EmptyBorder(PANEL_MARGIN, PANEL_MARGIN, PANEL_MARGIN, PANEL_MARGIN));
     }
 
     /**
@@ -47,10 +50,6 @@ public class AnswersPanel extends JPanel implements Refreshable {
     public void refresh() {
         removeAll();
         revalidate();
-        repaint();
-
-        setOpaque(false);
-        setBackground(new Color(0, 0, 0, 0));
 
         int i = 0;
         List<Answer> allAnswers = model.getActualQuestion().getAnswers();
@@ -87,7 +86,6 @@ public class AnswersPanel extends JPanel implements Refreshable {
             add(oneAnswerPanel);
         }
 
-        setBorder(new EmptyBorder(PANEL_MARGIN, PANEL_MARGIN, PANEL_MARGIN, PANEL_MARGIN));
         revalidate();
         repaint();
     }

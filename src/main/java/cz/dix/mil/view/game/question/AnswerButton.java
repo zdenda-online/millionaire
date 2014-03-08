@@ -18,10 +18,8 @@ public class AnswerButton extends JButton {
     private static final float ARC_WIDTH = 80.0f;
     private static final float ARC_HEIGHT = 50.0f;
     private static final int FOCUS_STROKE = 2;
-
-    protected Shape shape;
-    protected Shape border;
-    protected Shape base;
+    private Shape shape;
+    private Shape base;
 
     private Skin skin = SkinManager.getSkin();
 
@@ -65,10 +63,6 @@ public class AnswerButton extends JButton {
             shape = new RoundRectangle2D.Float(0, 0,
                     getWidth() - 1, getHeight() - 1,
                     ARC_WIDTH, ARC_HEIGHT);
-            border = new RoundRectangle2D.Float(FOCUS_STROKE, FOCUS_STROKE,
-                    getWidth() - 1 - FOCUS_STROKE * 2,
-                    getHeight() - 1 - FOCUS_STROKE * 2,
-                    ARC_WIDTH, ARC_HEIGHT);
         }
     }
 
@@ -76,15 +70,10 @@ public class AnswerButton extends JButton {
     protected void paintComponent(Graphics g) {
         initShape();
         setForeground(getTextColor());
-
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
         g2.setPaint(getGradient());
         g2.fill(shape);
-
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
-        g2.setColor(getBackground());
         super.paintComponent(g2);
     }
 
