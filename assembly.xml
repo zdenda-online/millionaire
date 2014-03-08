@@ -1,0 +1,11 @@
+<assembly>
+    <formats>
+        <format>tar.gz</format>
+        <format>zip</format>
+    </formats>
+    <fileSets>
+        <fileSet>
+            <directory>target/${project.artifactId}</directory>
+        </fileSet>
+    </fileSets>
+</assembly>
