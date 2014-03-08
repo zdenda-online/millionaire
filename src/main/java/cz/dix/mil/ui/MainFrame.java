@@ -50,7 +50,6 @@ public class MainFrame extends JFrame implements Refreshable {
         leftPanel.add(leftInnerPanel, BorderLayout.CENTER);
         leftPanel.add(answersPanel, BorderLayout.SOUTH);
 
-
         add(leftPanel, BorderLayout.CENTER);
         add(rewardsPanel, BorderLayout.EAST);
         setLocationRelativeTo(null);

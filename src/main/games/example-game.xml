@@ -12,13 +12,13 @@
         <answers-description>It has been the residence of every U.S. president since 1800.</answers-description>
     </question>
     <question>
-        <text>What is the biggest continent in the world?</text>
+        <text>Sushi is typical Japanese?</text>
         <reward>$200</reward>
         <answers>
-            <answer>Europe</answer>
-            <answer is-correct="true">Asia</answer>
-            <answer>South America</answer>
-            <answer>Africa</answer>
+            <answer>Wrestling Sport</answer>
+            <answer is-correct="true">Food</answer>
+            <answer>Sword</answer>
+            <answer>Animal</answer>
         </answers>
         <answers-description>Asia has 43,820,000 square kilometers.</answers-description>
     </question>
@@ -28,21 +28,22 @@
         <answers>
             <answer>Mont Blanc</answer>
             <answer>K2</answer>
-            <answer is-correct="true">Mount Everest</answer>
             <answer>Lhotse</answer>
+            <answer is-correct="true">Mount Everest</answer>
         </answers>
         <answers-description>Its peak is 8,848 metres (29,029 ft) above sea level.</answers-description>
     </question>
     <question>
-        <text>When did World War II end?</text>
+        <text>When did World War II start and end?</text>
         <reward>$500</reward>
         <answers>
-            <answer>1939</answer>
-            <answer>1941</answer>
-            <answer>1943</answer>
-            <answer is-correct="true">1945</answer>
+            <answer>1337 - 1453</answer>
+            <answer>1754 - 1763</answer>
+            <answer is-correct="true">1939 - 1945</answer>
+            <answer>1956 - 1975</answer>
         </answers>
-        <answers-description>Germany surrendered 8th May.</answers-description>
+        <answers-description>Answers correspond to Hundred Years' War, Seven Years' War, WW2 and Vietnam War.
+        </answers-description>
     </question>
     <question>
         <text>How long does it take the Earth to orbit the Sun?</text>

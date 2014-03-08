@@ -34,7 +34,7 @@ public class FinalRewardDialog extends JDialog {
         setIconImage(new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB_PRE));
         setLayout(new BorderLayout());
 
-        rewardLabel.setForeground(skin.audienceVotingText());
+        rewardLabel.setForeground(skin.finalRewardText());
         rewardLabel.setFont(skin.defaultFont());
         rewardLabel.setHorizontalAlignment(SwingConstants.CENTER);
         rewardLabel.setVerticalAlignment(SwingConstants.CENTER);
