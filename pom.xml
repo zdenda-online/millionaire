@@ -85,7 +85,7 @@
                     <includeConfigurationDirectoryInClasspath>false</includeConfigurationDirectoryInClasspath>
                     <assembleDirectory>${project.build.directory}/${project.artifactId}</assembleDirectory>
                     <extraJvmArguments>-Xms128m -Xmx256m</extraJvmArguments>
-                    <showConsoleWindow>false</showConsoleWindow>
+                    <showConsoleWindow>true</showConsoleWindow>
                     <platforms>
                         <platform>unix</platform>
                         <platform>windows</platform>
