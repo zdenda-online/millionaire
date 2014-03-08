@@ -23,15 +23,15 @@ public class SimpleAutomaticAudienceTest {
         List<Answer> answers = genAnswers(4);
         test(answers, QuestionDifficulty.EASY, 0, 20);
         test(answers, QuestionDifficulty.MID, 7, 23);
-        test(answers, QuestionDifficulty.HARD, 15, 27);
+        test(answers, QuestionDifficulty.HARD, 19, 27);
     }
 
     @Test
     public void testTwoAnswers() {
         List<Answer> answers = genAnswers(2);
         test(answers, QuestionDifficulty.EASY, 0, 30);
-        test(answers, QuestionDifficulty.MID, 20, 40);
-        test(answers, QuestionDifficulty.HARD, 30, 55);
+        test(answers, QuestionDifficulty.MID, 20, 50);
+        test(answers, QuestionDifficulty.HARD, 35, 55);
     }
 
     private void test(List<Answer> answers, QuestionDifficulty difficulty, int incorrectMin, int incorrectMax) {

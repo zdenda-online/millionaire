@@ -39,17 +39,17 @@ public class SimpleAutomaticAudienceAlgorithm implements AutomaticAudienceAlgori
                     // incorrect 7 - 23 => avg. 15 | correct: 31 - 79 => avg. 55
                     res = generate(answers, 7, 23);
                 } else { // answersCount == 2
-                    // incorrect 20 - 40 => avg. 30 | correct: 60 - 80 => avg. 70
-                    res = generate(answers, 20, 40);
+                    // incorrect 20 - 50 => avg. 35 | correct: 50 - 80 => avg. 65
+                    res = generate(answers, 20, 50);
                 }
                 break;
             case HARD:
                 if (answersCount == 4) {
-                    // incorrect 15 - 27 => avg. 21 | correct: 19 - 55 => avg. 37
-                    res = generate(answers, 15, 27);
+                    // incorrect 19 - 27 => avg. 23 | correct: 19 - 43 => avg. 31
+                    res = generate(answers, 19, 27);
                 } else { // answersCount == 2
-                    // incorrect 30 - 50 => avg. 42.5 | correct: 45 - 70 => avg. 57.5
-                    res = generate(answers, 30, 55);
+                    // incorrect 35 - 55 => avg. 45 | correct: 45 - 65 => avg. 55
+                    res = generate(answers, 35, 55);
                 }
                 break;
             default:
