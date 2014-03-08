@@ -42,7 +42,7 @@ public class RewardsPanel extends JPanel implements Refreshable {
         if (previousQuestionIdx >= 0) {
             rewards[previousQuestionIdx].setForeground(getDefaultColor(previousQuestionIdx));
         }
-        rewards[actualQuestionIdx].setForeground(skin.rewardActualText());
+        rewards[actualQuestionIdx].setForeground(skin.rewardActualQuestionText());
 
         revalidate();
         repaint();
@@ -60,7 +60,7 @@ public class RewardsPanel extends JPanel implements Refreshable {
             JLabel label = createRewardLabel(i, question.getReward());
             label.setFont(skin.defaultFont());
             if (i == 0) {
-                label.setForeground(skin.rewardActualText());
+                label.setForeground(skin.rewardActualQuestionText());
             } else {
                 label.setForeground(getDefaultColor(i));
             }

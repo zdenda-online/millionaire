@@ -141,7 +141,7 @@ public class DefaultSkin implements Skin {
      * {@inheritDoc}
      */
     @Override
-    public Color rewardActualText() {
+    public Color rewardActualQuestionText() {
         return new Color(255, 150, 0);
     }
 
