@@ -22,7 +22,8 @@ import java.util.List;
  */
 public class AnswersPanel extends JPanel implements Refreshable {
 
-    private static final int MARGIN = 5;
+    private static final int PANEL_MARGIN = 15;
+    private static final int BUTTONS_MARGIN = 10;
     private static final int BUTTONS_WIDTH = 200;
     private static final int BUTTONS_HEIGHT = 40;
     private final GameModel model;
@@ -33,7 +34,7 @@ public class AnswersPanel extends JPanel implements Refreshable {
     private AnswerButton[] answerButtons;
 
     public AnswersPanel(GameModel model, GameController controller) {
-        super(new GridLayout(2, 2, MARGIN, MARGIN));
+        super(new GridLayout(2, 2, BUTTONS_MARGIN, BUTTONS_MARGIN));
         this.model = model;
         this.controller = controller;
     }
@@ -44,6 +45,9 @@ public class AnswersPanel extends JPanel implements Refreshable {
     @Override
     public void refresh() {
         removeAll();
+        revalidate();
+        repaint();
+
         setOpaque(false);
         setBackground(new Color(0, 0, 0, 0));
 
@@ -82,7 +86,7 @@ public class AnswersPanel extends JPanel implements Refreshable {
             add(oneAnswerPanel);
         }
 
-        setBorder(new EmptyBorder(MARGIN, MARGIN, MARGIN, MARGIN));
+        setBorder(new EmptyBorder(PANEL_MARGIN, PANEL_MARGIN, PANEL_MARGIN, PANEL_MARGIN));
         revalidate();
         repaint();
     }

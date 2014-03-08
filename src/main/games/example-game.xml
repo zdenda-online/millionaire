@@ -69,19 +69,8 @@
         </answers-description>
     </question>
     <question>
-        <text>What team sport does not have an offside rule?</text>
-        <reward>$4,000</reward>
-        <answers>
-            <answer>Football</answer>
-            <answer is-correct="true">Basketball</answer>
-            <answer>Ice Hockey</answer>
-            <answer>Rugby</answer>
-        </answers>
-        <answers-description>There are only court violation in basketball.</answers-description>
-    </question>
-    <question>
         <text>Who married frontman of band Nickelback, Chad Kroeger, in 2013?</text>
-        <reward>$8,000</reward>
+        <reward>$4,000</reward>
         <answers>
             <answer>Kate Ryan</answer>
             <answer>Katy Perry</answer>
@@ -91,18 +80,29 @@
         <answers-description>They started dating in July 2012 and got engaged in August 2012.</answers-description>
     </question>
     <question>
-        <text>What is the decimal value of binary number 1101?</text>
+        <text>What team sport does not have an offside rule?</text>
+        <reward>$8,000</reward>
+        <answers>
+            <answer>Football</answer>
+            <answer is-correct="true">Basketball</answer>
+            <answer>Ice Hockey</answer>
+            <answer>Rugby</answer>
+        </answers>
+        <answers-description>There are only court violation in basketball.</answers-description>
+    </question>
+    <question>
+        <text>What is the decimal value of binary number 10101?</text>
         <reward>$16,000</reward>
         <answers>
-            <answer>9</answer>
-            <answer is-correct="true">13</answer>
-            <answer>15</answer>
-            <answer>16</answer>
+            <answer>17</answer>
+            <answer is-correct="true">21</answer>
+            <answer>23</answer>
+            <answer>29</answer>
         </answers>
         <answers-description>8 + 4 + (0) + 1</answers-description>
     </question>
     <question>
-        <text>British Queen Elizabeth II belongs to which royal house?</text>
+        <text>King Edward VIII belonged to which royal house?</text>
         <reward>$32,000</reward>
         <answers>
             <answer>House of Hanover</answer>
