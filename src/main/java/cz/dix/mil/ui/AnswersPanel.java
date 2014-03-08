@@ -36,7 +36,6 @@ public class AnswersPanel extends JPanel implements Refreshable {
         super(new GridLayout(2, 2, MARGIN, MARGIN));
         this.model = model;
         this.controller = controller;
-        setBackground(new Color(0, 0, 0, 0));
     }
 
     /**
@@ -45,6 +44,9 @@ public class AnswersPanel extends JPanel implements Refreshable {
     @Override
     public void refresh() {
         removeAll();
+        setOpaque(false);
+        setBackground(new Color(0, 0, 0, 0));
+
         int i = 0;
         List<Answer> allAnswers = model.getActualQuestion().getAnswers();
         answerButtons = new AnswerButton[allAnswers.size()];

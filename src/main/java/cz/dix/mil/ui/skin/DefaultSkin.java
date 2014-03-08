@@ -78,7 +78,7 @@ public class DefaultSkin implements Skin {
      */
     @Override
     public Gradient answerButtonCorrectGradient() {
-        return new Gradient(new Color(0, 240, 0), new Color(50, 150, 0));
+        return new Gradient(new Color(0, 240, 0), new Color(41, 116, 0));
     }
 
     /**
@@ -102,7 +102,7 @@ public class DefaultSkin implements Skin {
      */
     @Override
     public Gradient answerButtonSelectedGradient() {
-        return new Gradient(new Color(255, 200, 0), new Color(240, 120, 0));
+        return new Gradient(new Color(255, 174, 0), new Color(240, 101, 0));
     }
 
     /**
@@ -118,7 +118,7 @@ public class DefaultSkin implements Skin {
      */
     @Override
     public Gradient audienceResultColumn() {
-        return new Gradient(new Color(230, 0, 230), new Color(0, 0, 255));
+        return new Gradient(new Color(192, 0, 192), new Color(42, 0, 233));
     }
 
     /**

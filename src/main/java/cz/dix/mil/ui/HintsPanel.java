@@ -53,7 +53,7 @@ public class HintsPanel extends JPanel implements Refreshable {
 
         hintButtons = new JButton[3];
         if (model.isHintAvailable(Hint.AUDIENCE)) {
-            ImageIcon image = new ImageIcon(getClass().getResource("/imgs/audience.jpg"));
+            ImageIcon image = new ImageIcon(getClass().getResource("/imgs/audience.png"));
             hintButtons[0] = addHintButton(image, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -64,7 +64,7 @@ public class HintsPanel extends JPanel implements Refreshable {
         }
 
         if (model.isHintAvailable(Hint.FIFTY_FIFTY)) {
-            ImageIcon image = new ImageIcon(getClass().getResource("/imgs/5050.jpg"));
+            ImageIcon image = new ImageIcon(getClass().getResource("/imgs/5050.png"));
             hintButtons[1] = addHintButton(image, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -75,7 +75,7 @@ public class HintsPanel extends JPanel implements Refreshable {
         }
 
         if (model.isHintAvailable(Hint.PHONE_FRIEND)) {
-            ImageIcon image = new ImageIcon(getClass().getResource("/imgs/phone.jpg"));
+            ImageIcon image = new ImageIcon(getClass().getResource("/imgs/phone.png"));
             hintButtons[2] = addHintButton(image, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
