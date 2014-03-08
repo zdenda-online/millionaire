@@ -75,7 +75,7 @@ public class AnswersPanel extends JPanel implements Refreshable {
                 JLabel letterLabel = new JLabel(letter + ") ");
                 letterLabel.setFont(skin.defaultFont());
                 letterLabel.setOpaque(false);
-                letterLabel.setForeground(skin.defaultTextColor());
+                letterLabel.setForeground(skin.answerLetterColor());
                 oneAnswerPanel.add(letterLabel, BorderLayout.WEST);
                 oneAnswerPanel.add(answerButton, BorderLayout.CENTER);
             } else {

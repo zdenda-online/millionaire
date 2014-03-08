@@ -29,11 +29,14 @@ public class MillionaireMain {
             cmd = new JCommander(options, args);
             cmd.setProgramName("millionaire" + (IS_WIN ? ".bat" : ".sh"));
         } catch (ParameterException e) {
-            System.out.println(e.getMessage() + "\nFor more information use -h for help");
+            System.out.println(); // error on next row
+            System.out.println(e.getMessage());
+            System.out.println("For more information use -h for help");
             System.exit(1);
         }
 
         if (options.isHelp()) {
+            System.out.println(); // usage on next row
             cmd.usage();
             System.exit(0);
         }
@@ -56,8 +59,8 @@ public class MillionaireMain {
     }
 
     private static void setupSystem() {
+        SkinManager.setSkin(new DefaultSkin());
         try {
-            SkinManager.setSkin(new DefaultSkin());
             UIManager.setLookAndFeel("com.jtattoo.plaf.hifi.HiFiLookAndFeel");
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
             e.printStackTrace();

@@ -15,11 +15,11 @@ public class CmdOptions {
     @Parameter(names = {"-g", "--game"}, converter = FileConverter.class, required = true,
             description = "Path to the XML game file")
     private File gameFile;
-    @Parameter(names = {"-m", "--manual-audience"}, required = false,
-            description = "Allows manual audience (moderator must insert results of voting)")
+    @Parameter(names = {"-r", "--real-audience"}, required = false,
+            description = "Switch to real audience (moderator inserts numbers of votes)")
     private boolean isManualAudience = false;
     @Parameter(names = {"-h", "--help"}, help = true,
-            description = "Displays help")
+            description = "Print help (this message)")
     private boolean help = false;
 
     public File getGameFile() {

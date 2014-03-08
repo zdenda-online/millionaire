@@ -49,6 +49,11 @@ public class DefaultSkin implements Skin {
         return new Color(255, 220, 0);
     }
 
+    @Override
+    public Color answerLetterColor() {
+        return new Color(255, 150, 0);
+    }
+
     /**
      * {@inheritDoc}
      */

@@ -45,6 +45,13 @@ public interface Skin {
     Color questionTextColor();
 
     /**
+     * Gets a color of answer letter.
+     *
+     * @return color of answer letter
+     */
+    Color answerLetterColor();
+
+    /**
      * Gets a color of answer button border.
      *
      * @return color of answer button border

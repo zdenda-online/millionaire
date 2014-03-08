@@ -15,22 +15,22 @@ import java.util.List;
  */
 public class SimpleAutomaticAudienceTest {
 
-    private static final int TEST_RUNS = 10000;
+    private static final int TEST_RUNS = 100;
     private static SimpleAutomaticAudienceAlgorithm alg = new SimpleAutomaticAudienceAlgorithm();
 
     @Test
     public void testFourAnswers() {
         List<Answer> answers = genAnswers(4);
         test(answers, QuestionDifficulty.EASY, 0, 20);
-        test(answers, QuestionDifficulty.MID, 7, 23);
+        test(answers, QuestionDifficulty.MID, 10, 26);
         test(answers, QuestionDifficulty.HARD, 19, 27);
     }
 
     @Test
     public void testTwoAnswers() {
         List<Answer> answers = genAnswers(2);
-        test(answers, QuestionDifficulty.EASY, 0, 30);
-        test(answers, QuestionDifficulty.MID, 20, 50);
+        test(answers, QuestionDifficulty.EASY, 0, 35);
+        test(answers, QuestionDifficulty.MID, 25, 55);
         test(answers, QuestionDifficulty.HARD, 35, 55);
     }
 
@@ -59,8 +59,8 @@ public class SimpleAutomaticAudienceTest {
 //            System.out.println(difficulty + ": " + Arrays.toString(res) + "  incorrect: <" + incorrectMin + "," + incorrectMax + ">, " +
 //                    "correct: <" + correctMin + "," + correctMax + ">");
         }
-        System.out.println("Min/Max incorrect: " + lowestIncorrect + "/" + highestIncorrect + ", correct: "
-                + lowestCorrect + "/" + highestCorrect);
+        System.out.println(answers.size() + " answers " + difficulty + " min/Max incorrect: <" + lowestIncorrect + "," + highestIncorrect + ">, " +
+                "correct: <" + lowestCorrect + "," + highestCorrect + ">");
     }
 
     private static List<Answer> genAnswers(int count) {
