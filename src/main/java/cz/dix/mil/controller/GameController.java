@@ -1,9 +1,9 @@
 package cz.dix.mil.controller;
 
-import cz.dix.mil.cmd.CmdOptions;
+import cz.dix.mil.model.GameSettings;
 import cz.dix.mil.model.game.Answer;
 import cz.dix.mil.model.runtime.GameModel;
-import cz.dix.mil.ui.GameView;
+import cz.dix.mil.view.game.GameView;
 
 /**
  * Main controller of the game that is responsible for passing events to the {@link GameModel}
@@ -16,23 +16,34 @@ import cz.dix.mil.ui.GameView;
  */
 public class GameController {
 
-    private final CmdOptions settings;
-    private final GameModel model;
+    private final GameSettings settings;
     private final SoundsController soundsController;
-    private GameView view;
+    private final GameModel model;
+    private final GameView view;
 
-    public GameController(GameModel model, CmdOptions settings) {
-        this.model = model;
+    /**
+     * Private constructor, use {@link #newController(GameSettings)} instead.
+     *
+     * @param settings settings of the game
+     */
+    private GameController(GameSettings settings) {
         this.settings = settings;
+        this.model = new GameModel(settings.getGame());
         this.soundsController = new SoundsController(model);
-    }
-
-    public void setView(GameView view) {
-        this.view = view;
+        this.view = new GameView(model, this);
     }
 
     /**
-     * Moderator starts the new game.
+     * Creates a new controller for the game with given settings.
+     *
+     * @param settings settings of the game
+     */
+    public static GameController newController(GameSettings settings) {
+        return new GameController(settings);
+    }
+
+    /**
+     * Starts the whole game by playing introduction sound and showing main frame.
      */
     public void startGame() {
         soundsController.startGame(new ChainedAction() {
@@ -102,7 +113,7 @@ public class GameController {
             @Override
             public void toNextAction() {
                 view.hideAudienceVotingDialog();
-                if (settings.isManualAudience()) {
+                if (settings.isRealAudience()) {
                     view.showAudienceResultDialog();
                 } else {
                     model.generateAudienceResults();

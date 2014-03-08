@@ -1,11 +1,11 @@
-package cz.dix.mil.ui;
+package cz.dix.mil.view.game.hint;
 
 import cz.dix.mil.controller.Refreshable;
 import cz.dix.mil.model.runtime.AudienceResult;
 import cz.dix.mil.model.runtime.GameModel;
-import cz.dix.mil.ui.skin.Gradient;
-import cz.dix.mil.ui.skin.Skin;
-import cz.dix.mil.ui.skin.SkinManager;
+import cz.dix.mil.view.skin.Gradient;
+import cz.dix.mil.view.skin.Skin;
+import cz.dix.mil.view.skin.SkinManager;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,39 +1,45 @@
-package cz.dix.mil.ui;
+package cz.dix.mil.view.game.hint;
 
 import cz.dix.mil.controller.GameController;
 import cz.dix.mil.model.runtime.GameModel;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 
 /**
- * Dialog for submitting results of audience voting (hint).
+ * Dialog for submitting results of audience voting manually.
  *
  * @author Zdenek Obst, zdenek.obst-at-gmail.com
  */
-public class AudienceResultDialog extends JDialog {
+public class ManualAudienceResultDialog extends JDialog {
 
-    private static final int WIDTH = 200;
-    private static final int HEIGHT = 120;
+    private static final int WIDTH = 120;
+    private static final int HEIGHT_DEFAULT = 70;
+    private static final int DIALOG_MARGIN = 10;
+    private static final int ITEMS_MARGIN = 5;
+
     private final GameModel model;
     private final GameController controller;
 
-    public AudienceResultDialog(JFrame owner, GameModel model, GameController controller) {
+    public ManualAudienceResultDialog(JFrame owner, GameModel model, GameController controller) {
         super(owner);
         this.model = model;
         this.controller = controller;
     }
 
     private void init() {
-        setSize(WIDTH, HEIGHT);
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        setIconImage(new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB_PRE));
-
         int questionsCount = model.getActualQuestion().getAnswers().size();
-        JPanel answersPanel = new JPanel(new FlowLayout());
+        setSize(WIDTH, questionsCount * 30 + HEIGHT_DEFAULT);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        setIconImage(new ImageIcon(getClass().getResource("/imgs/icon.png")).getImage());
+        setLocationRelativeTo(null);
+        setResizable(false);
+        setLayout(new BorderLayout(ITEMS_MARGIN, ITEMS_MARGIN));
+
+        JPanel answersPanel = new JPanel(new GridLayout(questionsCount, 2, ITEMS_MARGIN, ITEMS_MARGIN));
         final JSpinner[] spinners = new JSpinner[questionsCount];
         int charNo = 65;
         for (int i = 0; i < questionsCount; i++) {
@@ -44,7 +50,7 @@ public class AudienceResultDialog extends JDialog {
             spinners[i] = spinner;
         }
 
-        JButton submitButton = new JButton("Submit results");
+        JButton submitButton = new JButton("Submit");
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -53,11 +59,11 @@ public class AudienceResultDialog extends JDialog {
             }
         });
 
-        setLayout(new BorderLayout());
-        add(answersPanel, BorderLayout.CENTER);
-        add(submitButton, BorderLayout.SOUTH);
-        setLocationRelativeTo(null);
-        setResizable(false);
+        JPanel mainPanel = new JPanel(new BorderLayout(ITEMS_MARGIN, ITEMS_MARGIN));
+        mainPanel.setBorder(new EmptyBorder(DIALOG_MARGIN, DIALOG_MARGIN, DIALOG_MARGIN, DIALOG_MARGIN));
+        mainPanel.add(answersPanel, BorderLayout.CENTER);
+        mainPanel.add(submitButton, BorderLayout.SOUTH);
+        add(mainPanel);
     }
 
     @Override

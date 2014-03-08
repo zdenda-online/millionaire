@@ -1,4 +1,4 @@
-package cz.dix.mil.ui;
+package cz.dix.mil.view.game.hint;
 
 import cz.dix.mil.controller.GameController;
 import cz.dix.mil.controller.Refreshable;

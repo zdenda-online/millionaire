@@ -1,4 +1,4 @@
-package cz.dix.mil.ui.skin;
+package cz.dix.mil.view.skin;
 
 import java.awt.*;
 

@@ -1,12 +1,11 @@
-package cz.dix.mil.ui;
+package cz.dix.mil.view.game.reward;
 
 import cz.dix.mil.model.runtime.GameModel;
-import cz.dix.mil.ui.skin.Skin;
-import cz.dix.mil.ui.skin.SkinManager;
+import cz.dix.mil.view.skin.Skin;
+import cz.dix.mil.view.skin.SkinManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 /**
  * Dialog that is shown when game is over (won or answered incorrectly).
@@ -31,17 +30,16 @@ public class FinalRewardDialog extends JDialog {
     private void init() {
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setIconImage(new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB_PRE));
+        setIconImage(new ImageIcon(getClass().getResource("/imgs/folder.png")).getImage());
         setLayout(new BorderLayout());
+        setLocationRelativeTo(null);
+        setResizable(false);
 
         rewardLabel.setForeground(skin.finalRewardText());
         rewardLabel.setFont(skin.defaultFont());
         rewardLabel.setHorizontalAlignment(SwingConstants.CENTER);
         rewardLabel.setVerticalAlignment(SwingConstants.CENTER);
         add(rewardLabel);
-
-        setLocationRelativeTo(null);
-        setResizable(false);
     }
 
     @Override

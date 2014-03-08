@@ -1,4 +1,4 @@
-package cz.dix.mil.ui.skin;
+package cz.dix.mil.view.skin;
 
 import java.awt.*;
 
@@ -14,7 +14,7 @@ public class DefaultSkin implements Skin {
      */
     @Override
     public Font defaultFont() {
-        return new Font(Font.DIALOG, Font.PLAIN, 20);
+        return new Font(Font.SANS_SERIF, Font.PLAIN, 20);
     }
 
     /**
@@ -22,7 +22,7 @@ public class DefaultSkin implements Skin {
      */
     @Override
     public Font smallerFont() {
-        return new Font(Font.DIALOG, Font.BOLD, 15);
+        return new Font(Font.SANS_SERIF, Font.BOLD, 15);
     }
 
     /**
@@ -30,7 +30,7 @@ public class DefaultSkin implements Skin {
      */
     @Override
     public Font largerFont() {
-        return new Font(Font.DIALOG, Font.BOLD, 26);
+        return new Font(Font.SANS_SERIF, Font.BOLD, 26);
     }
 
     /**

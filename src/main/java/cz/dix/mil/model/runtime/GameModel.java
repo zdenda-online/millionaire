@@ -32,6 +32,15 @@ public class GameModel {
     }
 
     /**
+     * Gets a name of the game.
+     *
+     * @return name of the game
+     */
+    public String getGameName() {
+        return game.getName();
+    }
+
+    /**
      * Updates model when player answers with given answer.
      *
      * @param answer answer selected by player

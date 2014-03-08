@@ -1,4 +1,4 @@
-package cz.dix.mil.model;
+package cz.dix.mil.model.game;
 
 import cz.dix.mil.model.game.Game;
 

@@ -1,11 +1,10 @@
 package cz.dix.mil.model.game;
 
-import cz.dix.mil.model.GameValidationException;
-
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElementRef;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.annotation.*;
+import java.io.File;
 import java.util.List;
 
 /**
@@ -18,6 +17,8 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Game {
 
+    @XmlElement(name = "name")
+    private String name;
     @XmlElementRef
     private List<Question> questions;
 
@@ -25,11 +26,30 @@ public class Game {
         // for JAXB
     }
 
-    public Game(List<Question> questions) {
-        this.questions = questions;
+    /**
+     * Creates a new instance from XML game file.
+     *
+     * @param file file with game contents
+     * @return new game instance
+     * @throws GameValidationException possible exception if file is corrupt
+     */
+    public static Game load(File file) throws GameValidationException {
+        if (!file.exists()) {
+            throw new GameValidationException("Selected file does not exist!");
+        }
+        Game game = null;
+        try {
+            JAXBContext ctx = JAXBContext.newInstance(Question.class, Game.class, Answer.class);
+            Unmarshaller unmarshaller = ctx.createUnmarshaller();
+            game = (Game) unmarshaller.unmarshal(file);
+        } catch (JAXBException e) {
+            throw new GameValidationException(e.getMessage());
+        }
+        game.validate();
+        return game;
     }
 
-    public void validate() {
+    private void validate() throws GameValidationException {
         if (questions == null || questions.size() == 0) {
             throw new GameValidationException("Game is must contain at least one question!");
         }
@@ -52,6 +72,15 @@ public class Game {
                 throw new GameValidationException("Every question must have one correct answer!");
             }
         }
+    }
+
+    /**
+     * Gets a name of the game.
+     *
+     * @return name of the game
+     */
+    public String getName() {
+        return (name == null) ? "Default" : name;
     }
 
     /**

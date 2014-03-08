@@ -46,12 +46,6 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>com.beust</groupId>
-            <artifactId>jcommander</artifactId>
-            <version>1.35</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.11</version>
@@ -85,7 +79,7 @@
                     <includeConfigurationDirectoryInClasspath>false</includeConfigurationDirectoryInClasspath>
                     <assembleDirectory>${project.build.directory}/${project.artifactId}</assembleDirectory>
                     <extraJvmArguments>-Xms128m -Xmx256m</extraJvmArguments>
-                    <showConsoleWindow>true</showConsoleWindow>
+                    <showConsoleWindow>false</showConsoleWindow>
                     <platforms>
                         <platform>unix</platform>
                         <platform>windows</platform>
@@ -97,7 +91,7 @@
                     <programs>
                         <program>
                             <id>${project.artifactId}</id>
-                            <mainClass>cz.dix.mil.cmd.MillionaireMain</mainClass>
+                            <mainClass>cz.dix.mil.MillionaireMain</mainClass>
                         </program>
                     </programs>
                 </configuration>

@@ -1,13 +1,12 @@
-package cz.dix.mil.ui;
+package cz.dix.mil.view.game.hint;
 
-import cz.dix.mil.ui.skin.Skin;
-import cz.dix.mil.ui.skin.SkinManager;
+import cz.dix.mil.view.skin.Skin;
+import cz.dix.mil.view.skin.SkinManager;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 
 /**
  * Dialog that is shown when answer is selected and allows moderator to do some disguise talks.
@@ -33,17 +32,16 @@ public class PhoneFriendDialog extends JDialog {
     private void init() {
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        setIconImage(new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB_PRE));
+        setIconImage(new ImageIcon(getClass().getResource("/imgs/icon.png")).getImage());
         setLayout(new BorderLayout());
+        setLocationRelativeTo(null);
+        setResizable(false);
 
         remainingLabel.setForeground(skin.phoneFriendCountdownText());
         remainingLabel.setFont(skin.largerFont());
         remainingLabel.setHorizontalAlignment(SwingConstants.CENTER);
         remainingLabel.setVerticalAlignment(SwingConstants.CENTER);
         add(remainingLabel, BorderLayout.CENTER);
-
-        setLocationRelativeTo(null);
-        setResizable(false);
     }
 
     /**

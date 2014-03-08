@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <game>
+    <name>Example Game</name>
     <question>
         <text>What is the official residence of U.S. president?</text>
         <reward>$100</reward>

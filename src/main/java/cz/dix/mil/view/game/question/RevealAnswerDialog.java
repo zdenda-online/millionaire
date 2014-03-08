@@ -1,4 +1,4 @@
-package cz.dix.mil.ui;
+package cz.dix.mil.view.game.question;
 
 import cz.dix.mil.controller.GameController;
 
@@ -14,8 +14,8 @@ import java.awt.image.BufferedImage;
  */
 public class RevealAnswerDialog extends JDialog {
 
-    private static final int WIDTH = 200;
-    private static final int HEIGHT = 100;
+    private static final int WIDTH = 170;
+    private static final int HEIGHT = 70;
     private final GameController controller;
 
     public RevealAnswerDialog(JFrame owner, GameController controller) {
@@ -27,7 +27,7 @@ public class RevealAnswerDialog extends JDialog {
     private void init() {
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        setIconImage(new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB_PRE));
+        setIconImage(new ImageIcon(getClass().getResource("/imgs/icon.png")).getImage());
 
         JButton continueButton = new JButton("Reveal answer!");
         continueButton.addActionListener(new ActionListener() {

@@ -1,12 +1,13 @@
-package cz.dix.mil.ui;
+package cz.dix.mil.view.game.question;
 
 import cz.dix.mil.controller.ChainedAction;
 import cz.dix.mil.controller.GameController;
 import cz.dix.mil.controller.Refreshable;
 import cz.dix.mil.model.game.Answer;
 import cz.dix.mil.model.runtime.GameModel;
-import cz.dix.mil.ui.skin.Skin;
-import cz.dix.mil.ui.skin.SkinManager;
+import cz.dix.mil.view.game.question.AnswerButton;
+import cz.dix.mil.view.skin.Skin;
+import cz.dix.mil.view.skin.SkinManager;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
