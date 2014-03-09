@@ -28,8 +28,6 @@ public class HintsPanel extends JPanel implements Refreshable {
         super(new FlowLayout());
         this.model = model;
         this.controller = controller;
-
-        setOpaque(false);
         refresh();
     }
 
@@ -92,7 +90,6 @@ public class HintsPanel extends JPanel implements Refreshable {
         hintButton.setFocusable(false);
         hintButton.setBorder(new EmptyBorder(MARGIN, MARGIN, MARGIN, MARGIN));
         hintButton.addActionListener(actionListener);
-        hintButton.setOpaque(false);
         add(hintButton, BorderLayout.NORTH);
         return hintButton;
     }

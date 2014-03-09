@@ -5,6 +5,8 @@ import java.awt.*;
 
 /**
  * Panel that has image as a background.
+ * Every other panel that is added to this one will be translucent
+ * (the background of this panel will be visible instead).
  *
  * @author Zdenek Obst, zdenek.obst-at-gmail.com
  */
@@ -29,15 +31,8 @@ public class BackgroundPanel extends JPanel {
     }
 
     @Override
-    public void add(Component component, Object constraints) {
-        if (component instanceof JPanel) {
-            setPanelNotOpaque((JPanel) component);
-        }
-        super.add(component, constraints);
-    }
-
-    @Override
     protected void paintComponent(Graphics g) {
+        setPanelsNonOpaque(this);
         super.paintComponent(g);
         Dimension d = getSize();
         g.drawImage(image, 0, 0, d.width, d.height, null);
@@ -49,13 +44,15 @@ public class BackgroundPanel extends JPanel {
      *
      * @param panel panel to be set non opaque
      */
-    private void setPanelNotOpaque(JPanel panel) {
-        panel.setOpaque(false);
+    private void setPanelsNonOpaque(JPanel panel) {
+        if (!this.equals(panel)) { // for everyone except this instance
+            panel.setOpaque(false);
+        }
         Component[] subComponents = panel.getComponents();
         if (subComponents != null) {
             for (Component c : subComponents) {
                 if (c instanceof JPanel) {
-                    setPanelNotOpaque((JPanel) c);
+                    setPanelsNonOpaque((JPanel) c);
                 }
             }
         }

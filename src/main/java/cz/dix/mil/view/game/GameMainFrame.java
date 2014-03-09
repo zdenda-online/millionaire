@@ -45,22 +45,19 @@ public class GameMainFrame extends JFrame implements Refreshable {
         setIconImage(new ImageIcon(getClass().getResource("/imgs/icon.png")).getImage());
         setLayout(new BorderLayout());
 
-        JPanel background = new BackgroundPanel(new ImageIcon(getClass().getResource("/imgs/background.png")).getImage());
-
-        JPanel leftPanel = new JPanel(new BorderLayout());
-
         JPanel leftInnerPanel = new JPanel(new BorderLayout());
-        leftInnerPanel.setOpaque(false);
         leftInnerPanel.add(audienceResultPanel, BorderLayout.CENTER);
         leftInnerPanel.add(questionsPanel, BorderLayout.SOUTH);
 
+        JPanel leftPanel = new JPanel(new BorderLayout());
         leftPanel.add(hintsPanel, BorderLayout.NORTH);
         leftPanel.add(leftInnerPanel, BorderLayout.CENTER);
         leftPanel.add(answersPanel, BorderLayout.SOUTH);
 
-        background.add(leftPanel, BorderLayout.CENTER);
-        background.add(rewardsPanel, BorderLayout.EAST);
-        add(background);
+        JPanel backgroundPanel = new BackgroundPanel(new ImageIcon(getClass().getResource("/imgs/background.png")).getImage());
+        backgroundPanel.add(leftPanel, BorderLayout.CENTER);
+        backgroundPanel.add(rewardsPanel, BorderLayout.EAST);
+        add(backgroundPanel);
 
         setLocationRelativeTo(null);
         setResizable(false);
