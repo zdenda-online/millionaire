@@ -30,7 +30,7 @@ public class GameMainFrame extends JFrame implements Refreshable {
     private final RewardsPanel rewardsPanel;
 
     public GameMainFrame(GameModel model, GameController controller) {
-        super("Game: " + model.getGameName());
+        super(model.getGameName());
         this.hintsPanel = new HintsPanel(model, controller);
         this.audienceResultPanel = new AudienceResultPanel(model);
         this.questionsPanel = new QuestionsPanel(model);
