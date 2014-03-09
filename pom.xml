@@ -93,6 +93,10 @@
                             <id>${project.artifactId}</id>
                             <mainClass>cz.dix.mil.GameMain</mainClass>
                         </program>
+                        <program>
+                            <id>${project.artifactId}-game-creator</id>
+                            <mainClass>cz.dix.mil.CreatorMain</mainClass>
+                        </program>
                     </programs>
                 </configuration>
                 <executions>
