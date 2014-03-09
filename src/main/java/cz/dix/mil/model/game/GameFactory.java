@@ -58,7 +58,7 @@ public class GameFactory {
      *
      * @return template game
      */
-    public static Game newTemplate() {
+    public static Game newGameTemplate() {
         List<Question> questions = new ArrayList<>();
         for (int i = 0; i < 15; i++) {
 
@@ -92,6 +92,8 @@ public class GameFactory {
         validate(game, gameValidation);
         try {
             Marshaller marshaller = jaxbContext.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             marshaller.marshal(game, file);
         } catch (JAXBException e) {
             throw new GameCreationException(e.getMessage());
