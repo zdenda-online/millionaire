@@ -21,7 +21,7 @@ public class SimpleAutomaticAudienceTest {
     @Test
     public void testFourAnswers() {
         List<Answer> answers = genAnswers(4);
-        test(answers, QuestionDifficulty.EASY, 0, 20);
+        test(answers, QuestionDifficulty.EASY, 0, 15);
         test(answers, QuestionDifficulty.MID, 10, 26);
         test(answers, QuestionDifficulty.HARD, 19, 27);
     }
@@ -29,8 +29,8 @@ public class SimpleAutomaticAudienceTest {
     @Test
     public void testTwoAnswers() {
         List<Answer> answers = genAnswers(2);
-        test(answers, QuestionDifficulty.EASY, 0, 35);
-        test(answers, QuestionDifficulty.MID, 25, 55);
+        test(answers, QuestionDifficulty.EASY, 0, 20);
+        test(answers, QuestionDifficulty.MID, 20, 55);
         test(answers, QuestionDifficulty.HARD, 35, 55);
     }
 

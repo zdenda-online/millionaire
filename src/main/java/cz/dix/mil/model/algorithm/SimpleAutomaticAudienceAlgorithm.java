@@ -27,11 +27,11 @@ public class SimpleAutomaticAudienceAlgorithm implements AutomaticAudienceAlgori
         switch (difficulty) {
             case EASY:
                 if (answersCount == 4) {
-                    // incorrect 0 - 20 => avg. 10 | correct: 40 - 100 => avg. 70
-                    res = generate(answers, 0, 20);
+                    // incorrect 0 - 15 => avg. 7.5 | correct: 55 - 100 => avg. 77.5
+                    res = generate(answers, 0, 15);
                 } else { // answersCount == 2
-                    // incorrect 0 - 35 => avg. 17.5 | correct: 65 - 100 => avg. 82.5
-                    res = generate(answers, 0, 35);
+                    // incorrect 0 - 20 => avg. 10 | correct: 80 - 100 => avg. 90
+                    res = generate(answers, 0, 20);
                 }
                 break;
             case MID:
@@ -39,8 +39,8 @@ public class SimpleAutomaticAudienceAlgorithm implements AutomaticAudienceAlgori
                     // incorrect 10 - 26 => avg. 18 | correct: 22 - 70 => avg. 46
                     res = generate(answers, 10, 26);
                 } else { // answersCount == 2
-                    // incorrect 25 - 55 => avg. 40 | correct: 45 - 75 => avg. 60
-                    res = generate(answers, 25, 55);
+                    // incorrect 20 - 55 => avg. 37.5 | correct: 45 - 80 => avg. 62.5
+                    res = generate(answers, 20, 55);
                 }
                 break;
             case HARD:
