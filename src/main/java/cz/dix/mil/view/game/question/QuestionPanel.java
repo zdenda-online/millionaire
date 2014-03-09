@@ -14,7 +14,7 @@ import java.awt.*;
  *
  * @author Zdenek Obst, zdenek.obst-at-gmail.com
  */
-public class QuestionsPanel extends JPanel implements Refreshable {
+public class QuestionPanel extends JPanel implements Refreshable {
 
     private static final int QUESTION_MARGIN = 30;
     private Skin skin = SkinManager.getSkin();
@@ -22,7 +22,7 @@ public class QuestionsPanel extends JPanel implements Refreshable {
     private final JLabel questionLabel = new JLabel();
     private final GameModel model;
 
-    public QuestionsPanel(GameModel model) {
+    public QuestionPanel(GameModel model) {
         super(new BorderLayout());
         this.model = model;
         init();

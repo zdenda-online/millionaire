@@ -163,7 +163,7 @@ public class DefaultSkin implements Skin {
      */
     @Override
     public Color rewardCheckpointText() {
-        return new Color(255, 230, 0);
+        return new Color(255, 220, 0);
     }
 
     /**

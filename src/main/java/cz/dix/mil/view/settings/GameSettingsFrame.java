@@ -3,20 +3,17 @@ package cz.dix.mil.view.settings;
 import cz.dix.mil.controller.GameController;
 import cz.dix.mil.model.GameSettings;
 import cz.dix.mil.model.game.Game;
-import cz.dix.mil.model.game.GameCreationException;
-import cz.dix.mil.model.game.GameFactory;
 import cz.dix.mil.model.game.validation.GameValidation;
 import cz.dix.mil.model.game.validation.OriginalGameValidation;
+import cz.dix.mil.view.common.GameImportFileChooser;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 
 /**
  * Frame that is shown at the beginning for choosing settings and starting the game.
@@ -25,9 +22,9 @@ import java.io.File;
  */
 public class GameSettingsFrame extends JFrame {
 
-    private static final int WIDTH = 230;
-    private static final int HEIGHT = 150;
-    private static final int ITEMS_MARGIN = 5;
+    private static final int WIDTH = 250;
+    private static final int HEIGHT = 180;
+    private static final int ITEMS_MARGIN = 10;
 
     // can be chosen as setting from combo-box in future maybe
     private static final GameValidation GAME_VALIDATION = new OriginalGameValidation();
@@ -55,9 +52,9 @@ public class GameSettingsFrame extends JFrame {
     private void init() {
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(new ImageIcon(getClass().getResource("/imgs/icon.png")).getImage());
         setLocationRelativeTo(null);
         setResizable(false);
-        setIconImage(new ImageIcon(getClass().getResource("/imgs/icon.png")).getImage());
 
         gameFileField.setEnabled(false);
         gameFileButton.addActionListener(new ActionListener() {
@@ -93,24 +90,8 @@ public class GameSettingsFrame extends JFrame {
      * Shows file chooser for selecting game file.
      */
     private void selectGameFile() {
-        JFileChooser fileChooser = new JFileChooser(new File("../games"));
-        fileChooser.setDialogTitle("Game File Selection");
-        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        fileChooser.setMultiSelectionEnabled(false);
-        fileChooser.setFileFilter(new FileNameExtensionFilter("XML Files", "xml"));
-        if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
-            gameFileField.setText(selectedFile.getName());
-            try {
-                this.game = GameFactory.newGame(selectedFile, GAME_VALIDATION);
-                JOptionPane.showMessageDialog(this, "Game file loaded successfully", "",
-                        JOptionPane.PLAIN_MESSAGE, new ImageIcon(getClass().getResource("/imgs/approved.png")));
-                startButton.setEnabled(true);
-            } catch (GameCreationException e) {
-                startButton.setEnabled(false);
-                JOptionPane.showMessageDialog(this, "Game file load failed due to:\n" + e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
-            }
-        }
+        this.game = new GameImportFileChooser(GAME_VALIDATION).importGame();
+        startButton.setEnabled(game != null);
     }
 
     /**
@@ -139,7 +120,7 @@ public class GameSettingsFrame extends JFrame {
             hintIcon.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    JOptionPane.showMessageDialog(GameSettingsFrame.this, infoHint, "", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(GameSettingsFrame.this, infoHint, label, JOptionPane.INFORMATION_MESSAGE);
                 }
             });
             add(hintIcon, BorderLayout.EAST);

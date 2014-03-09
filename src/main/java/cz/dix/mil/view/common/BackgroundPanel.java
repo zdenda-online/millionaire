@@ -1,4 +1,4 @@
-package cz.dix.mil.view.game;
+package cz.dix.mil.view.common;
 
 import javax.swing.*;
 import java.awt.*;

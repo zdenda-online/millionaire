@@ -14,7 +14,7 @@ public class Answer {
     @XmlValue
     private String text;
     @XmlAttribute(name = "is-correct", required = false)
-    private boolean isCorrect;
+    private Boolean isCorrect;
 
     public Answer() {
         // for JAXB
@@ -28,7 +28,7 @@ public class Answer {
      */
     public Answer(String text, boolean isCorrect) {
         this.text = text;
-        this.isCorrect = isCorrect;
+        this.isCorrect = isCorrect ? true : null; // incorrect answer attribute is not saved
     }
 
     /**
@@ -46,6 +46,6 @@ public class Answer {
      * @return true if answer is correct, otherwise false
      */
     public boolean isCorrect() {
-        return isCorrect;
+        return (isCorrect == null) ? false : isCorrect;
     }
 }

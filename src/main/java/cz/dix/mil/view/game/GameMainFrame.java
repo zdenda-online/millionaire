@@ -4,10 +4,11 @@ import cz.dix.mil.controller.ChainedAction;
 import cz.dix.mil.controller.GameController;
 import cz.dix.mil.controller.Refreshable;
 import cz.dix.mil.model.runtime.GameModel;
+import cz.dix.mil.view.common.BackgroundPanel;
 import cz.dix.mil.view.game.hint.AudienceResultPanel;
 import cz.dix.mil.view.game.hint.HintsPanel;
 import cz.dix.mil.view.game.question.AnswersPanel;
-import cz.dix.mil.view.game.question.QuestionsPanel;
+import cz.dix.mil.view.game.question.QuestionPanel;
 import cz.dix.mil.view.game.reward.RewardsPanel;
 
 import javax.swing.*;
@@ -25,7 +26,7 @@ public class GameMainFrame extends JFrame implements Refreshable {
 
     private final HintsPanel hintsPanel;
     private final AudienceResultPanel audienceResultPanel;
-    private final QuestionsPanel questionsPanel;
+    private final QuestionPanel questionPanel;
     private final AnswersPanel answersPanel;
     private final RewardsPanel rewardsPanel;
 
@@ -33,7 +34,7 @@ public class GameMainFrame extends JFrame implements Refreshable {
         super(model.getGameName());
         this.hintsPanel = new HintsPanel(model, controller);
         this.audienceResultPanel = new AudienceResultPanel(model);
-        this.questionsPanel = new QuestionsPanel(model);
+        this.questionPanel = new QuestionPanel(model);
         this.answersPanel = new AnswersPanel(model, controller);
         this.rewardsPanel = new RewardsPanel(model);
         init();
@@ -44,10 +45,12 @@ public class GameMainFrame extends JFrame implements Refreshable {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setIconImage(new ImageIcon(getClass().getResource("/imgs/icon.png")).getImage());
         setLayout(new BorderLayout());
+        setLocationRelativeTo(null);
+        setResizable(false);
 
         JPanel leftInnerPanel = new JPanel(new BorderLayout());
         leftInnerPanel.add(audienceResultPanel, BorderLayout.CENTER);
-        leftInnerPanel.add(questionsPanel, BorderLayout.SOUTH);
+        leftInnerPanel.add(questionPanel, BorderLayout.SOUTH);
 
         JPanel leftPanel = new JPanel(new BorderLayout());
         leftPanel.add(hintsPanel, BorderLayout.NORTH);
@@ -58,9 +61,6 @@ public class GameMainFrame extends JFrame implements Refreshable {
         backgroundPanel.add(leftPanel, BorderLayout.CENTER);
         backgroundPanel.add(rewardsPanel, BorderLayout.EAST);
         add(backgroundPanel);
-
-        setLocationRelativeTo(null);
-        setResizable(false);
     }
 
     /**
@@ -87,7 +87,7 @@ public class GameMainFrame extends JFrame implements Refreshable {
     public void refresh() {
         hintsPanel.refresh();
         audienceResultPanel.refresh();
-        questionsPanel.refresh();
+        questionPanel.refresh();
         answersPanel.refresh();
         rewardsPanel.refresh();
     }

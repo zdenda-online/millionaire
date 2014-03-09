@@ -7,11 +7,11 @@ import cz.dix.mil.view.skin.SkinManager;
 import javax.swing.*;
 
 /**
- * Main class of the millionaire game.
+ * Main class for staring game GUI.
  *
  * @author Zdenek Obst, zdenek.obst-at-gmail.com
  */
-public class MillionaireMain {
+public class GameMain {
 
     public static void main(String[] args) throws InterruptedException {
         setupSystem();

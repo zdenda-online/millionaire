@@ -91,7 +91,7 @@
                     <programs>
                         <program>
                             <id>${project.artifactId}</id>
-                            <mainClass>cz.dix.mil.MillionaireMain</mainClass>
+                            <mainClass>cz.dix.mil.GameMain</mainClass>
                         </program>
                     </programs>
                 </configuration>

@@ -25,7 +25,17 @@ public class Game {
     }
 
     /**
-     * Creates a game.
+     * Creates a new game.
+     *
+     * @param questions questions of the game
+     */
+    public Game(List<Question> questions) {
+        this.name = DEFAULT_NAME;
+        this.questions = questions;
+    }
+
+    /**
+     * Creates a new game.
      *
      * @param name      name of the game
      * @param questions questions of the game

@@ -64,20 +64,20 @@ public class GameFactory {
 
             String questionText = (i + 1) + ". question text";
             String questionReward = templateReward(i);
-            String answersDescription = "It is a) because of this and that...";
+            String answersDescription = "It is A) because of this and that...";
 
             List<Answer> answers = new ArrayList<>();
             for (int j = 0; j < 4; j++) {
                 char letter = (char) (65 + j);
                 boolean isCorrect = (j == 0);
-                String answerText = letter + ") " + (isCorrect ? "correct" : "incorrect") + " answer";
+                String answerText = (isCorrect ? "Correct" : "Incorrect") + " answer (" + letter + ")";
                 answers.add(new Answer(answerText, isCorrect));
             }
 
             questions.add(new Question(questionText, questionReward, answers, answersDescription));
         }
 
-        return new Game("Template Game", questions);
+        return new Game(questions);
     }
 
     /**
