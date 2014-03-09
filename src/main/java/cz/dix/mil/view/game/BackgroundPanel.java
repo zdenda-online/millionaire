@@ -30,7 +30,9 @@ public class BackgroundPanel extends JPanel {
 
     @Override
     public void add(Component component, Object constraints) {
-        ((JComponent) component).setOpaque(false);
+        if (component instanceof JPanel) {
+            setPanelNotOpaque((JPanel) component);
+        }
         super.add(component, constraints);
     }
 
@@ -39,5 +41,23 @@ public class BackgroundPanel extends JPanel {
         super.paintComponent(g);
         Dimension d = getSize();
         g.drawImage(image, 0, 0, d.width, d.height, null);
+    }
+
+    /**
+     * Sets given panel's opaque to be false.
+     * If this panel contains any other panels, it sets recursively their opaque to false too.
+     *
+     * @param panel panel to be set non opaque
+     */
+    private void setPanelNotOpaque(JPanel panel) {
+        panel.setOpaque(false);
+        Component[] subComponents = panel.getComponents();
+        if (subComponents != null) {
+            for (Component c : subComponents) {
+                if (c instanceof JPanel) {
+                    setPanelNotOpaque((JPanel) c);
+                }
+            }
+        }
     }
 }

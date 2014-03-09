@@ -10,7 +10,7 @@ public class CachedSoundsFactory implements SoundsFactory {
     private final SoundsFactory decorated;
 
     // cached sounds
-    private Sound start;
+    private Sound intro;
     private Sound easyQuestion;
     private Sound question;
     private Sound midQuestion;
@@ -34,11 +34,11 @@ public class CachedSoundsFactory implements SoundsFactory {
      * {@inheritDoc}
      */
     @Override
-    public Sound start() {
-        if (start == null) {
-            start = decorated.start();
+    public Sound intro() {
+        if (intro == null) {
+            intro = decorated.intro();
         }
-        return start;
+        return intro;
     }
 
     /**

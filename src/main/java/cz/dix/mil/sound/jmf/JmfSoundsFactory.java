@@ -21,7 +21,7 @@ public class JmfSoundsFactory implements SoundsFactory {
      * {@inheritDoc}
      */
     @Override
-    public Sound start() {
+    public Sound intro() {
         return new JmfSound(stream("start.wav"));
     }
 

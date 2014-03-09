@@ -11,16 +11,19 @@ public class GameSettings {
 
     private final Game game;
     private final boolean isRealAudience;
+    private final boolean skipIntro;
 
     /**
      * Creates a new settings.
      *
      * @param game           game to be played
      * @param isRealAudience flag whether game has real audience
+     * @param skipIntro      flag whether game intro should be skipped (true if yes)
      */
-    public GameSettings(Game game, boolean isRealAudience) {
+    public GameSettings(Game game, boolean isRealAudience, boolean skipIntro) {
         this.game = game;
         this.isRealAudience = isRealAudience;
+        this.skipIntro = skipIntro;
     }
 
     /**
@@ -40,5 +43,14 @@ public class GameSettings {
      */
     public boolean isRealAudience() {
         return isRealAudience;
+    }
+
+    /**
+     * Gets a flag whether game intro (welcome song) should be skipped.
+     *
+     * @return true if intro should be skipped, otherwise false
+     */
+    public boolean skipIntro() {
+        return skipIntro;
     }
 }

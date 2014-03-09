@@ -46,16 +46,23 @@ public class GameController {
      * Starts the whole game by playing introduction sound and showing main frame.
      */
     public void startGame() {
-        view.showStartFrame();
-        soundsController.startGame(new ChainedAction() {
+        ChainedAction gameStart = new ChainedAction() {
             @Override
             public void toNextAction() {
-                view.disposeStartFrame();
+                view.disposeIntroFrame();
+                soundsController.startGame();
                 model.toNextQuestion();
                 view.updateMainFrame();
                 view.showMainFrame();
             }
-        });
+        };
+
+        if (settings.skipIntro()) {
+            gameStart.toNextAction();
+        } else {
+            view.showIntroFrame();
+            soundsController.playIntro(gameStart);
+        }
     }
 
     /**

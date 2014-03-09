@@ -12,7 +12,7 @@ public interface SoundsFactory {
      *
      * @return sound for entering
      */
-    Sound start();
+    Sound intro();
 
 
     /**

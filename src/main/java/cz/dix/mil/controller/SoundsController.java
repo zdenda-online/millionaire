@@ -23,18 +23,24 @@ public class SoundsController {
     }
 
     /**
-     * Plays a starting sound (blocked), starts sound for easy questions and passes processing to chained action.
+     * Plays a introduction sound (blocked) and after that passes processing to chained action.
      *
-     * @param chainedAction action to be fired after start sound is played
+     * @param chainedAction action to be fired after intro sound is played
      */
-    public void startGame(final ChainedAction chainedAction) {
-        soundsFactory.start().play(new ChainedAction() {
+    public void playIntro(final ChainedAction chainedAction) {
+        soundsFactory.intro().play(new ChainedAction() {
             @Override
             public void toNextAction() {
-                playLoopedAndStoreSound(soundsFactory.easyQuestion());
                 chainedAction.toNextAction();
             }
         });
+    }
+
+    /**
+     * Starts the game by playing question sound (for easy questions).
+     */
+    public void startGame() {
+        playLoopedAndStoreSound(soundsFactory.easyQuestion());
     }
 
     /**
@@ -223,15 +229,6 @@ public class SoundsController {
     private void playAndStoreSoundChained(Sound sound, ChainedAction chainedAction) {
         actualSound = sound;
         actualSound.play(chainedAction);
-    }
-
-    private void closeOnBackground(final Sound sound) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                sound.close();
-            }
-        }).start();
     }
 
     private boolean isAnswerCorrect() {

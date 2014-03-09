@@ -17,7 +17,7 @@ import cz.dix.mil.view.game.reward.FinalRewardDialog;
  */
 public class GameView {
 
-    private final GameStartFrame gameStartFrame;
+    private final GameIntroFrame gameIntroFrame;
     private final GameMainFrame gameMainFrame;
     private final RevealAnswerDialog revealAnswerDialog;
     private final AudienceVotingDialog audienceVotingDialog;
@@ -26,7 +26,7 @@ public class GameView {
     private final FinalRewardDialog finalRewardDialog;
 
     public GameView(GameModel model, GameController controller) {
-        this.gameStartFrame = new GameStartFrame(model);
+        this.gameIntroFrame = new GameIntroFrame(model);
         this.gameMainFrame = new GameMainFrame(model, controller);
         this.revealAnswerDialog = new RevealAnswerDialog(gameMainFrame, controller);
         this.audienceVotingDialog = new AudienceVotingDialog(gameMainFrame);
@@ -36,17 +36,17 @@ public class GameView {
     }
 
     /**
-     * Shows start frame when starting sound plays.
+     * Shows introduction frame when starting sound plays.
      */
-    public void showStartFrame() {
-        gameStartFrame.setVisible(true);
+    public void showIntroFrame() {
+        gameIntroFrame.setVisible(true);
     }
 
     /**
-     * Disposes starts frame when starting sound is ended.
+     * Disposes introduction frame when starting sound is ended.
      */
-    public void disposeStartFrame() {
-        gameStartFrame.dispose();
+    public void disposeIntroFrame() {
+        gameIntroFrame.dispose();
     }
 
     /**

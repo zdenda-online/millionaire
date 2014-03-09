@@ -8,11 +8,11 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Frame that is shown when game is starting (starting sound plays).
+ * Frame that is shown when game is starting (starting sound plays) as an introduction.
  *
  * @author Zdenek Obst, zdenek.obst-at-gmail.com
  */
-public class GameStartFrame extends JFrame {
+public class GameIntroFrame extends JFrame {
 
     private static final int WIDTH = 600;
     private static final int HEIGHT = 100;
@@ -22,7 +22,7 @@ public class GameStartFrame extends JFrame {
     private final JLabel welcomeLabel = new JLabel();
     private final JLabel infoLabel = new JLabel();
 
-    public GameStartFrame(GameModel model) {
+    public GameIntroFrame(GameModel model) {
         super();
         this.model = model;
         init();
@@ -42,7 +42,7 @@ public class GameStartFrame extends JFrame {
         welcomeLabel.setHorizontalAlignment(SwingConstants.CENTER);
         welcomeLabel.setVerticalAlignment(SwingConstants.CENTER);
 
-        infoLabel.setText("Game will begin shortly...");
+        infoLabel.setText("The game will begin shortly...");
         infoLabel.setForeground(skin.defaultTextColor());
         infoLabel.setFont(skin.smallerFont());
         infoLabel.setHorizontalAlignment(SwingConstants.CENTER);
