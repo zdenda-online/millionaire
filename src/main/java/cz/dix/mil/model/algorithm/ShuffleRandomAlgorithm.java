@@ -17,6 +17,9 @@ public class ShuffleRandomAlgorithm<T> implements RandomAlgorithm<T> {
      */
     @Override
     public T random(Collection<T> possibilities) {
+        if (possibilities == null || possibilities.size() == 0) {
+            throw new IllegalArgumentException("Must have at least one possibility");
+        }
         List<T> asList = new ArrayList<T>(possibilities);
         Collections.shuffle(asList);
         return asList.get(0);
