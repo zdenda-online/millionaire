@@ -20,9 +20,15 @@ public class Answer {
         // for JAXB
     }
 
+    /**
+     * Creates a new answer.
+     *
+     * @param text      text of the answer
+     * @param isCorrect flag whether answer is correct
+     */
     public Answer(String text, boolean isCorrect) {
-        this.isCorrect = isCorrect;
         this.text = text;
+        this.isCorrect = isCorrect;
     }
 
     /**

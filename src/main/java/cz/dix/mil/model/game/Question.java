@@ -28,6 +28,21 @@ public class Question {
     }
 
     /**
+     * Creates a new question.
+     *
+     * @param text               text of the question
+     * @param reward             reward for the question
+     * @param answers            answers of question
+     * @param answersDescription description of answers
+     */
+    public Question(String text, String reward, List<Answer> answers, String answersDescription) {
+        this.text = text;
+        this.reward = reward;
+        this.answers = answers;
+        this.answersDescription = answersDescription;
+    }
+
+    /**
      * Gets a text of the question.
      *
      * @return text of question

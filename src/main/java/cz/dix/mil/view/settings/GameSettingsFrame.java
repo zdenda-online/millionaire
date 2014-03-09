@@ -3,7 +3,8 @@ package cz.dix.mil.view.settings;
 import cz.dix.mil.controller.GameController;
 import cz.dix.mil.model.GameSettings;
 import cz.dix.mil.model.game.Game;
-import cz.dix.mil.model.game.GameValidationException;
+import cz.dix.mil.model.game.GameCreationException;
+import cz.dix.mil.model.game.GameFactory;
 import cz.dix.mil.model.game.validation.GameValidation;
 import cz.dix.mil.model.game.validation.OriginalGameValidation;
 
@@ -101,11 +102,11 @@ public class GameSettingsFrame extends JFrame {
             File selectedFile = fileChooser.getSelectedFile();
             gameFileField.setText(selectedFile.getName());
             try {
-                this.game = Game.newInstance(selectedFile, GAME_VALIDATION);
+                this.game = GameFactory.newGame(selectedFile, GAME_VALIDATION);
                 JOptionPane.showMessageDialog(this, "Game file loaded successfully", "",
                         JOptionPane.PLAIN_MESSAGE, new ImageIcon(getClass().getResource("/imgs/approved.png")));
                 startButton.setEnabled(true);
-            } catch (GameValidationException e) {
+            } catch (GameCreationException e) {
                 startButton.setEnabled(false);
                 JOptionPane.showMessageDialog(this, "Game file load failed due to:\n" + e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
             }

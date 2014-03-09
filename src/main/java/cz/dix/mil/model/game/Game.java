@@ -1,13 +1,6 @@
 package cz.dix.mil.model.game;
 
-import cz.dix.mil.model.game.validation.GameValidation;
-import cz.dix.mil.model.game.validation.ValidationResult;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.*;
-import java.io.File;
 import java.util.List;
 
 /**
@@ -32,31 +25,14 @@ public class Game {
     }
 
     /**
-     * Creates a new instance from XML game file.
+     * Creates a game.
      *
-     * @param file           file with game contents
-     * @param gameValidation validation that should be used for resolving whether game is valid
-     * @return new game instance
-     * @throws GameValidationException possible exception if file is corrupt
+     * @param name      name of the game
+     * @param questions questions of the game
      */
-    public static Game newInstance(File file, GameValidation gameValidation) throws GameValidationException {
-        if (!file.exists()) {
-            throw new GameValidationException("Selected file does not exist!");
-        }
-        Game game;
-        try {
-            JAXBContext ctx = JAXBContext.newInstance(Question.class, Game.class, Answer.class);
-            Unmarshaller unmarshaller = ctx.createUnmarshaller();
-            game = (Game) unmarshaller.unmarshal(file);
-        } catch (JAXBException e) {
-            throw new GameValidationException(e.getMessage());
-        }
-
-        ValidationResult validationResult = gameValidation.validate(game);
-        if (!validationResult.isValid()) {
-            throw new GameValidationException(validationResult.getMessage());
-        }
-        return game;
+    public Game(String name, List<Question> questions) {
+        this.name = name;
+        this.questions = questions;
     }
 
     /**
