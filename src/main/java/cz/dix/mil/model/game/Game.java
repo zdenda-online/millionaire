@@ -1,5 +1,8 @@
 package cz.dix.mil.model.game;
 
+import cz.dix.mil.model.game.validation.GameValidation;
+import cz.dix.mil.model.game.validation.ValidationResult;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -11,11 +14,13 @@ import java.util.List;
  * Game is a simple aggregator of questions.
  * It is static representation of the game itself but it does not contain any runtime data
  *
- * @author Zdenek Obst
+ * @author Zdenek Obst, zdenek.obst-at-gmail.com
  */
 @XmlRootElement(name = "game")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Game {
+
+    private static final String DEFAULT_NAME = "Who Wants to Be a Millionaire?";
 
     @XmlElement(name = "name")
     private String name;
@@ -29,15 +34,16 @@ public class Game {
     /**
      * Creates a new instance from XML game file.
      *
-     * @param file file with game contents
+     * @param file           file with game contents
+     * @param gameValidation validation that should be used for resolving whether game is valid
      * @return new game instance
      * @throws GameValidationException possible exception if file is corrupt
      */
-    public static Game load(File file) throws GameValidationException {
+    public static Game newInstance(File file, GameValidation gameValidation) throws GameValidationException {
         if (!file.exists()) {
             throw new GameValidationException("Selected file does not exist!");
         }
-        Game game = null;
+        Game game;
         try {
             JAXBContext ctx = JAXBContext.newInstance(Question.class, Game.class, Answer.class);
             Unmarshaller unmarshaller = ctx.createUnmarshaller();
@@ -45,33 +51,12 @@ public class Game {
         } catch (JAXBException e) {
             throw new GameValidationException(e.getMessage());
         }
-        game.validate();
+
+        ValidationResult validationResult = gameValidation.validate(game);
+        if (!validationResult.isValid()) {
+            throw new GameValidationException(validationResult.getMessage());
+        }
         return game;
-    }
-
-    private void validate() throws GameValidationException {
-        if (questions == null || questions.size() == 0) {
-            throw new GameValidationException("Game is must contain at least one question!");
-        }
-        for (Question question : questions) {
-            List<Answer> answers = question.getAnswers();
-            if (answers == null || answers.size() != 4) { // remove check for 4 answers?, simple audience won't work!
-                throw new GameValidationException("Every question must contain four answers!");
-            }
-
-            boolean hasCorrectAnswer = false;
-            for (Answer answer : answers) {
-                if (hasCorrectAnswer && answer.isCorrect()) {
-                    throw new GameValidationException("Every question can have only one correct answer!");
-                }
-                if (!hasCorrectAnswer) {
-                    hasCorrectAnswer = answer.isCorrect();
-                }
-            }
-            if (!hasCorrectAnswer) {
-                throw new GameValidationException("Every question must have one correct answer!");
-            }
-        }
     }
 
     /**
@@ -80,7 +65,7 @@ public class Game {
      * @return name of the game
      */
     public String getName() {
-        return (name == null) ? "Default" : name;
+        return (name == null) ? DEFAULT_NAME : name;
     }
 
     /**

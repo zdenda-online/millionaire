@@ -4,6 +4,8 @@ import cz.dix.mil.controller.GameController;
 import cz.dix.mil.model.GameSettings;
 import cz.dix.mil.model.game.Game;
 import cz.dix.mil.model.game.GameValidationException;
+import cz.dix.mil.model.game.validation.GameValidation;
+import cz.dix.mil.model.game.validation.OriginalGameValidation;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -25,6 +27,9 @@ public class GameSettingsFrame extends JFrame {
     private static final int WIDTH = 230;
     private static final int HEIGHT = 150;
     private static final int ITEMS_MARGIN = 5;
+
+    // can be chosen as setting from combo-box in future maybe
+    private static final GameValidation GAME_VALIDATION = new OriginalGameValidation();
 
     private static final String REAL_AUDIENCE_HINT = "By default, a result of audience hint (voting) is computed " +
             "automatically according to the difficulty of actual question.\n" +
@@ -96,7 +101,7 @@ public class GameSettingsFrame extends JFrame {
             File selectedFile = fileChooser.getSelectedFile();
             gameFileField.setText(selectedFile.getName());
             try {
-                this.game = Game.load(selectedFile);
+                this.game = Game.newInstance(selectedFile, GAME_VALIDATION);
                 JOptionPane.showMessageDialog(this, "Game file loaded successfully", "",
                         JOptionPane.PLAIN_MESSAGE, new ImageIcon(getClass().getResource("/imgs/approved.png")));
                 startButton.setEnabled(true);

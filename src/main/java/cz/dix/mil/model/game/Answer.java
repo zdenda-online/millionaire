@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.*;
 /**
  * One single answer to the question.
  *
- * @author Zdenek Obst
+ * @author Zdenek Obst, zdenek.obst-at-gmail.com
  */
 @XmlRootElement(name = "answer")
 @XmlAccessorType(XmlAccessType.FIELD)

@@ -1,15 +1,13 @@
 package cz.dix.mil.model.game;
 
 import javax.xml.bind.annotation.*;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
  * Single question within the game.
  * Its difficulty is determined by the order within parent's {@link Game} instance.
  *
- * @author Zdenek Obst
+ * @author Zdenek Obst, zdenek.obst-at-gmail.com
  */
 @XmlRootElement(name = "question")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -27,27 +25,6 @@ public class Question {
 
     public Question() {
         // for JAXB
-    }
-
-    public Question(String text, String reward, String answersDescription, Answer... answers) {
-        boolean hasCorrect = false;
-        for (Answer answer : answers) {
-            if (answer.isCorrect() && hasCorrect) {
-                throw new IllegalArgumentException("Can have only one correct answer");
-            }
-            if (answer.isCorrect()) {
-                hasCorrect = true;
-            }
-        }
-        if (!hasCorrect) {
-            throw new IllegalArgumentException("At least one answer must be correct");
-        }
-
-        this.text = text;
-        this.reward = reward;
-        this.answersDescription = answersDescription;
-        this.answers = new ArrayList<Answer>();
-        Collections.addAll(this.answers, answers);
     }
 
     /**
