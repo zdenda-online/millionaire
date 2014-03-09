@@ -39,7 +39,6 @@ public class AnswersPanel extends JPanel implements Refreshable {
         this.controller = controller;
 
         setOpaque(false);
-        setBackground(new Color(0, 0, 0, 0));
         setBorder(new EmptyBorder(PANEL_MARGIN, PANEL_MARGIN, PANEL_MARGIN, PANEL_MARGIN));
     }
 
@@ -56,7 +55,7 @@ public class AnswersPanel extends JPanel implements Refreshable {
         answerButtons = new AnswerButton[allAnswers.size()];
         for (final Answer answer : allAnswers) {
             JPanel oneAnswerPanel = new JPanel(new BorderLayout());
-            oneAnswerPanel.setBackground(new Color(0, 0, 0, 0));
+            oneAnswerPanel.setOpaque(false);
             if (model.isAnswerAvailable(answer)) {
                 final AnswerButton answerButton = new AnswerButton(answer.getText());
                 if (answer.isCorrect()) {

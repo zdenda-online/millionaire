@@ -50,7 +50,6 @@ public class GameMainFrame extends JFrame implements Refreshable {
         JPanel leftPanel = new JPanel(new BorderLayout());
 
         JPanel leftInnerPanel = new JPanel(new BorderLayout());
-        leftInnerPanel.setBackground(new Color(0, 0, 0, 0));
         leftInnerPanel.setOpaque(false);
         leftInnerPanel.add(audienceResultPanel, BorderLayout.CENTER);
         leftInnerPanel.add(questionsPanel, BorderLayout.SOUTH);

@@ -30,7 +30,6 @@ public class QuestionsPanel extends JPanel implements Refreshable {
 
     private void init() {
         setOpaque(false);
-        setBackground(new Color(0, 0, 0, 0));
         questionLabel.setFont(skin.defaultFont());
         questionLabel.setForeground(skin.questionTextColor());
         questionLabel.setBorder(new EmptyBorder(QUESTION_MARGIN, QUESTION_MARGIN, QUESTION_MARGIN, QUESTION_MARGIN));

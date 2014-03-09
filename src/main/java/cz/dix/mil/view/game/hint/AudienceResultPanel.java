@@ -32,7 +32,6 @@ public class AudienceResultPanel extends JPanel implements Refreshable {
         FlowLayout layout = new FlowLayout(FlowLayout.CENTER, COLUMNS_GAP, 0);
         setLayout(layout);
         setOpaque(false);
-        setBackground(new Color(0, 0, 0, 0));
     }
 
     /**
@@ -60,7 +59,6 @@ public class AudienceResultPanel extends JPanel implements Refreshable {
             setLayout(new BorderLayout(10, 10));
             setPreferredSize(new Dimension(COL_WIDTH, COL_HEIGHT));
             setOpaque(false);
-            setBackground(new Color(0, 0, 0, 0));
 
             add(new ResultRectangle(percents), BorderLayout.CENTER);
 
@@ -80,7 +78,6 @@ public class AudienceResultPanel extends JPanel implements Refreshable {
             setLayout(new BorderLayout());
             setPreferredSize(new Dimension(RECTANGLE_WIDTH, RECTANGLE_HEIGHT));
             setOpaque(false);
-            setBackground(new Color(0, 0, 0, 0));
             this.percents = percents;
         }
 
