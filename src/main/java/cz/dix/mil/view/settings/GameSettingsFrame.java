@@ -102,7 +102,7 @@ public class GameSettingsFrame extends JFrame {
         fileChooser.setDialogTitle("Game File Selection");
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         fileChooser.setMultiSelectionEnabled(false);
-        fileChooser.setFileFilter(new FileNameExtensionFilter("XML only", "xml"));
+        fileChooser.setFileFilter(new FileNameExtensionFilter("XML Files", "xml"));
         if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
             gameFileField.setText(selectedFile.getName());

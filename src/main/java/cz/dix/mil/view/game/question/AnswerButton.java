@@ -17,12 +17,10 @@ public class AnswerButton extends JButton {
 
     private static final float ARC_WIDTH = 80.0f;
     private static final float ARC_HEIGHT = 50.0f;
-    private static final int FOCUS_STROKE = 2;
     private Shape shape;
     private Shape base;
 
     private Skin skin = SkinManager.getSkin();
-
 
     public enum ButtonState {
         DEFAULT, SELECTED_ANSWER, CORRECT_ANSWER
