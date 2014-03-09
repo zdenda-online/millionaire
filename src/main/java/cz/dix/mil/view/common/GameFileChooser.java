@@ -10,16 +10,16 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 
 /**
- * File chooser that is used for loading game file
+ * File chooser that is used for importing and exporting game files.
  *
  * @author Zdenek Obst, zdenek.obst-at-gmail.com
  */
-public class GameImportFileChooser extends JFileChooser {
+public class GameFileChooser extends JFileChooser {
 
     private static final File DEFAULT_DIR = new File("../games");
     private final GameValidation gameValidation;
 
-    public GameImportFileChooser(GameValidation gameValidation) {
+    public GameFileChooser(GameValidation gameValidation) {
         super(DEFAULT_DIR);
         this.gameValidation = gameValidation;
         setDialogTitle("Game File Selection");
@@ -37,11 +37,11 @@ public class GameImportFileChooser extends JFileChooser {
         if (showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             try {
                 Game importedGame = GameFactory.newGame(getSelectedFile(), gameValidation);
-                JOptionPane.showMessageDialog(this, "Game file loaded successfully", "",
+                JOptionPane.showMessageDialog(this, "Game imported successfully", "",
                         JOptionPane.PLAIN_MESSAGE, new ImageIcon(getClass().getResource("/imgs/approved.png")));
                 return importedGame;
             } catch (GameCreationException e) {
-                JOptionPane.showMessageDialog(this, "Game file load failed due to:\n" + e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Game import failed due to:\n" + e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
                 return null;
             }
         }

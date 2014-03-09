@@ -5,7 +5,7 @@ import cz.dix.mil.model.GameSettings;
 import cz.dix.mil.model.game.Game;
 import cz.dix.mil.model.game.validation.GameValidation;
 import cz.dix.mil.model.game.validation.OriginalGameValidation;
-import cz.dix.mil.view.common.GameImportFileChooser;
+import cz.dix.mil.view.common.GameFileChooser;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -90,7 +90,7 @@ public class GameSettingsFrame extends JFrame {
      * Shows file chooser for selecting game file.
      */
     private void selectGameFile() {
-        this.game = new GameImportFileChooser(GAME_VALIDATION).importGame();
+        this.game = new GameFileChooser(GAME_VALIDATION).importGame();
         startButton.setEnabled(game != null);
     }
 

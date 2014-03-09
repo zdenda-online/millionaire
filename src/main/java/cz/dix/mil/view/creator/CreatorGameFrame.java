@@ -5,7 +5,7 @@ import cz.dix.mil.model.game.Question;
 import cz.dix.mil.model.game.validation.GameValidation;
 import cz.dix.mil.model.game.validation.OriginalGameValidation;
 import cz.dix.mil.view.common.AutoSelectTextField;
-import cz.dix.mil.view.common.GameImportFileChooser;
+import cz.dix.mil.view.common.GameFileChooser;
 import cz.dix.mil.view.skin.Skin;
 import cz.dix.mil.view.skin.SkinManager;
 
@@ -152,7 +152,7 @@ public class CreatorGameFrame extends JFrame {
      * Loads new game from the given file.
      */
     private void importGame() {
-        Game game = new GameImportFileChooser(GAME_VALIDATION).importGame();
+        Game game = new GameFileChooser(GAME_VALIDATION).importGame();
         if (game != null) {
             setGame(game);
         }
@@ -170,7 +170,7 @@ public class CreatorGameFrame extends JFrame {
         }
         Game game = new Game(gameNameField.getText(), questions);
 
-        new GameImportFileChooser(GAME_VALIDATION).exportGame(game);
+        new GameFileChooser(GAME_VALIDATION).exportGame(game);
     }
 
     private void initMap(List<Question> questions) {
