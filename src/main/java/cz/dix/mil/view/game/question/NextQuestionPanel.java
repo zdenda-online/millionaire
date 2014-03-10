@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 /**
  * Simple panel with single button for showing next question.
  * Note that you should {@link #reactivateButton()} before every use because during click,
- * buttons gets automatically disabled (not to allow click quickly twice)
+ * buttons gets automatically hidden (not to allow click quickly twice).
  *
  * @author Zdenek Obst, zdenek.obst-at-gmail.com
  */
@@ -20,8 +20,7 @@ public class NextQuestionPanel extends JPanel {
     private static final int BUTTON_WIDTH = 400;
     private static final int BUTTON_HEIGHT = 50;
 
-    private final GameController controller;
-    private final JButton button;
+    private final JButton button = new RoundedButton("Next Question");
 
     /**
      * Creates a new question panel.
@@ -30,8 +29,13 @@ public class NextQuestionPanel extends JPanel {
      */
     public NextQuestionPanel(final GameController controller) {
         super(new GridBagLayout());
-        this.controller = controller;
-        this.button = new RoundedButton("Next Question");
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                button.setVisible(false);
+                controller.showNextQuestion();
+            }
+        });
         button.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         add(button);
         reactivateButton();
@@ -41,12 +45,6 @@ public class NextQuestionPanel extends JPanel {
      * Reactivates the button of this panel.
      */
     public void reactivateButton() {
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                button.removeActionListener(this);
-                controller.showNextQuestion();
-            }
-        });
+        button.setVisible(true);
     }
 }

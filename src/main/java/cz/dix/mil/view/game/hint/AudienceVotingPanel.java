@@ -19,7 +19,7 @@ public class AudienceVotingPanel extends JPanel {
     private static final int DELAY_BETWEEN_TEXT_CHANGE_MILLIS = 500;
     private static final String[] TEXTS = {"Audience is voting...", "Audience is voting..", "Audience is voting.",
             "Audience is voting", "Audience is voting.", "Audience is voting.."};
-    private static final int MAX_TICKS = 30; // more than sound for voting people
+    private static final int VOTING_SOUND_LENGTH_SECS = 10; // 9s lasts voting sound
 
     private final JLabel label = new JLabel();
     private int actualTick = 0;
@@ -51,7 +51,8 @@ public class AudienceVotingPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 actualTick++;
                 label.setText(getActualText());
-                if (actualTick > MAX_TICKS) {
+                if (actualTick > (VOTING_SOUND_LENGTH_SECS * 2)) { // -2 because text changes every 0.5s
+                    label.setText("Voting finished!");
                     stopTimer();
                 }
             }
