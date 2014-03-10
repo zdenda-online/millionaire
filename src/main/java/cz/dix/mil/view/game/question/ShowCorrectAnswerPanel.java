@@ -17,8 +17,8 @@ import java.awt.event.ActionListener;
  */
 public class ShowCorrectAnswerPanel extends JPanel {
 
-    private static final int BUTTON_WIDTH = 400;
-    private static final int BUTTON_HEIGHT = 50;
+    private static final int BUTTON_WIDTH = 350;
+    private static final int BUTTON_HEIGHT = 45;
 
     private final JButton button = new RoundedButton("Reveal Answer");
 
