@@ -53,7 +53,7 @@ public abstract class AbstractGameValidation implements GameValidation {
         for (Question question : questions) {
             List<Answer> answers = question.getAnswers();
             if (answers == null || answers.size() != allowedAnswersCount) {
-                return new ValidationResult(questionNr + ". question must have exactly " + allowedAnswersCount + " answers!");
+                return new ValidationResult("Question #" + questionNr + " must have exactly " + allowedAnswersCount + " answers!");
             }
 
             int correctAnswers = 0;
@@ -64,7 +64,7 @@ public abstract class AbstractGameValidation implements GameValidation {
             }
 
             if (correctAnswers != allowedCorrectAnswersCount) {
-                return new ValidationResult(questionNr + ". question must have exactly " + allowedCorrectAnswersCount + " correct answer!");
+                return new ValidationResult("Question #" + questionNr + " must have exactly " + allowedCorrectAnswersCount + " correct answer!");
             }
             questionNr++;
         }

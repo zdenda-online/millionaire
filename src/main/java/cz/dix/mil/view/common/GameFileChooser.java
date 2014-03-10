@@ -37,11 +37,11 @@ public class GameFileChooser extends JFileChooser {
         if (showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             try {
                 Game importedGame = GameFactory.newGame(getSelectedFile(), gameValidation);
-                JOptionPane.showMessageDialog(this, "Game imported successfully", "",
+                JOptionPane.showMessageDialog(this, "Game imported successfully!", "",
                         JOptionPane.PLAIN_MESSAGE, new ImageIcon(getClass().getResource("/imgs/approved.png")));
                 return importedGame;
             } catch (GameCreationException e) {
-                JOptionPane.showMessageDialog(this, "Game import failed due to:\n" + e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Game import failed!\n" + e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
                 return null;
             }
         }
@@ -57,10 +57,10 @@ public class GameFileChooser extends JFileChooser {
         if (showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
             try {
                 GameFactory.exportToXml(game, gameValidation, getSelectedFile());
-                JOptionPane.showMessageDialog(this, "Game exported successfully", "",
+                JOptionPane.showMessageDialog(this, "Game exported successfully!", "",
                         JOptionPane.PLAIN_MESSAGE, new ImageIcon(getClass().getResource("/imgs/approved.png")));
             } catch (GameCreationException e) {
-                JOptionPane.showMessageDialog(this, "Game export failed due to:\n" + e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Game export failed!\n" + e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
             }
         }
     }

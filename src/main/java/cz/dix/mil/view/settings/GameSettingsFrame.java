@@ -38,7 +38,7 @@ public class GameSettingsFrame extends JFrame {
 
     private Game game;
     private JButton gameFileButton = new JButton(new ImageIcon(getClass().getResource("/imgs/folder.png")));
-    private JTextField gameFileField = new JTextField("select game file -->");
+    private JTextField gameNameField = new JTextField("select game file -->");
     private CheckboxWithInfoPanel realAudiencePanel = new CheckboxWithInfoPanel("Real Audience", REAL_AUDIENCE_HINT);
     private CheckboxWithInfoPanel skipIntroPanel = new CheckboxWithInfoPanel("Skip Intro", SKIP_INTRO_HINT);
     private JButton startButton = new JButton("Start game");
@@ -56,7 +56,7 @@ public class GameSettingsFrame extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
 
-        gameFileField.setEnabled(false);
+        gameNameField.setEnabled(false);
         gameFileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -74,7 +74,7 @@ public class GameSettingsFrame extends JFrame {
         });
 
         JPanel gamePanel = new JPanel(new BorderLayout(ITEMS_MARGIN, ITEMS_MARGIN));
-        gamePanel.add(gameFileField, BorderLayout.CENTER);
+        gamePanel.add(gameNameField, BorderLayout.CENTER);
         gamePanel.add(gameFileButton, BorderLayout.EAST);
 
         JPanel mainPanel = new JPanel(new GridLayout(4, 1, ITEMS_MARGIN, ITEMS_MARGIN));
@@ -92,6 +92,9 @@ public class GameSettingsFrame extends JFrame {
     private void selectGameFile() {
         this.game = new GameFileChooser(GAME_VALIDATION).importGame();
         startButton.setEnabled(game != null);
+        if (game != null) {
+            gameNameField.setText(game.getName());
+        }
     }
 
     /**
