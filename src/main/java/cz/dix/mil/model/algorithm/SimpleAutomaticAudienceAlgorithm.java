@@ -27,11 +27,11 @@ public class SimpleAutomaticAudienceAlgorithm implements AutomaticAudienceAlgori
         switch (difficulty) {
             case EASY:
                 if (answersCount == 4) {
-                    // incorrect 0 - 15 => avg. 7.5 | correct: 55 - 100 => avg. 77.5
-                    res = generate(answers, 0, 15);
-                } else { // answersCount == 2
-                    // incorrect 0 - 20 => avg. 10 | correct: 80 - 100 => avg. 90
+                    // incorrect 0 - 20 => avg. 10 | correct: 40 - 100 => avg. 70
                     res = generate(answers, 0, 20);
+                } else { // answersCount == 2
+                    // incorrect 0 - 30 => avg. 15 | correct: 80 - 100 => avg. 90
+                    res = generate(answers, 0, 30);
                 }
                 break;
             case MID:
