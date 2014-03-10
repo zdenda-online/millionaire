@@ -1,6 +1,5 @@
 package cz.dix.mil.view.game.question;
 
-import cz.dix.mil.controller.ChainedAction;
 import cz.dix.mil.controller.GameController;
 import cz.dix.mil.controller.Refreshable;
 import cz.dix.mil.model.game.Answer;
@@ -64,7 +63,7 @@ public class AnswersPanel extends JPanel implements Refreshable {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         answerButton.setButtonState(AnswerButton.ButtonState.SELECTED_ANSWER);
-                        controller.answerQuestion(answer);
+                        controller.selectAnswer(answer);
                     }
                 });
                 char letter = (char) (65 + i);
@@ -99,9 +98,9 @@ public class AnswersPanel extends JPanel implements Refreshable {
     }
 
     /**
-     * Disables all buttons and changes color of button that corresponds to yjr correct answer.
+     * Disables all buttons and changes color of button that corresponds to correct answer.
      */
-    public void revealAnswer(ChainedAction chainedAction) {
+    public void revealAnswer() {
         final AnswerButton appliedButton = correctAnswerButton;
         final AnswerButton.ButtonState originalType = appliedButton.getButtonState();
         new Thread(new Runnable() {
@@ -127,7 +126,5 @@ public class AnswersPanel extends JPanel implements Refreshable {
                 }
             }
         }).start();
-
-        chainedAction.toNextAction();
     }
 }

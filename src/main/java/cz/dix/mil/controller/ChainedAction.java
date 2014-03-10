@@ -10,7 +10,7 @@ package cz.dix.mil.controller;
 public interface ChainedAction {
 
     /**
-     * Calls next action in the chain.
+     * Execute next action in the chain.
      */
-    void toNextAction();
+    void execute();
 }

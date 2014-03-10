@@ -9,6 +9,22 @@ import java.awt.*;
  */
 public class DefaultSkin implements Skin {
 
+    // Colors used for text
+    private static final Color YELLOW = new Color(255, 220, 0);
+    private static final Color ORANGE = new Color(255, 150, 0);
+
+    // Colors used for buttons
+    private static final Color DARK_BLUE = new Color(20, 20, 150);
+    private static final Color DARK_PURPLE = new Color(70, 0, 100);
+    private static final Color GREEN = new Color(0, 240, 0);
+    private static final Color DARK_GREEN = new Color(40, 115, 0);
+    private static final Color LIGHT_ORANGE = new Color(255, 174, 0);
+    private static final Color DARK_ORANGE = new Color(240, 100, 0);
+
+    // Colors used for audience result
+    private static final Color LIGHT_PURPLE = new Color(190, 0, 190);
+    private static final Color BLUE = new Color(40, 0, 230);
+
     /**
      * {@inheritDoc}
      */
@@ -37,8 +53,24 @@ public class DefaultSkin implements Skin {
      * {@inheritDoc}
      */
     @Override
+    public Font ultraLargeFont() {
+        return new Font(Font.SANS_SERIF, Font.BOLD, 36);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Color defaultTextColor() {
-        return new Color(255, 220, 0);
+        return YELLOW;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Gradient defaultButtonGradient() {
+        return new Gradient(DARK_BLUE, DARK_PURPLE);
     }
 
     /**
@@ -46,12 +78,15 @@ public class DefaultSkin implements Skin {
      */
     @Override
     public Color questionTextColor() {
-        return new Color(255, 220, 0);
+        return YELLOW;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Color answerLetterColor() {
-        return new Color(255, 150, 0);
+        return ORANGE;
     }
 
     /**
@@ -59,23 +94,23 @@ public class DefaultSkin implements Skin {
      */
     @Override
     public Color answerButtonBorderColor() {
-        return new Color(255, 220, 0);
+        return YELLOW;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Gradient answerButtonDefaultGradient() {
-        return new Gradient(new Color(20, 20, 150), new Color(70, 0, 100));
+    public Gradient answerButtonGradient() {
+        return new Gradient(DARK_BLUE, DARK_PURPLE);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Color answerButtonDefaultText() {
-        return new Color(255, 220, 0);
+    public Color answerButtonText() {
+        return YELLOW;
     }
 
     /**
@@ -83,7 +118,7 @@ public class DefaultSkin implements Skin {
      */
     @Override
     public Gradient answerButtonCorrectGradient() {
-        return new Gradient(new Color(0, 240, 0), new Color(41, 116, 0));
+        return new Gradient(GREEN, DARK_GREEN);
     }
 
     /**
@@ -91,7 +126,7 @@ public class DefaultSkin implements Skin {
      */
     @Override
     public Color answerButtonCorrectText() {
-        return new Color(255, 255, 255);
+        return Color.WHITE;
     }
 
     /**
@@ -99,7 +134,7 @@ public class DefaultSkin implements Skin {
      */
     @Override
     public Color audienceVotingText() {
-        return defaultTextColor();
+        return ORANGE;
     }
 
     /**
@@ -107,7 +142,7 @@ public class DefaultSkin implements Skin {
      */
     @Override
     public Gradient answerButtonSelectedGradient() {
-        return new Gradient(new Color(255, 174, 0), new Color(240, 101, 0));
+        return new Gradient(LIGHT_ORANGE, DARK_ORANGE);
     }
 
     /**
@@ -115,7 +150,7 @@ public class DefaultSkin implements Skin {
      */
     @Override
     public Color answerButtonSelectedText() {
-        return new Color(255, 255, 255);
+        return Color.WHITE;
     }
 
     /**
@@ -123,7 +158,7 @@ public class DefaultSkin implements Skin {
      */
     @Override
     public Gradient audienceResultColumn() {
-        return new Gradient(new Color(192, 0, 192), new Color(42, 0, 233));
+        return new Gradient(LIGHT_PURPLE, BLUE);
     }
 
     /**
@@ -131,7 +166,7 @@ public class DefaultSkin implements Skin {
      */
     @Override
     public Color audienceResultTextColor() {
-        return new Color(255, 255, 255);
+        return Color.WHITE;
     }
 
     /**
@@ -139,7 +174,7 @@ public class DefaultSkin implements Skin {
      */
     @Override
     public Color phoneFriendCountdownText() {
-        return defaultTextColor();
+        return ORANGE;
     }
 
     /**
@@ -147,7 +182,7 @@ public class DefaultSkin implements Skin {
      */
     @Override
     public Color rewardDefaultText() {
-        return new Color(255, 255, 255);
+        return Color.WHITE;
     }
 
     /**
@@ -155,7 +190,7 @@ public class DefaultSkin implements Skin {
      */
     @Override
     public Color rewardActualQuestionText() {
-        return new Color(255, 150, 0);
+        return ORANGE;
     }
 
     /**
@@ -163,7 +198,7 @@ public class DefaultSkin implements Skin {
      */
     @Override
     public Color rewardCheckpointText() {
-        return new Color(255, 220, 0);
+        return YELLOW;
     }
 
     /**
@@ -171,6 +206,6 @@ public class DefaultSkin implements Skin {
      */
     @Override
     public Color finalRewardText() {
-        return defaultTextColor();
+        return ORANGE;
     }
 }

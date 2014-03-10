@@ -13,10 +13,16 @@ public class AutoSelectTextField extends JTextField {
 
     private boolean alreadyClicked = false;
 
+    /**
+     * Creates a new autoselect text field.
+     */
     public AutoSelectTextField() {
         super();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void processMouseEvent(MouseEvent e) {
         if (!alreadyClicked) {

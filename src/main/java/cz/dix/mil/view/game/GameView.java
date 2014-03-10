@@ -1,13 +1,8 @@
 package cz.dix.mil.view.game;
 
-import cz.dix.mil.controller.ChainedAction;
 import cz.dix.mil.controller.GameController;
 import cz.dix.mil.model.runtime.GameModel;
-import cz.dix.mil.view.game.hint.AudienceVotingDialog;
 import cz.dix.mil.view.game.hint.ManualAudienceResultDialog;
-import cz.dix.mil.view.game.hint.PhoneFriendDialog;
-import cz.dix.mil.view.game.question.RevealAnswerDialog;
-import cz.dix.mil.view.game.reward.FinalRewardDialog;
 
 /**
  * Represents all components of the game view.
@@ -18,21 +13,13 @@ import cz.dix.mil.view.game.reward.FinalRewardDialog;
 public class GameView {
 
     private final GameIntroFrame gameIntroFrame;
-    private final GameMainFrame gameMainFrame;
-    private final RevealAnswerDialog revealAnswerDialog;
-    private final AudienceVotingDialog audienceVotingDialog;
+    private final GameFrame gameFrame;
     private final ManualAudienceResultDialog manualAudienceResultDialog;
-    private final PhoneFriendDialog phoneFriendDialog;
-    private final FinalRewardDialog finalRewardDialog;
 
     public GameView(GameModel model, GameController controller) {
         this.gameIntroFrame = new GameIntroFrame(model);
-        this.gameMainFrame = new GameMainFrame(model, controller);
-        this.revealAnswerDialog = new RevealAnswerDialog(gameMainFrame, controller);
-        this.audienceVotingDialog = new AudienceVotingDialog(gameMainFrame);
-        this.manualAudienceResultDialog = new ManualAudienceResultDialog(gameMainFrame, model, controller);
-        this.phoneFriendDialog = new PhoneFriendDialog(gameMainFrame);
-        this.finalRewardDialog = new FinalRewardDialog(gameMainFrame, model);
+        this.gameFrame = new GameFrame(model, controller);
+        this.manualAudienceResultDialog = new ManualAudienceResultDialog(gameFrame, model, controller);
     }
 
     /**
@@ -53,37 +40,43 @@ public class GameView {
      * Shows main frame of game.
      */
     public void showMainFrame() {
-        gameMainFrame.setVisible(true);
+        gameFrame.setVisible(true);
+    }
+
+    /**
+     * Hides question (hides all components except reward).
+     */
+    public void hideQuestion() {
+        gameFrame.hideQuestion();
     }
 
     /**
      * Updates main frame of the game.
      */
     public void updateMainFrame() {
-        gameMainFrame.refresh();
+        gameFrame.refresh();
     }
 
     /**
      * Disables all actions in main frame of the game.
      */
     public void disableMainFrame() {
-        gameMainFrame.disableActions();
+        gameFrame.disableActions();
     }
 
     /**
-     * Reveals correct answer in view and passes processing to specified chained action.
-     *
-     * @param chainedAction action to be fired after answer is revealed
+     * Reveals correct answer.
      */
-    public void revealAnswer(ChainedAction chainedAction) {
-        gameMainFrame.revealAnswer(chainedAction);
+    public void revealAnswer() {
+        gameFrame.revealAnswer();
     }
 
     /**
-     * Reveals dialog for answer reveal (moderator's action).
+     * Disables all actions and shows button for revealing an answer.
      */
-    public void showRevealAnswerDialog() {
-        revealAnswerDialog.setVisible(true);
+    public void showRevealAnswerButton() {
+        disableMainFrame();
+        gameFrame.showRevealAnswerPanel();
     }
 
     /**
@@ -94,30 +87,31 @@ public class GameView {
     }
 
     /**
-     * Reveals dialog when audience is voting.
+     * Disables all actions and shows label that audience is voting.
      */
-    public void showAudienceVotingDialog() {
-        audienceVotingDialog.setVisible(true);
+    public void showAudienceVoting() {
+        gameFrame.showAudienceVotingPanel();
     }
 
     /**
-     * Disposes dialog when audience voting is finished.
+     * Shows audience voting result.
      */
-    public void disposeAudienceVotingDialog() {
-        audienceVotingDialog.dispose();
+    public void showAudienceVotingResult() {
+        gameFrame.refresh();
+        gameFrame.showAudienceVotingResultPanel();
     }
 
     /**
      * Reveals dialog with countdown of phone friend.
      */
-    public void showPhoneFriendDialog() {
-        phoneFriendDialog.startCountdown();
+    public void showPhoneFriendCountdown() {
+        gameFrame.showPhoneFriendPanel();
     }
 
     /**
-     * Reveals dialog with final reward (game is over).
+     * Shows with final reward (game is over).
      */
-    public void showFinalRewardDialog() {
-        finalRewardDialog.setVisible(true);
+    public void showFinalReward() {
+        gameFrame.showFinalRewardPanel();
     }
 }

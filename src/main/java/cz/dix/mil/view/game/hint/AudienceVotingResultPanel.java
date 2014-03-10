@@ -1,6 +1,5 @@
 package cz.dix.mil.view.game.hint;
 
-import cz.dix.mil.controller.Refreshable;
 import cz.dix.mil.model.runtime.AudienceResult;
 import cz.dix.mil.model.runtime.GameModel;
 import cz.dix.mil.view.skin.Gradient;
@@ -15,7 +14,7 @@ import java.awt.*;
  *
  * @author Zdenek Obst, zdenek.obst-at-gmail.com
  */
-public class AudienceResultPanel extends JPanel implements Refreshable {
+public class AudienceVotingResultPanel extends JPanel {
 
     private static final int COLUMNS_GAP = 20;
     private static final int RECTANGLE_WIDTH = 70;
@@ -27,17 +26,16 @@ public class AudienceResultPanel extends JPanel implements Refreshable {
 
     private final GameModel model;
 
-    public AudienceResultPanel(GameModel model) {
+    public AudienceVotingResultPanel(GameModel model) {
         this.model = model;
         FlowLayout layout = new FlowLayout(FlowLayout.CENTER, COLUMNS_GAP, 0);
         setLayout(layout);
     }
 
     /**
-     * Refreshes panel according to the results of audience voting.
+     * Fetches results of voting from model.
      */
-    @Override
-    public void refresh() {
+    public void fetchResults() {
         removeAll();
 
         if (model.hasAudienceResult()) {

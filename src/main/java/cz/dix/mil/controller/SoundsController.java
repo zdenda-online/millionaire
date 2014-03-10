@@ -30,8 +30,8 @@ public class SoundsController {
     public void playIntro(final ChainedAction chainedAction) {
         soundsFactory.intro().play(new ChainedAction() {
             @Override
-            public void toNextAction() {
-                chainedAction.toNextAction();
+            public void execute() {
+                chainedAction.execute();
             }
         });
     }
@@ -57,7 +57,7 @@ public class SoundsController {
                 isAnswerRevealed = false;
                 playAndStoreSoundChained(soundsFactory.answerWaitStart(), new ChainedAction() {
                     @Override
-                    public void toNextAction() {
+                    public void execute() {
                         if (!isAnswerRevealed) { // avoid situation when answerStart did not finish and answer was revealed
                             stopActualSound();
                             playLoopedAndStoreSound(soundsFactory.answerWaitContinue());
@@ -71,12 +71,11 @@ public class SoundsController {
     }
 
     /**
-     * Plays appropriate sounds (correct/incorrect answer or checkpoint)
-     * and passes processing to chained action.
+     * Plays appropriate sounds (correct/incorrect answer or checkpoint) and passes processing to chained action
      *
-     * @param chainedAction action to be fired after sounds is played
+     * @param chainedAction next action for processing
      */
-    public void revealAnswer(final ChainedAction chainedAction) {
+    public void revealAnswer(ChainedAction chainedAction) {
         isAnswerRevealed = true;
         switch (model.getActualQuestionDifficulty()) {
             case EASY:
@@ -116,15 +115,15 @@ public class SoundsController {
     public void nextQuestion(final ChainedAction chainedAction) {
         switch (model.getActualQuestionDifficulty()) {
             case EASY:
-                chainedAction.toNextAction();
+                chainedAction.execute();
                 break;
             case MID:
                 stopActualSound();
                 soundsFactory.question().play(new ChainedAction() {
                     @Override
-                    public void toNextAction() {
+                    public void execute() {
                         playLoopedAndStoreSound(soundsFactory.midQuestion());
-                        chainedAction.toNextAction();
+                        chainedAction.execute();
                     }
                 });
                 break;
@@ -132,9 +131,9 @@ public class SoundsController {
                 stopActualSound();
                 soundsFactory.question().play(new ChainedAction() {
                     @Override
-                    public void toNextAction() {
+                    public void execute() {
                         playLoopedAndStoreSound(soundsFactory.hardQuestion());
-                        chainedAction.toNextAction();
+                        chainedAction.execute();
                     }
                 });
                 break;
@@ -152,7 +151,7 @@ public class SoundsController {
         pauseActualSound();
         soundsFactory.audience().play(new ChainedAction() {
             @Override
-            public void toNextAction() {
+            public void execute() {
                 useHint(chainedAction, soundsFactory.audienceEnd());
             }
         });
@@ -181,9 +180,10 @@ public class SoundsController {
     /**
      * Checks whether the question is ordinary (is not checkpoint) and plays checkpoint sound if not.
      *
+     * @param chainedAction next action to be played after checkpoint sound
      * @return true if actual question is ordinary, otherwise false
      */
-    private boolean isOrdinaryQuestion(final ChainedAction chainedAction) {
+    private boolean isOrdinaryQuestion(ChainedAction chainedAction) {
         if (model.isCheckpoint(model.getActualQuestion())) {
             stopActualSound();
             soundsFactory.checkpoint().play(chainedAction);
@@ -196,9 +196,9 @@ public class SoundsController {
     private void useHint(final ChainedAction chainedAction, Sound hintSound) {
         hintSound.play(new ChainedAction() {
             @Override
-            public void toNextAction() {
+            public void execute() {
                 continueActualSound();
-                chainedAction.toNextAction();
+                chainedAction.execute();
             }
         });
     }

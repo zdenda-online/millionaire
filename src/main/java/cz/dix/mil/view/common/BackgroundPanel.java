@@ -14,22 +14,27 @@ public class BackgroundPanel extends JPanel {
 
     private Image image;
 
-    /*
-     *  Set image as the background with the specified style
+    /**
+     * Creates a new background panel.
+     *
+     * @param image image to be shown on the background
      */
     public BackgroundPanel(Image image) {
         this.image = image;
         setLayout(new BorderLayout());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Dimension getPreferredSize() {
-        if (image == null)
-            return super.getPreferredSize();
-        else
-            return new Dimension(image.getWidth(null), image.getHeight(null));
+        return new Dimension(image.getWidth(null), image.getHeight(null));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void paintComponent(Graphics g) {
         setPanelsNonOpaque(this);

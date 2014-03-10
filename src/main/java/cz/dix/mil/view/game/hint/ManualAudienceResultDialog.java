@@ -55,7 +55,7 @@ public class ManualAudienceResultDialog extends JDialog {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 dispose();
-                controller.setAudienceHintResults(getSpinnerValues(spinners));
+                controller.setManualAudienceHintResults(getSpinnerValues(spinners));
             }
         });
 

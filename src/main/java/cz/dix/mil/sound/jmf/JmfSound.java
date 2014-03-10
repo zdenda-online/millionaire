@@ -90,7 +90,7 @@ public class JmfSound implements Sound {
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
-                    chainedAction.toNextAction();
+                    chainedAction.execute();
                 }
             }
         }).start();

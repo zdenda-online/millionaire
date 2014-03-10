@@ -48,7 +48,7 @@ public class GameController {
     public void startGame() {
         ChainedAction gameStart = new ChainedAction() {
             @Override
-            public void toNextAction() {
+            public void execute() {
                 view.disposeIntroFrame();
                 soundsController.startGame();
                 model.toNextQuestion();
@@ -58,7 +58,7 @@ public class GameController {
         };
 
         if (settings.skipIntro()) {
-            gameStart.toNextAction();
+            gameStart.execute();
         } else {
             view.showIntroFrame();
             soundsController.playIntro(gameStart);
@@ -66,67 +66,67 @@ public class GameController {
     }
 
     /**
-     * Player answers the question.
+     * Player selects an answer to the question.
      *
      * @param answer answer selected by player
      */
-    public void answerQuestion(Answer answer) {
-        view.disableMainFrame();
+    public void selectAnswer(Answer answer) {
+        view.showRevealAnswerButton();
         model.answerQuestion(answer);
-        view.showRevealAnswerDialog();
         soundsController.selectAnswer();
     }
 
     /**
-     * Moderator shows correct answer.
+     * Moderator shows the correct answer of actual question.
      */
-    public void revealCorrectAnswer() {
-        view.revealAnswer(new ChainedAction() {
+    public void showCorrectAnswer() {
+        view.revealAnswer();
+        soundsController.revealAnswer(new ChainedAction() {
             @Override
-            public void toNextAction() {
-                soundsController.revealAnswer(new ChainedAction() {
-                    @Override
-                    public void toNextAction() {
-                        switch (model.getPlayerProgress()) {
-                            case IN_GAME:
-                                if (model.hasNextQuestion()) {
-                                    model.toNextQuestion();
-                                    soundsController.nextQuestion(new ChainedAction() {
-                                        @Override
-                                        public void toNextAction() {
-                                            view.updateMainFrame();
-                                        }
-                                    });
-                                }
-                                break;
-                            case GAVE_UP:
-                            case AFTER_INCORRECT_ANSWER:
-                            case WON_GAME:
-                            default:
-                                view.showFinalRewardDialog();
-                                break;
-                        }
-                    }
-                });
+            public void execute() {
+                switch (model.getPlayerProgress()) {
+                    case IN_GAME:
+                        view.hideQuestion();
+                        break;
+                    case GAVE_UP:
+                    case AFTER_INCORRECT_ANSWER:
+                    case WON_GAME:
+                    default:
+                        view.showFinalReward();
+                        break;
+                }
             }
         });
+    }
+
+    /**
+     * Moderator moves to next question.
+     */
+    public void showNextQuestion() {
+        if (model.hasNextQuestion()) {
+            model.toNextQuestion();
+            soundsController.nextQuestion(new ChainedAction() {
+                @Override
+                public void execute() {
+                    view.updateMainFrame();
+                }
+            });
+        }
     }
 
     /**
      * Player asks for audience hint.
      */
     public void useAudienceHint() {
-        view.disableMainFrame();
-        view.showAudienceVotingDialog();
+        view.showAudienceVoting();
         soundsController.askAudience(new ChainedAction() {
             @Override
-            public void toNextAction() {
-                view.disposeAudienceVotingDialog();
+            public void execute() {
                 if (settings.isRealAudience()) {
                     view.showAudienceResultDialog();
                 } else {
                     model.generateAudienceResults();
-                    view.updateMainFrame();
+                    view.showAudienceVotingResult();
                 }
             }
         });
@@ -137,7 +137,7 @@ public class GameController {
      *
      * @param counts counts for each answer
      */
-    public void setAudienceHintResults(int[] counts) {
+    public void setManualAudienceHintResults(int[] counts) {
         model.setAudienceResults(counts);
         view.updateMainFrame();
     }
@@ -149,7 +149,7 @@ public class GameController {
         model.useFiftyFifty();
         soundsController.fiftyFifty(new ChainedAction() {
             @Override
-            public void toNextAction() {
+            public void execute() {
                 view.updateMainFrame();
             }
         });
@@ -161,10 +161,10 @@ public class GameController {
     public void usePhoneFriendHint() {
         model.usePhoneFriend();
         view.disableMainFrame();
-        view.showPhoneFriendDialog();
+        view.showPhoneFriendCountdown();
         soundsController.phoneFriend(new ChainedAction() {
             @Override
-            public void toNextAction() {
+            public void execute() {
                 view.updateMainFrame();
             }
         });

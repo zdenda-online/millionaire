@@ -31,11 +31,25 @@ public interface Skin {
     Font largerFont();
 
     /**
+     * Gets an ultra large font of GUI.
+     *
+     * @return ultra large font
+     */
+    Font ultraLargeFont();
+
+    /**
      * Gets a default text color of GUI.
      *
      * @return default text color
      */
     Color defaultTextColor();
+
+    /**
+     * Gets a default background of buttons.
+     *
+     * @return default background of button
+     */
+    Gradient defaultButtonGradient();
 
     /**
      * Gets a color of question text.
@@ -63,14 +77,14 @@ public interface Skin {
      *
      * @return background of default answer button
      */
-    Gradient answerButtonDefaultGradient();
+    Gradient answerButtonGradient();
 
     /**
      * Gets a color of answer button default text.
      *
      * @return answer button default text
      */
-    Color answerButtonDefaultText();
+    Color answerButtonText();
 
     /**
      * Gets a background of selected answer button.
@@ -99,7 +113,6 @@ public interface Skin {
      * @return answer button correct text
      */
     Color answerButtonCorrectText();
-
 
     /**
      * Gets a color of audience voting text.
