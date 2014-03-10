@@ -24,10 +24,10 @@ import java.util.Map;
  *
  * @author Zdenek Obst, zdenek.obst-at-gmail.com
  */
-public class CreatorGameFrame extends JFrame {
+public class CreatorFrame extends JFrame {
 
-    private static final int WIDTH = 650;
-    private static final int HEIGHT = 290;
+    private static final int WIDTH = 700;
+    private static final int HEIGHT = 300;
     private static final int FRAME_MARGIN = 10;
     private static final int ITEMS_MARGIN = 10;
     private static final GameValidation GAME_VALIDATION = new OriginalGameValidation(); // allow change in future?
@@ -42,7 +42,7 @@ public class CreatorGameFrame extends JFrame {
 
     private int selectedQuestionIdx = 0;
 
-    public CreatorGameFrame(Game initialGame) {
+    public CreatorFrame(Game initialGame) {
         super("Game Creator");
         int answersCount = initialGame.getQuestion(0).getAnswers().size();
         this.questionPanel = new CreatorQuestionPanel(answersCount, ITEMS_MARGIN);
@@ -57,7 +57,6 @@ public class CreatorGameFrame extends JFrame {
         setIconImage(new ImageIcon(getClass().getResource("/imgs/icon.png")).getImage());
         setLayout(new BorderLayout());
         setLocationRelativeTo(null);
-        setResizable(false);
 
         JPanel mainPanel = new JPanel(new BorderLayout(ITEMS_MARGIN, ITEMS_MARGIN));
         mainPanel.setBorder(new EmptyBorder(FRAME_MARGIN, FRAME_MARGIN, FRAME_MARGIN, FRAME_MARGIN));
@@ -130,12 +129,14 @@ public class CreatorGameFrame extends JFrame {
      * @return panel with buttons
      */
     private JPanel initImportExportButtons() {
+        importGameButton.setForeground(skin.defaultTextColor());
         importGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 importGame();
             }
         });
+        exportGameButton.setForeground(skin.defaultTextColor());
         exportGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -2,7 +2,7 @@ package cz.dix.mil;
 
 import cz.dix.mil.model.game.Game;
 import cz.dix.mil.model.game.GameFactory;
-import cz.dix.mil.view.creator.CreatorGameFrame;
+import cz.dix.mil.view.creator.CreatorFrame;
 import cz.dix.mil.view.skin.DefaultSkin;
 import cz.dix.mil.view.skin.SkinManager;
 
@@ -18,7 +18,7 @@ public class CreatorMain {
     public static void main(String[] args) throws InterruptedException {
         setupSystem();
         Game gameTemplate = GameFactory.newGameTemplate();
-        new CreatorGameFrame(gameTemplate).setVisible(true);
+        new CreatorFrame(gameTemplate).setVisible(true);
     }
 
     private static void setupSystem() {

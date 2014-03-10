@@ -66,7 +66,6 @@ public class GameFrame extends JFrame implements Refreshable {
         setIconImage(new ImageIcon(getClass().getResource("/imgs/icon.png")).getImage());
         setLayout(new BorderLayout());
         setLocationRelativeTo(null);
-        setResizable(false);
 
         JPanel leftInnerPanel = new JPanel(new BorderLayout());
         leftInnerPanel.add(middlePanel, BorderLayout.CENTER);
