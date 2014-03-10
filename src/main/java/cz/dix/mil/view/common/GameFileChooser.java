@@ -34,6 +34,7 @@ public class GameFileChooser extends JFileChooser {
      * @return game instance or null if load failed (or closed)
      */
     public Game importGame() {
+        setApproveButtonText("Import");
         if (showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             try {
                 Game importedGame = GameFactory.newGame(getSelectedFile(), gameValidation);
@@ -54,9 +55,14 @@ public class GameFileChooser extends JFileChooser {
      * @param game game to be saved
      */
     public void exportGame(Game game) {
+        setApproveButtonText("Export");
         if (showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
             try {
-                GameFactory.exportToXml(game, gameValidation, getSelectedFile());
+                File selectedFile = getSelectedFile();
+                if (!selectedFile.getAbsolutePath().endsWith(".xml")) {
+                    selectedFile = new File(selectedFile.getAbsolutePath() + ".xml");
+                }
+                GameFactory.exportToXml(game, gameValidation, selectedFile);
                 JOptionPane.showMessageDialog(this, "Game exported successfully!", "",
                         JOptionPane.PLAIN_MESSAGE, new ImageIcon(getClass().getResource("/imgs/approved.png")));
             } catch (GameCreationException e) {

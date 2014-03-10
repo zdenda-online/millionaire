@@ -34,8 +34,8 @@ public class CreatorFrame extends JFrame {
     private final Skin skin = SkinManager.getSkin();
 
     private final JTextField gameNameField = new AutoSelectTextField();
-    private final JButton importGameButton = new JButton("Import Game");
-    private final JButton exportGameButton = new JButton("Export Game");
+    private final JButton importGameButton = new JButton("Import Game from XML");
+    private final JButton exportGameButton = new JButton("Export Game to XML");
     private final CreatorQuestionPanel questionPanel;
     private final JButton[] questionButtons;
     private final Map<Integer, Question> questionsMap = new HashMap<>();
@@ -153,9 +153,14 @@ public class CreatorFrame extends JFrame {
      * Loads new game from the given file.
      */
     private void importGame() {
-        Game game = new GameFileChooser(GAME_VALIDATION).importGame();
-        if (game != null) {
-            setGame(game);
+        int yesNoImport = JOptionPane.showConfirmDialog(this, "By importing XML game file, " +
+                "you will lose current game data (questions etc.)\nDo you want to continue?",
+                "Import Game", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        if (yesNoImport == JOptionPane.YES_OPTION) {
+            Game game = new GameFileChooser(GAME_VALIDATION).importGame();
+            if (game != null) {
+                setGame(game);
+            }
         }
     }
 
