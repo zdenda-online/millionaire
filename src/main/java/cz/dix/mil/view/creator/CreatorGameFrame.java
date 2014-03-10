@@ -27,7 +27,7 @@ import java.util.Map;
 public class CreatorGameFrame extends JFrame {
 
     private static final int WIDTH = 650;
-    private static final int HEIGHT = 280;
+    private static final int HEIGHT = 290;
     private static final int FRAME_MARGIN = 10;
     private static final int ITEMS_MARGIN = 10;
     private static final GameValidation GAME_VALIDATION = new OriginalGameValidation(); // allow change in future?
