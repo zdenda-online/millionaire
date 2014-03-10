@@ -33,4 +33,11 @@ public class AutoSelectTextField extends JTextField {
         }
         super.processMouseEvent(e);
     }
+
+    /**
+     * Clears the flag that text field was clicked.
+     */
+    public void clearClickedFlag() {
+        this.alreadyClicked = false;
+    }
 }

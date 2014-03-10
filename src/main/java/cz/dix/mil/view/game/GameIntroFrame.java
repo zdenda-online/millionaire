@@ -30,7 +30,7 @@ public class GameIntroFrame extends JFrame {
 
     private void init() {
         setSize(WIDTH, HEIGHT);
-        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setIconImage(new ImageIcon(getClass().getResource("/imgs/icon.png")).getImage());
         setLayout(new GridLayout(2, 1));
         setLocationRelativeTo(null);
@@ -42,7 +42,7 @@ public class GameIntroFrame extends JFrame {
         welcomeLabel.setHorizontalAlignment(SwingConstants.CENTER);
         welcomeLabel.setVerticalAlignment(SwingConstants.CENTER);
 
-        infoLabel.setText("The game will begin shortly...");
+        infoLabel.setText("The game will begin after the theme tune...");
         infoLabel.setForeground(skin.defaultTextColor());
         infoLabel.setFont(skin.smallerFont());
         infoLabel.setHorizontalAlignment(SwingConstants.CENTER);

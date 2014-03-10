@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<game>
+    <name>Who Wants to Be a Millionaire?</name>
+    <question>
+        <text>1. question text</text>
+        <reward>$100</reward>
+        <answers>
+            <answer is-correct="true">Correct answer (A)</answer>
+            <answer>Incorrect answer (B)</answer>
+            <answer>Incorrect answer (C)</answer>
+            <answer>Incorrect answer (D)</answer>
+        </answers>
+    </question>
+    <question>
+        <text>2. question text</text>
+        <reward>$200</reward>
+        <answers>
+            <answer is-correct="true">Correct answer (A)</answer>
+            <answer>Incorrect answer (B)</answer>
+            <answer>Incorrect answer (C)</answer>
+            <answer>Incorrect answer (D)</answer>
+        </answers>
+        <answers-description>It is A) because of this and that...</answers-description>
+    </question>
+    <question>
+        <text>3. question text</text>
+        <reward>$300</reward>
+        <answers>
+            <answer is-correct="true">Correct answer (A)</answer>
+            <answer>Incorrect answer (B)</answer>
+            <answer>Incorrect answer (C)</answer>
+            <answer>Incorrect answer (D)</answer>
+        </answers>
+        <answers-description>It is A) because of this and that...</answers-description>
+    </question>
+    <question>
+        <text>4. question text</text>
+        <reward>$500</reward>
+        <answers>
+            <answer is-correct="true">Correct answer (A)</answer>
+            <answer>Incorrect answer (B)</answer>
+            <answer>Incorrect answer (C)</answer>
+            <answer>Incorrect answer (D)</answer>
+        </answers>
+        <answers-description>It is A) because of this and that...</answers-description>
+    </question>
+    <question>
+        <text>5. question text</text>
+        <reward>$1,000</reward>
+        <answers>
+            <answer is-correct="true">Correct answer (A)</answer>
+            <answer>Incorrect answer (B)</answer>
+            <answer>Incorrect answer (C)</answer>
+            <answer>Incorrect answer (D)</answer>
+        </answers>
+        <answers-description>It is A) because of this and that...</answers-description>
+    </question>
+    <question>
+        <text>6. question text</text>
+        <reward>$2,000</reward>
+        <answers>
+            <answer is-correct="true">Correct answer (A)</answer>
+            <answer>Incorrect answer (B)</answer>
+            <answer>Incorrect answer (C)</answer>
+            <answer>Incorrect answer (D)</answer>
+        </answers>
+        <answers-description>It is A) because of this and that...</answers-description>
+    </question>
+    <question>
+        <text>7. question text</text>
+        <reward>$4,000</reward>
+        <answers>
+            <answer is-correct="true">Correct answer (A)</answer>
+            <answer>Incorrect answer (B)</answer>
+            <answer>Incorrect answer (C)</answer>
+            <answer>Incorrect answer (D)</answer>
+        </answers>
+        <answers-description>It is A) because of this and that...</answers-description>
+    </question>
+    <question>
+        <text>8. question text</text>
+        <reward>$8,000</reward>
+        <answers>
+            <answer is-correct="true">Correct answer (A)</answer>
+            <answer>Incorrect answer (B)</answer>
+            <answer>Incorrect answer (C)</answer>
+            <answer>Incorrect answer (D)</answer>
+        </answers>
+        <answers-description>It is A) because of this and that...</answers-description>
+    </question>
+    <question>
+        <text>9. question text</text>
+        <reward>$16,000</reward>
+        <answers>
+            <answer is-correct="true">Correct answer (A)</answer>
+            <answer>Incorrect answer (B)</answer>
+            <answer>Incorrect answer (C)</answer>
+            <answer>Incorrect answer (D)</answer>
+        </answers>
+        <answers-description>It is A) because of this and that...</answers-description>
+    </question>
+    <question>
+        <text>10. question text</text>
+        <reward>$32,000</reward>
+        <answers>
+            <answer is-correct="true">Correct answer (A)</answer>
+            <answer>Incorrect answer (B)</answer>
+            <answer>Incorrect answer (C)</answer>
+            <answer>Incorrect answer (D)</answer>
+        </answers>
+        <answers-description>It is A) because of this and that...</answers-description>
+    </question>
+    <question>
+        <text>11. question text</text>
+        <reward>$64,000</reward>
+        <answers>
+            <answer is-correct="true">Correct answer (A)</answer>
+            <answer>Incorrect answer (B)</answer>
+            <answer>Incorrect answer (C)</answer>
+            <answer>Incorrect answer (D)</answer>
+        </answers>
+        <answers-description>It is A) because of this and that...</answers-description>
+    </question>
+    <question>
+        <text>12. question text</text>
+        <reward>$125,000</reward>
+        <answers>
+            <answer is-correct="true">Correct answer (A)</answer>
+            <answer>Incorrect answer (B)</answer>
+            <answer>Incorrect answer (C)</answer>
+            <answer>Incorrect answer (D)</answer>
+        </answers>
+        <answers-description>It is A) because of this and that...</answers-description>
+    </question>
+    <question>
+        <text>13. question text</text>
+        <reward>$250,000</reward>
+        <answers>
+            <answer is-correct="true">Correct answer (A)</answer>
+            <answer>Incorrect answer (B)</answer>
+            <answer>Incorrect answer (C)</answer>
+            <answer>Incorrect answer (D)</answer>
+        </answers>
+        <answers-description>It is A) because of this and that...</answers-description>
+    </question>
+    <question>
+        <text>14. question text</text>
+        <reward>$500,000</reward>
+        <answers>
+            <answer is-correct="true">Correct answer (A)</answer>
+            <answer>Incorrect answer (B)</answer>
+            <answer>Incorrect answer (C)</answer>
+            <answer>Incorrect answer (D)</answer>
+        </answers>
+        <answers-description>It is A) because of this and that...</answers-description>
+    </question>
+    <question>
+        <text>15. question text</text>
+        <reward>$1 MILLION</reward>
+        <answers>
+            <answer is-correct="true">Correct answer (A)</answer>
+            <answer>Incorrect answer (B)</answer>
+            <answer>Incorrect answer (C)</answer>
+            <answer>Incorrect answer (D)</answer>
+        </answers>
+        <answers-description>It is A) because of this and that...</answers-description>
+    </question>
+</game>

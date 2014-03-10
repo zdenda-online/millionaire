@@ -18,8 +18,8 @@ public class CreatorQuestionPanel extends JPanel {
 
     private final int answersCount;
     private final int itemsMargin;
-    private final JTextField questionTextField = new AutoSelectTextField();
-    private final JTextField questionRewardField = new AutoSelectTextField();
+    private final AutoSelectTextField questionTextField = new AutoSelectTextField();
+    private final AutoSelectTextField questionRewardField = new AutoSelectTextField();
     private final AnswerPanel[] answerPanels;
 
     public CreatorQuestionPanel(int answersCount, int itemsMargin) {
@@ -88,12 +88,25 @@ public class CreatorQuestionPanel extends JPanel {
     }
 
     /**
+     * Clears clicked flags on all fields.
+     *
+     * @see AutoSelectTextField
+     */
+    public void clearClickedFlags() {
+        questionTextField.clearClickedFlag();
+        questionRewardField.clearClickedFlag();
+        for (AnswerPanel answerPanel : answerPanels) {
+            answerPanel.clearClickedFlag();
+        }
+    }
+
+    /**
      * Panel with answer radio button and text field.
      */
     private class AnswerPanel extends JPanel {
 
         private final JRadioButton isCorrectButton = new JRadioButton();
-        private final JTextField answerField = new AutoSelectTextField();
+        private final AutoSelectTextField answerField = new AutoSelectTextField();
 
         private AnswerPanel(ButtonGroup buttonGroup) {
             buttonGroup.add(isCorrectButton);
@@ -109,6 +122,10 @@ public class CreatorQuestionPanel extends JPanel {
 
         private Answer getAnswer() {
             return new Answer(answerField.getText(), isCorrectButton.isSelected());
+        }
+
+        private void clearClickedFlag() {
+            answerField.clearClickedFlag();
         }
     }
 }

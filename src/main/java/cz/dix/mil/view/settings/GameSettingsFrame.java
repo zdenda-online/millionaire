@@ -33,7 +33,7 @@ public class GameSettingsFrame extends JFrame {
             "automatically according to the difficulty of actual question.\n" +
             "However if you have a real audience around, you can select this option to" +
             " allow the insertion of audience votes manually.";
-    private static final String SKIP_INTRO_HINT = "By default, a signature tune is played when the game starts and " +
+    private static final String SKIP_INTRO_HINT = "By default, the theme tune is played when the game starts and " +
             "the welcome window is shown during that time.\nYou can select this option to skip this introduction.";
 
     private Game game;

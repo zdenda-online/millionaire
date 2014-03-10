@@ -16,6 +16,7 @@ import java.io.File;
  */
 public class GameFileChooser extends JFileChooser {
 
+    private static final String GAME_FILE_EXTENSION = "game";
     private static final File DEFAULT_DIR = new File("../games");
     private final GameValidation gameValidation;
 
@@ -25,7 +26,7 @@ public class GameFileChooser extends JFileChooser {
         setDialogTitle("Game File Selection");
         setFileSelectionMode(JFileChooser.FILES_ONLY);
         setMultiSelectionEnabled(false);
-        setFileFilter(new FileNameExtensionFilter("XML Files", "xml"));
+        setFileFilter(new FileNameExtensionFilter("Game Files", GAME_FILE_EXTENSION));
     }
 
     /**
@@ -34,8 +35,8 @@ public class GameFileChooser extends JFileChooser {
      * @return game instance or null if load failed (or closed)
      */
     public Game importGame() {
-        setApproveButtonText("Import");
-        if (showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+        setDialogType(OPEN_DIALOG);
+        if (showDialog(this, "Import") == JFileChooser.APPROVE_OPTION) {
             try {
                 Game importedGame = GameFactory.newGame(getSelectedFile(), gameValidation);
                 JOptionPane.showMessageDialog(this, "Game imported successfully!", "",
@@ -55,12 +56,20 @@ public class GameFileChooser extends JFileChooser {
      * @param game game to be saved
      */
     public void exportGame(Game game) {
-        setApproveButtonText("Export");
-        if (showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+        setDialogType(SAVE_DIALOG);
+        if (showDialog(this, "Export") == JFileChooser.APPROVE_OPTION) {
             try {
                 File selectedFile = getSelectedFile();
-                if (!selectedFile.getAbsolutePath().endsWith(".xml")) {
-                    selectedFile = new File(selectedFile.getAbsolutePath() + ".xml");
+                if (!selectedFile.getAbsolutePath().endsWith("." + GAME_FILE_EXTENSION)) {
+                    selectedFile = new File(selectedFile.getAbsolutePath() + "." + GAME_FILE_EXTENSION);
+                }
+                if (selectedFile.exists()) {
+                    int yesNo = JOptionPane.showConfirmDialog(this, "Given game file already exists.\n" +
+                            "Do you want to overwrite it?", "Overwrite Game File",
+                            JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                    if (yesNo == JOptionPane.NO_OPTION) {
+                        return;
+                    }
                 }
                 GameFactory.exportToXml(game, gameValidation, selectedFile);
                 JOptionPane.showMessageDialog(this, "Game exported successfully!", "",
