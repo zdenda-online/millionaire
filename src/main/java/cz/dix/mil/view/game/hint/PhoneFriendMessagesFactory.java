@@ -30,23 +30,23 @@ public class PhoneFriendMessagesFactory {
             "OK, I should know this...\n&nbsp;", // 5s
     };
     private static final String[] EASY_SCENARIO_BEGINNING_2 = {
-            "Hello, %s\nPossible Answers are %s.", // 10s
-            "That shouldn't be that hard.\nSo you said %s.", // 5s
-            "I think I've heard of this one...\n&nbsp;", // 5s
+            "Hello, %s\nThe answers are %s.", // 10s
+            "It seems easy.\nSo you said %s.", // 5s
+            "I think I've heard about it...\n&nbsp;", // 5s
     };
     private static final String[] MID_SCENARIO_BEGINNING_1 = {
             "Hi, %s\nPossible Answers are %s.", // 10s
-            "It really is tricky.\nSo %s.", // 5s
-            "Fine, give me a while...\n&nbsp; ", // 5s
+            "It really is tricky.\n%s.", // 5s
+            "Fine, give me a little while...\n&nbsp; ", // 5s
     };
     private static final String[] MID_SCENARIO_BEGINNING_2 = {
-            "Hello, so %s\nAnswers are %s.", // 10s
-            "OK...\nSo the possibilities %s.", // 5s
-            "Alright, umm...\n&nbsp;", // 5s
+            "Hello, %s\nThe answers are %s.", // 10s
+            "OK...\nSo %s.", // 5s
+            "Alright, ummmm...\n&nbsp;", // 5s
     };
     private static final String[] HARD_SCENARIO_BEGINNING_1 = {
             "Hi, %s\nPossible Answers are %s.", // 10s
-            "Ou, that is really hard.\nSo %s.", // 5s
+            "Ou, that is really hard.\n%s.", // 5s
             "I'm thinking...\n&nbsp;", // 5s
     };
     private static final String[] HARD_SCENARIO_BEGINNING_2 = {
@@ -57,25 +57,25 @@ public class PhoneFriendMessagesFactory {
 
     // last 10 seconds of call
     private static final String[] ENDINGS_NO_ANSWER = {
-            "I'm sorry I have no idea, really don't know.\nAny of possible ones don't tell me anything...",
-            "I'm afraid I won't help you with this, sorry.\nNo, not really...",
-            "I can't remember it!\nI think I'm not able to be give you correct answer...",
-            "I wish to help you, but I really don't know.\nForgive me..."
+            "I'm sorry I have no idea, I really don't know.\nI can't choose one answer...",
+            "I'm afraid I won't help you with this.\nNo, not really, sorry...",
+            "I can't remember it!\nI think I'm not able to be give you a correct answer...",
+            "I wish to help you, but I really don't know.\nForgive me, too hard for me..."
     };
     private static final String[] ENDINGS_VERY_SURE_ANSWER = {
-            "I'm sure about this, that should be %s.\nYes, definitely %s...",
-            "Yes, that must be %s.\nI feel sure about %s...",
-            "I got it, it is %s.\nI'm sure, that %s is correct answer...",
+            "I'm sure, it is %s.\nYes, definitely %s...",
+            "Yes, that must be %s.\n%s is the correct answer...",
+            "It is %s.\nI feel confident, %s is correct...",
     };
     private static final String[] ENDINGS_ALMOST_SURE_ANSWER = {
             "I think I know this.\nAlthough I'm not 100% sure, I think it is %s...",
-            "I'm not absolutely sure, but I really think it is %s\nI would go for this one...",
-            "No 100% guarantee but I think that %s is correct.\nI'm almost sure...",
+            "I'm not absolutely sure, but I think it is %s\nI'd go for this one...",
+            "No 100% guarantee but I think that %s is correct.\nI'm almost certain...",
     };
     private static final String[] ENDINGS_NOT_SURE_ANSWER = {
-            "I'm really not sure...\nI would go with %s but really not sure...",
-            "I have feeling that it can be %s.\nBut that is only a feeling, I'm not sure...",
-            "I have %s in my head. But I'm unsure about it.\nReally unsure...",
+            "I'm really not sure.\nI would go with %s but I'm really not sure...",
+            "I have a feeling that it can be %s.\nBut that is only a feeling, I'm not sure...",
+            "I have %s in my head. But I'm unsure of it.\nReally unsure...",
     };
     private static final String[] ENDINGS_JUST_GUESS_ANSWER = {
             "That is really tricky...\n%s seems best to me but it is only a guess...",

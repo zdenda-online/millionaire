@@ -203,7 +203,7 @@ public class DefaultSkin implements Skin {
 
     @Override
     public Color phoneFriendConversationText() {
-        return YELLOW;
+        return Color.WHITE;
     }
 
     /**
