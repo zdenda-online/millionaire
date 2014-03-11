@@ -9,6 +9,8 @@ import java.util.*;
  */
 public class ShuffleRandomAlgorithm implements RandomAlgorithm {
 
+    private final Random random = new Random();
+
     /**
      * {@inheritDoc}
      */
@@ -18,8 +20,8 @@ public class ShuffleRandomAlgorithm implements RandomAlgorithm {
             throw new IllegalArgumentException("Must have at least one possibility");
         }
         List<T> asList = new ArrayList<>(possibilities);
-        Collections.shuffle(asList);
-        return asList.get(0);
+        int randomIndex = random.nextInt(asList.size());
+        return asList.get(randomIndex);
     }
 
     /**

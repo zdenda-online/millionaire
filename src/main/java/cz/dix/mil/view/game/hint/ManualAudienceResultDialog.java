@@ -2,6 +2,8 @@ package cz.dix.mil.view.game.hint;
 
 import cz.dix.mil.controller.GameController;
 import cz.dix.mil.model.runtime.GameModel;
+import cz.dix.mil.view.skin.Skin;
+import cz.dix.mil.view.skin.SkinManager;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -16,7 +18,8 @@ import java.awt.event.ActionListener;
  */
 public class ManualAudienceResultDialog extends JDialog {
 
-    private static final int WIDTH = 120;
+    private Skin skin = SkinManager.getSkin();
+    private static final int WIDTH = 140;
     private static final int HEIGHT_DEFAULT = 70;
     private static final int DIALOG_MARGIN = 10;
     private static final int ITEMS_MARGIN = 5;
@@ -32,7 +35,7 @@ public class ManualAudienceResultDialog extends JDialog {
 
     private void init() {
         int questionsCount = model.getActualQuestion().getAnswers().size();
-        setSize(WIDTH, questionsCount * 30 + HEIGHT_DEFAULT);
+        setSize(WIDTH, questionsCount * 35 + HEIGHT_DEFAULT);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         setIconImage(new ImageIcon(getClass().getResource("/imgs/icon.png")).getImage());
         setLocationRelativeTo(null);
@@ -44,9 +47,9 @@ public class ManualAudienceResultDialog extends JDialog {
         int charNo = 65;
         for (int i = 0; i < questionsCount; i++) {
             char letter = (char) (charNo + i);
-            answersPanel.add(new JLabel(String.valueOf(letter)));
+            answersPanel.add(setSkin(new JLabel(String.valueOf(letter))));
             JSpinner spinner = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
-            answersPanel.add(spinner);
+            answersPanel.add(setSkin(spinner));
             spinners[i] = spinner;
         }
 
@@ -62,7 +65,7 @@ public class ManualAudienceResultDialog extends JDialog {
         JPanel mainPanel = new JPanel(new BorderLayout(ITEMS_MARGIN, ITEMS_MARGIN));
         mainPanel.setBorder(new EmptyBorder(DIALOG_MARGIN, DIALOG_MARGIN, DIALOG_MARGIN, DIALOG_MARGIN));
         mainPanel.add(answersPanel, BorderLayout.CENTER);
-        mainPanel.add(submitButton, BorderLayout.SOUTH);
+        mainPanel.add(setSkin(submitButton), BorderLayout.SOUTH);
         add(mainPanel);
     }
 
@@ -78,5 +81,15 @@ public class ManualAudienceResultDialog extends JDialog {
             out[i] = (int) spinners[i].getValue();
         }
         return out;
+    }
+
+    private JComponent setSkin(JComponent component) {
+        if (component instanceof JButton) {
+            component.setForeground(skin.formsButtonsText());
+        } else {
+            component.setForeground(skin.formsComponentsText());
+        }
+        component.setFont(skin.formsFont());
+        return component;
     }
 }

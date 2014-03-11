@@ -140,6 +140,7 @@ public class GameController {
     public void setManualAudienceHintResults(int[] counts) {
         model.setAudienceResults(counts);
         view.updateMainFrame();
+        view.showAudienceVotingResult();
     }
 
     /**

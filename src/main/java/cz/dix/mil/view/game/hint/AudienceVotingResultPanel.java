@@ -7,6 +7,7 @@ import cz.dix.mil.view.skin.Skin;
 import cz.dix.mil.view.skin.SkinManager;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 /**
@@ -16,6 +17,7 @@ import java.awt.*;
  */
 public class AudienceVotingResultPanel extends JPanel {
 
+    private static final int PANEL_MARGIN = 15;
     private static final int COLUMNS_GAP = 20;
     private static final int RECTANGLE_WIDTH = 70;
     private static final int RECTANGLE_HEIGHT = 200;
@@ -30,6 +32,7 @@ public class AudienceVotingResultPanel extends JPanel {
         this.model = model;
         FlowLayout layout = new FlowLayout(FlowLayout.CENTER, COLUMNS_GAP, 0);
         setLayout(layout);
+        setBorder(new EmptyBorder(PANEL_MARGIN, PANEL_MARGIN, PANEL_MARGIN, PANEL_MARGIN));
     }
 
     /**
