@@ -76,6 +76,7 @@ public class CreatorFrame extends JFrame {
         initMap(game.getQuestions());
         gameNameField.setText(game.getName());
         questionPanel.setQuestion(questionsMap.get(selectedQuestionIdx));
+        changeQuestion(0, true);
 
     }
 
@@ -109,7 +110,7 @@ public class CreatorFrame extends JFrame {
             questionButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    changeQuestion(questionIdx);
+                    changeQuestion(questionIdx, false);
                 }
             });
             questionButtons[i] = questionButton;
@@ -192,9 +193,10 @@ public class CreatorFrame extends JFrame {
      * Changes selected question (by button) and updates form according to it.
      *
      * @param questionIdx new selected question index
+     * @param forcibly    flag whether change even if new question index is same as actually selected
      */
-    private void changeQuestion(int questionIdx) {
-        if (selectedQuestionIdx == questionIdx) {
+    private void changeQuestion(int questionIdx, boolean forcibly) {
+        if (selectedQuestionIdx == questionIdx && !forcibly) {
             return; // no need to save anything
         }
         questionsMap.put(selectedQuestionIdx, questionPanel.getQuestion()); // save question
