@@ -73,6 +73,13 @@ public interface Skin {
     Gradient defaultButtonGradient();
 
     /**
+     * Gets a default background of buttons for rollover.
+     *
+     * @return default background of button for rollover
+     */
+    Gradient defaultButtonRolloverGradient();
+
+    /**
      * Gets a color of question text.
      *
      * @return color of question text

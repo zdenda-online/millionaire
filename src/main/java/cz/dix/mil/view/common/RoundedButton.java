@@ -30,7 +30,6 @@ public class RoundedButton extends JButton {
 
     public RoundedButton(String text) {
         super(text);
-        setRolloverEnabled(false);
         setFocusable(false);
         setContentAreaFilled(false);
         initShape();
@@ -44,6 +43,15 @@ public class RoundedButton extends JButton {
      */
     protected Paint getBackgroundPaint() {
         return constructGradient(skin.defaultButtonGradient());
+    }
+
+    /**
+     * Gets a paint of background when there is rollover over button.
+     *
+     * @return rollover paint
+     */
+    protected Paint getRolloverPaint() {
+        return constructGradient(skin.defaultButtonRolloverGradient());
     }
 
     /**
@@ -75,7 +83,11 @@ public class RoundedButton extends JButton {
         setForeground(getTextColor());
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.setPaint(getBackgroundPaint());
+        if (isRolloverEnabled() && model.isRollover() && !model.isArmed()) {
+            g2.setPaint(getRolloverPaint());
+        } else {
+            g2.setPaint(getBackgroundPaint());
+        }
         g2.fill(shape);
         super.paintComponent(g2);
     }

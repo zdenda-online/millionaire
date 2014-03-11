@@ -93,6 +93,7 @@ public class AnswersPanel extends JPanel implements Refreshable {
                 for (ActionListener listener : button.getActionListeners()) {
                     button.removeActionListener(listener);
                 }
+                button.setRolloverEnabled(false);
             }
         }
     }

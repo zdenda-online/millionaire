@@ -13,17 +13,15 @@ public class DefaultSkin implements Skin {
     private static final Color YELLOW = new Color(255, 220, 0);
     private static final Color ORANGE = new Color(255, 150, 0);
 
-    // Colors used for buttons
+    // Colors used for buttons and audience results
+    private static final Color BLUE = new Color(40, 0, 230);
     private static final Color DARK_BLUE = new Color(20, 20, 150);
+    private static final Color PURPLE = new Color(190, 0, 190);
     private static final Color DARK_PURPLE = new Color(70, 0, 100);
     private static final Color GREEN = new Color(0, 240, 0);
     private static final Color DARK_GREEN = new Color(40, 115, 0);
-    private static final Color LIGHT_ORANGE = new Color(255, 174, 0);
-    private static final Color DARK_ORANGE = new Color(240, 100, 0);
-
-    // Colors used for audience result
-    private static final Color LIGHT_PURPLE = new Color(190, 0, 190);
-    private static final Color BLUE = new Color(40, 0, 230);
+    private static final Color LIGHT_ORANGE = new Color(255, 180, 0);
+    private static final Color DARK_ORANGE = new Color(245, 60, 0);
 
     /**
      * {@inheritDoc}
@@ -95,6 +93,14 @@ public class DefaultSkin implements Skin {
     @Override
     public Gradient defaultButtonGradient() {
         return new Gradient(DARK_BLUE, DARK_PURPLE);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Gradient defaultButtonRolloverGradient() {
+        return new Gradient(BLUE, PURPLE);
     }
 
     /**
@@ -182,7 +188,7 @@ public class DefaultSkin implements Skin {
      */
     @Override
     public Gradient audienceResultColumn() {
-        return new Gradient(LIGHT_PURPLE, BLUE);
+        return new Gradient(PURPLE, BLUE);
     }
 
     /**
@@ -201,6 +207,9 @@ public class DefaultSkin implements Skin {
         return ORANGE;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Color phoneFriendConversationText() {
         return Color.WHITE;

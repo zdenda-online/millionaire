@@ -43,6 +43,9 @@ public class AnswerButton extends RoundedButton {
         return buttonState;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected Paint getBackgroundPaint() {
         switch (buttonState) {
@@ -57,6 +60,21 @@ public class AnswerButton extends RoundedButton {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected Paint getRolloverPaint() {
+        if (!ButtonState.DEFAULT.equals(buttonState) || !isEnabled()) {
+            return getBackgroundPaint();
+        } else {
+            return super.getRolloverPaint();
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected Color getTextColor() {
         switch (buttonState) {
@@ -70,5 +88,7 @@ public class AnswerButton extends RoundedButton {
                 return super.getTextColor();
         }
     }
+
+
 
 }
