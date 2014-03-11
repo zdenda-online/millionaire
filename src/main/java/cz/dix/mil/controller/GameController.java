@@ -52,8 +52,8 @@ public class GameController {
                 view.disposeIntroFrame();
                 soundsController.startGame();
                 model.toNextQuestion();
-                view.updateMainFrame();
-                view.showMainFrame();
+                view.updateFrame();
+                view.showFrame();
             }
         };
 
@@ -84,9 +84,9 @@ public class GameController {
         soundsController.revealAnswer(new ChainedAction() {
             @Override
             public void execute() {
-                view.hideQuestion();
                 switch (model.getPlayerProgress()) {
                     case IN_GAME:
+                        view.showNextQuestionPanel();
                         break;
                     case GAVE_UP:
                     case AFTER_INCORRECT_ANSWER:
@@ -108,7 +108,7 @@ public class GameController {
             soundsController.nextQuestion(new ChainedAction() {
                 @Override
                 public void execute() {
-                    view.updateMainFrame();
+                    view.updateFrame();
                 }
             });
         }
@@ -139,7 +139,7 @@ public class GameController {
      */
     public void setManualAudienceHintResults(int[] counts) {
         model.setAudienceResults(counts);
-        view.updateMainFrame();
+        view.updateFrame();
         view.showAudienceVotingResult();
     }
 
@@ -151,7 +151,7 @@ public class GameController {
         soundsController.fiftyFifty(new ChainedAction() {
             @Override
             public void execute() {
-                view.updateMainFrame();
+                view.updateFrame();
             }
         });
     }
@@ -161,7 +161,7 @@ public class GameController {
      */
     public void usePhoneFriendHint() {
         model.removePhoneFriendHint();
-        view.disableMainFrame();
+        view.disableFrame();
         if (settings.isRealPhoneFriend()) {
             view.showPhoneFriendCountdown();
         } else {
@@ -170,7 +170,7 @@ public class GameController {
         soundsController.phoneFriend(new ChainedAction() {
             @Override
             public void execute() {
-                view.updateMainFrame();
+                view.updateFrame();
             }
         });
     }

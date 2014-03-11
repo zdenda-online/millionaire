@@ -40,28 +40,29 @@ public class GameView {
     /**
      * Shows main frame of game.
      */
-    public void showMainFrame() {
+    public void showFrame() {
         gameFrame.setVisible(true);
     }
 
     /**
-     * Hides question (hides all components except reward).
+     * Hides question (hides all components except reward) and shows next question panel.
      */
-    public void hideQuestion() {
-        gameFrame.hideQuestion();
+    public void showNextQuestionPanel() {
+        gameFrame.hideQuestion(false);
+        gameFrame.showNextQuestionPanel();
     }
 
     /**
      * Updates main frame of the game.
      */
-    public void updateMainFrame() {
+    public void updateFrame() {
         gameFrame.refresh();
     }
 
     /**
      * Disables all actions in main frame of the game.
      */
-    public void disableMainFrame() {
+    public void disableFrame() {
         gameFrame.disableActions();
     }
 
@@ -76,7 +77,7 @@ public class GameView {
      * Disables all actions and shows button for revealing an answer.
      */
     public void showRevealAnswerButton() {
-        disableMainFrame();
+        disableFrame();
         gameFrame.showRevealAnswerPanel();
     }
 
@@ -120,6 +121,7 @@ public class GameView {
      * Shows with final reward (game is over).
      */
     public void showFinalReward() {
+        gameFrame.hideQuestion(true);
         gameFrame.showFinalRewardPanel();
     }
 }

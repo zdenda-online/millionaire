@@ -118,9 +118,17 @@ public class GameFrame extends JFrame implements Refreshable {
 
     /**
      * Hides question data (typically between questions).
+     *
+     * @param hideHints flag whether also hide panel with hints (true if yes)
      */
-    public void hideQuestion() {
-        showQuestion(false);
+    public void hideQuestion(boolean hideHints) {
+        showQuestion(false, hideHints);
+    }
+
+    /**
+     * Shows panel with next question button.
+     */
+    public void showNextQuestionPanel() {
         nextQuestionPanel.reactivateButton();
         setMiddlePanel(nextQuestionPanel);
     }
@@ -166,7 +174,7 @@ public class GameFrame extends JFrame implements Refreshable {
         answersPanel.refresh();
         rewardsPanel.refresh();
 
-        showQuestion(true);
+        showQuestion(true, true);
     }
 
     private void setMiddlePanel(JPanel contents) {
@@ -178,7 +186,10 @@ public class GameFrame extends JFrame implements Refreshable {
         middlePanel.repaint();
     }
 
-    private void showQuestion(boolean isShown) {
+    private void showQuestion(boolean isShown, boolean includeHints) {
+        if (includeHints) {
+            hintsPanel.setVisible(isShown);
+        }
         questionPanel.setVisible(isShown);
         answersPanel.setVisible(isShown);
     }
