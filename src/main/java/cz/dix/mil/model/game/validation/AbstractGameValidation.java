@@ -15,23 +15,23 @@ import java.util.List;
 public abstract class AbstractGameValidation implements GameValidation {
 
     /**
-     * Gets a count of questions that are allowed to be in game (precisely).
+     * Gets a vote of questions that are allowed to be in game (precisely).
      *
-     * @return count of allowed questions
+     * @return vote of allowed questions
      */
     protected abstract int getQuestionsCount();
 
     /**
-     * Gets a count of allowed answers every question can have.
+     * Gets a vote of allowed answers every question can have.
      *
-     * @return count of allowed answers per question
+     * @return vote of allowed answers per question
      */
     protected abstract int getAnswersCount();
 
     /**
-     * Gets a count of correct answers for every question.
+     * Gets a vote of correct answers for every question.
      *
-     * @return count of correct answers for every question
+     * @return vote of correct answers for every question
      */
     protected abstract int getCorrectAnswersCount();
 

@@ -34,7 +34,7 @@ public class RoundedButton extends JButton {
         setFocusable(false);
         setContentAreaFilled(false);
         initShape();
-        setFont(skin.defaultFont());
+        setFont(skin.normalFont());
     }
 
     /**

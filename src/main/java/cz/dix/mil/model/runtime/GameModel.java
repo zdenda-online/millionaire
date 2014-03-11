@@ -1,7 +1,9 @@
 package cz.dix.mil.model.runtime;
 
-import cz.dix.mil.model.algorithm.AutomaticAudienceAlgorithm;
-import cz.dix.mil.model.algorithm.SimpleAutomaticAudienceAlgorithm;
+import cz.dix.mil.model.algorithm.AutomaticAudience;
+import cz.dix.mil.model.algorithm.AutomaticPhoneFriend;
+import cz.dix.mil.model.algorithm.DefaultAutomaticAudience;
+import cz.dix.mil.model.algorithm.DefaultAutomaticPhoneFriend;
 import cz.dix.mil.model.game.Answer;
 import cz.dix.mil.model.game.Game;
 import cz.dix.mil.model.game.Question;
@@ -18,14 +20,15 @@ import java.util.*;
 public class GameModel {
 
     private final Game game;
-    private final AutomaticAudienceAlgorithm automaticAudienceAlgorithm = new SimpleAutomaticAudienceAlgorithm();
+    private final AutomaticAudience automaticAudience = new DefaultAutomaticAudience();
+    private final AutomaticPhoneFriend automaticPhoneFriend = new DefaultAutomaticPhoneFriend();
     private int actualQuestionIdx = -1;
     private Collection<Hint> availableHints = new ArrayList<>(Arrays.asList(Hint.values()));
 
     private Answer selectedAnswer = null;
     private Set<Answer> removedAnswers = new HashSet<>();
     private PlayersProgress playersProgress = PlayersProgress.BEFORE_GAME;
-    private AudienceResult audienceResult;
+    private AudienceVotingResult audienceVotingResult;
 
     public GameModel(Game game) {
         this.game = game;
@@ -141,31 +144,45 @@ public class GameModel {
     }
 
     /**
-     * Uses phone friend hint.
+     * Removes phone friend hint from available hints.
      */
-    public void usePhoneFriend() {
+    public void removePhoneFriendHint() {
         availableHints.remove(Hint.PHONE_FRIEND);
     }
 
     /**
+     * Uses phone friend hint and generates result according to automatic algorithm
+     *
+     * @return result of phone friend
+     */
+    public PhoneFriendResult generatePhoneFriendResult() {
+        removePhoneFriendHint();
+        availableHints.remove(Hint.PHONE_FRIEND);
+        return automaticPhoneFriend.call(getPossibleAnswers(), getActualQuestionDifficulty());
+    }
+
+    /**
      * Uses audience hint and updates values according to given values.
-     * Use {@link #getAudienceResult()} to retrieve it.
+     * Use {@link #getAudienceVotingResult()} to retrieve it.
      *
      * @param counts counts of votes for each answer
      */
     public void setAudienceResults(int[] counts) {
         availableHints.remove(Hint.AUDIENCE);
-        audienceResult = new AudienceResult(counts);
+        audienceVotingResult = new AudienceVotingResult(counts);
     }
 
     /**
-     * Uses audience hint and generates values according to automatic algorithm results.
-     * Use {@link #getAudienceResult()} to retrieve it.
+     * Uses audience hint and generates values according to automatic algorithm.
+     * Use can use {@link #getAudienceVotingResult()} to retrieve it later.
+     *
+     * @return result of audience voting
      */
-    public void generateAudienceResults() {
+    public AudienceVotingResult generateAudienceResults() {
         availableHints.remove(Hint.AUDIENCE);
-        int[] res = automaticAudienceAlgorithm.count(getPossibleAnswers(), getActualQuestionDifficulty());
-        audienceResult = createAudienceResult(res);
+        audienceVotingResult = automaticAudience.vote(getActualQuestion().getAnswers(),
+                getPossibleAnswers(), getActualQuestionDifficulty());
+        return audienceVotingResult;
     }
 
     /**
@@ -207,7 +224,7 @@ public class GameModel {
      * @return true if audience result is available, otherwise false
      */
     public boolean hasAudienceResult() {
-        return audienceResult != null;
+        return audienceVotingResult != null;
     }
 
     /**
@@ -218,6 +235,21 @@ public class GameModel {
      */
     public boolean isAnswerAvailable(Answer answer) {
         return !removedAnswers.contains(answer);
+    }
+
+    /**
+     * Gets answers that are possible (not removed by 50-50 for example).
+     *
+     * @return possible answers.
+     */
+    public List<Answer> getPossibleAnswers() {
+        List<Answer> out = new ArrayList<>();
+        for (Answer answer : getActualQuestion().getAnswers()) {
+            if (isAnswerAvailable(answer)) {
+                out.add(answer);
+            }
+        }
+        return out;
     }
 
     /**
@@ -262,8 +294,8 @@ public class GameModel {
      *
      * @return results of audience hint
      */
-    public AudienceResult getAudienceResult() {
-        return audienceResult;
+    public AudienceVotingResult getAudienceVotingResult() {
+        return audienceVotingResult;
     }
 
     private int getQuestionIdx(Question question) {
@@ -281,28 +313,6 @@ public class GameModel {
         selectedAnswer = null;
         removedAnswers.clear();
         playersProgress = PlayersProgress.IN_GAME;
-        audienceResult = null;
-    }
-
-    private List<Answer> getPossibleAnswers() {
-        List<Answer> out = new ArrayList<>();
-        for (Answer answer : getActualQuestion().getAnswers()) {
-            if (isAnswerAvailable(answer)) {
-                out.add(answer);
-            }
-        }
-        return out;
-    }
-
-    private AudienceResult createAudienceResult(int[] availAnswersCount) {
-        List<Answer> allAnswers = getActualQuestion().getAnswers();
-        int[] percents = new int[allAnswers.size()];
-        int allIdx = 0;
-        int availIdx = 0;
-        for (Answer answer : allAnswers) {
-            int p = isAnswerAvailable(answer) ? availAnswersCount[availIdx++] : 0;
-            percents[allIdx++] = p;
-        }
-        return new AudienceResult(percents);
+        audienceVotingResult = null;
     }
 }

@@ -58,7 +58,7 @@ public class RewardsPanel extends JPanel implements Refreshable {
         int i = questions.size() - 1;
         for (Question question : questions) {
             JLabel label = createRewardLabel(i, question.getReward());
-            label.setFont(skin.defaultFont());
+            label.setFont(skin.normalFont());
             if (i == 0) {
                 label.setForeground(skin.rewardActualQuestionText());
             } else {

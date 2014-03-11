@@ -84,9 +84,9 @@ public class GameController {
         soundsController.revealAnswer(new ChainedAction() {
             @Override
             public void execute() {
+                view.hideQuestion();
                 switch (model.getPlayerProgress()) {
                     case IN_GAME:
-                        view.hideQuestion();
                         break;
                     case GAVE_UP:
                     case AFTER_INCORRECT_ANSWER:
@@ -159,9 +159,13 @@ public class GameController {
      * Player asks for phone friend hint.
      */
     public void usePhoneFriendHint() {
-        model.usePhoneFriend();
+        model.removePhoneFriendHint();
         view.disableMainFrame();
-        view.showPhoneFriendCountdown();
+        if (settings.isRealPhoneFriend()) {
+            view.showPhoneFriendCountdown();
+        } else {
+            view.showPhoneFriendCountdown(model.generatePhoneFriendResult());
+        }
         soundsController.phoneFriend(new ChainedAction() {
             @Override
             public void execute() {

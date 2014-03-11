@@ -11,18 +11,21 @@ public class GameSettings {
 
     private final Game game;
     private final boolean isRealAudience;
+    private final boolean isRealPhoneFriend;
     private final boolean skipIntro;
 
     /**
      * Creates a new settings.
      *
-     * @param game           game to be played
-     * @param isRealAudience flag whether game has real audience
-     * @param skipIntro      flag whether game intro should be skipped (true if yes)
+     * @param game              game to be played
+     * @param isRealAudience    flag whether game has real audience
+     * @param isRealPhoneFriend flag whether player will use real phone friend
+     * @param skipIntro         flag whether game intro should be skipped (true if yes)
      */
-    public GameSettings(Game game, boolean isRealAudience, boolean skipIntro) {
+    public GameSettings(Game game, boolean isRealAudience, boolean isRealPhoneFriend, boolean skipIntro) {
         this.game = game;
         this.isRealAudience = isRealAudience;
+        this.isRealPhoneFriend = isRealPhoneFriend;
         this.skipIntro = skipIntro;
     }
 
@@ -43,6 +46,15 @@ public class GameSettings {
      */
     public boolean isRealAudience() {
         return isRealAudience;
+    }
+
+    /**
+     * Gets a flag whether player will use real phone friend.
+     *
+     * @return true if player will use real phone friend, otherwise false for automatic phone friend
+     */
+    public boolean isRealPhoneFriend() {
+        return isRealPhoneFriend;
     }
 
     /**

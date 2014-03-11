@@ -14,7 +14,7 @@ public interface Skin {
      *
      * @return default font
      */
-    Font defaultFont();
+    Font normalFont();
 
     /**
      * Gets a smaller font of GUI.
@@ -136,11 +136,18 @@ public interface Skin {
     Color audienceResultTextColor();
 
     /**
-     * Gets a color of phone friend countdown text
+     * Gets a color of phone friend countdown text.
      *
      * @return phone friend countdown text
      */
     Color phoneFriendCountdownText();
+
+    /**
+     * Gets a color of phone friend conversation text (automatic phone friend).
+     *
+     * @return phone friend conversation text
+     */
+    Color phoneFriendConversationText();
 
     /**
      * Gets a color of default reward (in rewards panel).

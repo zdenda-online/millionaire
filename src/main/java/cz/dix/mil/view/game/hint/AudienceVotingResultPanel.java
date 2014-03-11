@@ -1,6 +1,6 @@
 package cz.dix.mil.view.game.hint;
 
-import cz.dix.mil.model.runtime.AudienceResult;
+import cz.dix.mil.model.runtime.AudienceVotingResult;
 import cz.dix.mil.model.runtime.GameModel;
 import cz.dix.mil.view.skin.Gradient;
 import cz.dix.mil.view.skin.Skin;
@@ -39,7 +39,7 @@ public class AudienceVotingResultPanel extends JPanel {
         removeAll();
 
         if (model.hasAudienceResult()) {
-            AudienceResult result = model.getAudienceResult();
+            AudienceVotingResult result = model.getAudienceVotingResult();
             for (int i = 0; i < result.getPercentsSize(); i++) {
                 char letter = (char) (65 + i);
                 add(new AnswerResultPanel(result.getPercents(i), String.valueOf(letter)));

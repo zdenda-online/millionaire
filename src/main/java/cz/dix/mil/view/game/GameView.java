@@ -2,6 +2,7 @@ package cz.dix.mil.view.game;
 
 import cz.dix.mil.controller.GameController;
 import cz.dix.mil.model.runtime.GameModel;
+import cz.dix.mil.model.runtime.PhoneFriendResult;
 import cz.dix.mil.view.game.hint.ManualAudienceResultDialog;
 
 /**
@@ -105,7 +106,14 @@ public class GameView {
      * Reveals dialog with countdown of phone friend.
      */
     public void showPhoneFriendCountdown() {
-        gameFrame.showPhoneFriendPanel();
+        gameFrame.showPhoneFriendPanel(null);
+    }
+
+    /**
+     * Reveals dialog with countdown of phone friend and shows conversation that leads to given phone friend result.
+     */
+    public void showPhoneFriendCountdown(PhoneFriendResult result) {
+        gameFrame.showPhoneFriendPanel(result);
     }
 
     /**

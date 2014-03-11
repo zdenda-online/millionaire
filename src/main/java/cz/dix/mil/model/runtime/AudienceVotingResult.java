@@ -3,26 +3,29 @@ package cz.dix.mil.model.runtime;
 import java.util.Arrays;
 
 /**
- * Represents results of audience hint.
+ * Represents results of audience voting hint.
  *
  * @author Zdenek Obst, zdenek.obst-at-gmail.com
  */
-public class AudienceResult {
+public class AudienceVotingResult {
 
     private int[] percents;
 
     /**
-     * Creates a new audience result.
+     * Creates a new audience voting result.
      *
      * @param counts counts (number of votes) for answers
      */
-    public AudienceResult(int[] counts) {
-        this.percents = new int[counts.length];
+    public AudienceVotingResult(int[] counts) {
         int sum = sum(counts);
+        if (sum == 100) {
+            this.percents = counts;
+            return; // no need to compute anything
+        }
 
-        // last question is rest from 100%
+        this.percents = new int[counts.length];
         for (int i = 0; i < counts.length - 1; i++) {
-            percents[i] = count(counts[i], sum);
+            percents[i] = toPercents(counts[i], sum);
         }
         percents[counts.length - 1] = 100 - sum(percents);
     }
@@ -35,7 +38,7 @@ public class AudienceResult {
         return sum;
     }
 
-    private int count(int value, int sum) {
+    private int toPercents(int value, int sum) {
         double res = ((double) value / (double) sum) * 100;
         return (int) Math.round(res);
     }
@@ -51,9 +54,9 @@ public class AudienceResult {
     }
 
     /**
-     * Gets a count of answers (percents).
+     * Gets a vote of answers (percents).
      *
-     * @return count of answers
+     * @return vote of answers
      */
     public int getPercentsSize() {
         return percents.length;

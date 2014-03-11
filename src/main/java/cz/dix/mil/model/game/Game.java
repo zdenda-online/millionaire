@@ -55,9 +55,9 @@ public class Game {
     }
 
     /**
-     * Gets a count of all questions.
+     * Gets a vote of all questions.
      *
-     * @return count of questions
+     * @return vote of questions
      */
     public int getQuestionsCount() {
         return questions.size();

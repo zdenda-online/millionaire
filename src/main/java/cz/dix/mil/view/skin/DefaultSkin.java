@@ -29,7 +29,7 @@ public class DefaultSkin implements Skin {
      * {@inheritDoc}
      */
     @Override
-    public Font defaultFont() {
+    public Font normalFont() {
         return new Font(Font.SANS_SERIF, Font.PLAIN, 20);
     }
 
@@ -175,6 +175,11 @@ public class DefaultSkin implements Skin {
     @Override
     public Color phoneFriendCountdownText() {
         return ORANGE;
+    }
+
+    @Override
+    public Color phoneFriendConversationText() {
+        return YELLOW;
     }
 
     /**

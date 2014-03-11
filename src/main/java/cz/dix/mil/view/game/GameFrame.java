@@ -3,6 +3,7 @@ package cz.dix.mil.view.game;
 import cz.dix.mil.controller.GameController;
 import cz.dix.mil.controller.Refreshable;
 import cz.dix.mil.model.runtime.GameModel;
+import cz.dix.mil.model.runtime.PhoneFriendResult;
 import cz.dix.mil.view.common.BackgroundPanel;
 import cz.dix.mil.view.game.hint.AudienceVotingPanel;
 import cz.dix.mil.view.game.hint.AudienceVotingResultPanel;
@@ -55,7 +56,7 @@ public class GameFrame extends JFrame implements Refreshable {
         this.nextQuestionPanel = new NextQuestionPanel(controller);
         this.finalRewardPanel = new FinalRewardPanel(model);
         this.audienceVotingPanel = new AudienceVotingPanel();
-        this.phoneFriendPanel = new PhoneFriendPanel();
+        this.phoneFriendPanel = new PhoneFriendPanel(model);
 
         init();
     }
@@ -143,11 +144,14 @@ public class GameFrame extends JFrame implements Refreshable {
 
     /**
      * Shows panel with timer that corresponds to remaining time of phone call.
+     * Generates conversation that leads to given phone friend result (if any)
+     *
+     * @param phoneFriendResult result of automatic phone friend (can be null if real friend is used)
      */
-    public void showPhoneFriendPanel() {
+    public void showPhoneFriendPanel(PhoneFriendResult phoneFriendResult) {
         disableActions();
         setMiddlePanel(phoneFriendPanel);
-        phoneFriendPanel.startCountdown();
+        phoneFriendPanel.startCountdown(phoneFriendResult);
     }
 
     /**

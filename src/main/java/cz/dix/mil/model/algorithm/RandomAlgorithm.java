@@ -7,7 +7,7 @@ import java.util.Collection;
  *
  * @author Zdenek Obst, zdenek.obst-at-gmail.com
  */
-public interface RandomAlgorithm<T> {
+public interface RandomAlgorithm {
 
     /**
      * Selects one random entry.
@@ -15,5 +15,13 @@ public interface RandomAlgorithm<T> {
      * @param possibilities possibilities
      * @return one random entry
      */
-    T random(Collection<T> possibilities);
+    <T> T random(Collection<T> possibilities);
+
+    /**
+     * Selects one random entry.
+     *
+     * @param possibilities possibilities
+     * @return one random entry
+     */
+    <T> T random(T[] possibilities);
 }

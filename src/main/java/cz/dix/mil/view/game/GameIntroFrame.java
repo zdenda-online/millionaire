@@ -38,7 +38,7 @@ public class GameIntroFrame extends JFrame {
 
         welcomeLabel.setText("Welcome to the game: " + model.getGameName());
         welcomeLabel.setForeground(skin.defaultTextColor());
-        welcomeLabel.setFont(skin.defaultFont());
+        welcomeLabel.setFont(skin.normalFont());
         welcomeLabel.setHorizontalAlignment(SwingConstants.CENTER);
         welcomeLabel.setVerticalAlignment(SwingConstants.CENTER);
 

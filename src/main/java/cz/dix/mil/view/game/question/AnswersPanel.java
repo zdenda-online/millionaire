@@ -68,7 +68,7 @@ public class AnswersPanel extends JPanel implements Refreshable {
                 });
                 char letter = (char) (65 + i);
                 JLabel letterLabel = new JLabel(letter + ") ");
-                letterLabel.setFont(skin.defaultFont());
+                letterLabel.setFont(skin.normalFont());
                 letterLabel.setForeground(skin.answerLetterColor());
                 oneAnswerPanel.add(letterLabel, BorderLayout.WEST);
                 oneAnswerPanel.add(answerButton, BorderLayout.CENTER);
