@@ -3,6 +3,7 @@ package cz.dix.mil.view.creator;
 import cz.dix.mil.model.game.Answer;
 import cz.dix.mil.model.game.Question;
 import cz.dix.mil.view.common.AutoSelectTextField;
+import cz.dix.mil.view.common.MaxLengthDocument;
 import cz.dix.mil.view.skin.Skin;
 import cz.dix.mil.view.skin.SkinManager;
 
@@ -17,6 +18,9 @@ import java.util.List;
  * @author Zdenek Obst, zdenek.obst-at-gmail.com
  */
 public class CreatorQuestionPanel extends JPanel {
+
+    private static final int MAX_REWARD_CHARACTERS = 20;
+    private static final int MAX_ANSWER_CHARACTERS = 30;
 
     private Skin skin = SkinManager.getSkin();
     private final int answersCount;
@@ -42,6 +46,7 @@ public class CreatorQuestionPanel extends JPanel {
 
         JPanel rewardPanel = new JPanel(new BorderLayout(itemsMargin, itemsMargin));
         rewardPanel.add(setSkin(new JLabel("Reward:")), BorderLayout.WEST);
+        questionRewardField.setDocument(new MaxLengthDocument(MAX_REWARD_CHARACTERS));
         rewardPanel.add(setSkin(questionRewardField), BorderLayout.CENTER);
 
         JPanel questionRewardPanel = new JPanel(new GridLayout(2, 1, itemsMargin, itemsMargin));
@@ -114,6 +119,7 @@ public class CreatorQuestionPanel extends JPanel {
         private AnswerPanel(ButtonGroup buttonGroup) {
             buttonGroup.add(isCorrectButton);
             setLayout(new BorderLayout(itemsMargin, itemsMargin));
+            answerField.setDocument(new MaxLengthDocument(MAX_ANSWER_CHARACTERS));
             add(isCorrectButton, BorderLayout.WEST);
             add(setSkin(answerField), BorderLayout.CENTER);
         }
