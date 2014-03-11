@@ -26,7 +26,7 @@ import java.util.Map;
  */
 public class CreatorFrame extends JFrame {
 
-    private static final int WIDTH = 800;
+    private static final int WIDTH = 900;
     private static final int HEIGHT = 330;
     private static final int FRAME_MARGIN = 10;
     private static final int ITEMS_MARGIN = 10;
@@ -101,6 +101,7 @@ public class CreatorFrame extends JFrame {
         for (int i = 0; i < questionButtons.length; i++) {
             final int questionIdx = i;
             JButton questionButton = new JButton(String.valueOf(i + 1));
+            questionButton.setFocusable(false);
             questionButton.setFont(skin.formsFont());
             if (i == 0) {
                 questionButton.setForeground(skin.rewardActualQuestionText());
@@ -133,6 +134,7 @@ public class CreatorFrame extends JFrame {
      */
     private JPanel initImportExportButtons() {
         importGameButton.setForeground(skin.defaultTextColor());
+        importGameButton.setFocusable(false);
         importGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -140,6 +142,7 @@ public class CreatorFrame extends JFrame {
             }
         });
         exportGameButton.setForeground(skin.defaultTextColor());
+        exportGameButton.setFocusable(false);
         exportGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
