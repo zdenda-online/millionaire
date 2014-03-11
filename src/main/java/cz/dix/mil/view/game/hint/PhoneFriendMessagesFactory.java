@@ -25,7 +25,7 @@ public class PhoneFriendMessagesFactory {
 
     // first 20 seconds of call
     private static final String[] EASY_SCENARIO_BEGINNING_1 = {
-            "Hi,%s\nPossible Answers are %s.", // 10s
+            "Hi, %s\nPossible Answers are %s.", // 10s
             "That is not that hard.\nPossibilities %s.", // 5s
             "OK, I should know this...\n&nbsp;", // 5s
     };
