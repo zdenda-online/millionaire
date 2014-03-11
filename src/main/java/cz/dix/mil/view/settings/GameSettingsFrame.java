@@ -109,9 +109,10 @@ public class GameSettingsFrame extends JFrame {
      * Shows file chooser for selecting game file.
      */
     private void selectGameFile() {
-        this.game = new GameFileChooser(GAME_VALIDATION).importGame();
-        startButton.setEnabled(game != null);
+        Game game = new GameFileChooser(GAME_VALIDATION).importGame();
         if (game != null) {
+            this.game = game;
+            startButton.setEnabled(true);
             gameNameField.setText(game.getName());
         }
     }

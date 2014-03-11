@@ -28,12 +28,18 @@
     </scm>
 
     <properties>
+        <compiler.version>1.7</compiler.version>
+        <assembly.dir>${project.build.directory}/${project.artifactId}</assembly.dir>
+        <archive.name>${project.artifactId}-${project.version}</archive.name>
+        <game.name>${project.artifactId}</game.name>
+        <game-creator.name>${project.artifactId}-game-creator</game-creator.name>
+
         <jtatto.version>1.6.7</jtatto.version>
         <jmf.version>2.1.1e</jmf.version>
         <junit.version>4.11</junit.version>
         <mvn.compiler.version>3.1</mvn.compiler.version>
         <mvn.appassembler.version>1.7</mvn.appassembler.version>
-        <mvn.assembly.version>2.4</mvn.assembly.version>
+        <mvn.antrun.version>1.7</mvn.antrun.version>
 
         <project.build.encoding>UTF-8</project.build.encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -67,8 +73,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${mvn.compiler.version}</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>${compiler.version}</source>
+                    <target>${compiler.version}</target>
                 </configuration>
             </plugin>
 
@@ -84,7 +90,7 @@
                     <configurationDirectory>games</configurationDirectory>
                     <copyConfigurationDirectory>true</copyConfigurationDirectory>
                     <includeConfigurationDirectoryInClasspath>false</includeConfigurationDirectoryInClasspath>
-                    <assembleDirectory>${project.build.directory}/${project.artifactId}</assembleDirectory>
+                    <assembleDirectory>${assembly.dir}</assembleDirectory>
                     <extraJvmArguments>-Xms128m -Xmx256m</extraJvmArguments>
                     <showConsoleWindow>false</showConsoleWindow>
                     <platforms>
@@ -97,11 +103,11 @@
                     </binFileExtensions>
                     <programs>
                         <program>
-                            <id>${project.artifactId}</id>
+                            <id>${game.name}</id>
                             <mainClass>cz.dix.mil.GameMain</mainClass>
                         </program>
                         <program>
-                            <id>${project.artifactId}-game-creator</id>
+                            <id>${game-creator.name}</id>
                             <mainClass>cz.dix.mil.CreatorMain</mainClass>
                         </program>
                     </programs>
@@ -117,20 +123,38 @@
                 </executions>
             </plugin>
 
-            <!-- Compress generated program structure to final archives (zip/tar.gz) -->
+            <!-- Change permissions for scripts and compress to distributable archives (zip/tar.gz) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>${mvn.assembly.version}</version>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>${mvn.antrun.version}</version>
                 <configuration>
-                    <descriptor>assembly.xml</descriptor>
-                    <finalName>${project.artifactId}</finalName>
+                    <target>
+
+                        <chmod dir="${assembly.dir}/bin" includes="**/*.sh,**/*.bat" perm="755"/>
+
+                        <zip destfile="${project.build.directory}/${archive.name}.zip">
+                            <zipfileset dirmode="775" filemode="775" dir="${assembly.dir}/bin" prefix="bin"/>
+                            <zipfileset dirmode="775" filemode="664" dir="${assembly.dir}/games" prefix="games"/>
+                            <zipfileset dirmode="775" filemode="664" dir="${assembly.dir}/lib" prefix="lib"/>
+                        </zip>
+
+                        <tar destfile="${project.build.directory}/${archive.name}.tar">
+                            <tarfileset dirmode="775" filemode="775" dir="${assembly.dir}/bin" prefix="bin"/>
+                            <tarfileset dirmode="775" filemode="664" dir="${assembly.dir}/games" prefix="games"/>
+                            <tarfileset dirmode="775" filemode="664" dir="${assembly.dir}/lib" prefix="lib"/>
+                        </tar>
+                        <gzip destfile="${project.build.directory}/${archive.name}.tar.gz"
+                              src="${project.build.directory}/${archive.name}.tar"/>
+                        <delete file="${project.build.directory}/${archive.name}.tar"/>
+
+                    </target>
                 </configuration>
                 <executions>
                     <execution>
                         <phase>package</phase>
                         <goals>
-                            <goal>single</goal>
+                            <goal>run</goal>
                         </goals>
                     </execution>
                 </executions>
