@@ -3,6 +3,8 @@ package cz.dix.mil.view.creator;
 import cz.dix.mil.model.game.Answer;
 import cz.dix.mil.model.game.Question;
 import cz.dix.mil.view.common.AutoSelectTextField;
+import cz.dix.mil.view.skin.Skin;
+import cz.dix.mil.view.skin.SkinManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +18,7 @@ import java.util.List;
  */
 public class CreatorQuestionPanel extends JPanel {
 
+    private Skin skin = SkinManager.getSkin();
     private final int answersCount;
     private final int itemsMargin;
     private final AutoSelectTextField questionTextField = new AutoSelectTextField();
@@ -34,12 +37,12 @@ public class CreatorQuestionPanel extends JPanel {
         setBorder(BorderFactory.createTitledBorder("Question"));
 
         JPanel questionPanel = new JPanel(new BorderLayout(itemsMargin, itemsMargin));
-        questionPanel.add(new JLabel("Text:"), BorderLayout.WEST);
-        questionPanel.add(questionTextField, BorderLayout.CENTER);
+        questionPanel.add(setSkin(new JLabel("Text:")), BorderLayout.WEST);
+        questionPanel.add(setSkin(questionTextField), BorderLayout.CENTER);
 
         JPanel rewardPanel = new JPanel(new BorderLayout(itemsMargin, itemsMargin));
-        rewardPanel.add(new JLabel("Reward:"), BorderLayout.WEST);
-        rewardPanel.add(questionRewardField, BorderLayout.CENTER);
+        rewardPanel.add(setSkin(new JLabel("Reward:")), BorderLayout.WEST);
+        rewardPanel.add(setSkin(questionRewardField), BorderLayout.CENTER);
 
         JPanel questionRewardPanel = new JPanel(new GridLayout(2, 1, itemsMargin, itemsMargin));
         questionRewardPanel.add(questionPanel);
@@ -112,7 +115,7 @@ public class CreatorQuestionPanel extends JPanel {
             buttonGroup.add(isCorrectButton);
             setLayout(new BorderLayout(itemsMargin, itemsMargin));
             add(isCorrectButton, BorderLayout.WEST);
-            add(answerField, BorderLayout.CENTER);
+            add(setSkin(answerField), BorderLayout.CENTER);
         }
 
         private void setAnswer(Answer answer) {
@@ -127,5 +130,15 @@ public class CreatorQuestionPanel extends JPanel {
         private void clearClickedFlag() {
             answerField.clearClickedFlag();
         }
+    }
+
+    private JComponent setSkin(JComponent component) {
+        if (component instanceof JButton) {
+            component.setForeground(skin.formsButtonsText());
+        } else {
+            component.setForeground(skin.formsComponentsText());
+        }
+        component.setFont(skin.formsFont());
+        return component;
     }
 }

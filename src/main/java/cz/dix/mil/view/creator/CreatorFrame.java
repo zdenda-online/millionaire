@@ -26,12 +26,12 @@ import java.util.Map;
  */
 public class CreatorFrame extends JFrame {
 
-    private static final int WIDTH = 700;
-    private static final int HEIGHT = 300;
+    private static final int WIDTH = 800;
+    private static final int HEIGHT = 330;
     private static final int FRAME_MARGIN = 10;
     private static final int ITEMS_MARGIN = 10;
     private static final GameValidation GAME_VALIDATION = new OriginalGameValidation(); // allow change in future?
-    private final Skin skin = SkinManager.getSkin();
+    private Skin skin = SkinManager.getSkin();
 
     private final JTextField gameNameField = new AutoSelectTextField();
     private final JButton importGameButton = new JButton("Import Game from File");
@@ -85,8 +85,8 @@ public class CreatorFrame extends JFrame {
      */
     private JPanel initGameNamePanel() {
         JPanel gameNamePanel = new JPanel(new BorderLayout(ITEMS_MARGIN, ITEMS_MARGIN));
-        gameNamePanel.add(new JLabel("Game Name:"), BorderLayout.WEST);
-        gameNamePanel.add(gameNameField, BorderLayout.CENTER);
+        gameNamePanel.add(setSkin(new JLabel("Game Name:")), BorderLayout.WEST);
+        gameNamePanel.add(setSkin(gameNameField), BorderLayout.CENTER);
         return gameNamePanel;
     }
 
@@ -99,6 +99,7 @@ public class CreatorFrame extends JFrame {
         for (int i = 0; i < questionButtons.length; i++) {
             final int questionIdx = i;
             JButton questionButton = new JButton(String.valueOf(i + 1));
+            questionButton.setFont(skin.formsFont());
             if (i == 0) {
                 questionButton.setForeground(skin.rewardActualQuestionText());
             } else {
@@ -144,8 +145,8 @@ public class CreatorFrame extends JFrame {
             }
         });
         JPanel buttonsPanel = new JPanel(new GridLayout(1, 2, ITEMS_MARGIN, ITEMS_MARGIN));
-        buttonsPanel.add(importGameButton);
-        buttonsPanel.add(exportGameButton);
+        buttonsPanel.add(setSkin(importGameButton));
+        buttonsPanel.add(setSkin(exportGameButton));
         return buttonsPanel;
     }
 
@@ -212,4 +213,13 @@ public class CreatorFrame extends JFrame {
         }
     }
 
+    private JComponent setSkin(JComponent component) {
+        if (component instanceof JButton) {
+            component.setForeground(skin.formsButtonsText());
+        } else {
+            component.setForeground(skin.formsComponentsText());
+        }
+        component.setFont(skin.formsFont());
+        return component;
+    }
 }

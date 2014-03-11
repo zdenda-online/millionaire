@@ -6,6 +6,7 @@ import cz.dix.mil.model.game.Game;
 import cz.dix.mil.model.game.validation.GameValidation;
 import cz.dix.mil.model.game.validation.OriginalGameValidation;
 import cz.dix.mil.view.common.GameFileChooser;
+import cz.dix.mil.view.skin.Skin;
 import cz.dix.mil.view.skin.SkinManager;
 
 import javax.swing.*;
@@ -23,8 +24,8 @@ import java.awt.event.MouseEvent;
  */
 public class GameSettingsFrame extends JFrame {
 
-    private static final int WIDTH = 280;
-    private static final int HEIGHT = 210;
+    private static final int WIDTH = 350;
+    private static final int HEIGHT = 230;
     private static final int ITEMS_MARGIN = 10;
 
     // can be chosen as setting from combo-box in future maybe
@@ -43,6 +44,7 @@ public class GameSettingsFrame extends JFrame {
             "which is played only for the effect.";
 
     private Game game;
+    private Skin skin = SkinManager.getSkin();
     private JButton gameFileButton = new JButton(new ImageIcon(getClass().getResource("/imgs/folder.png")));
     private JTextField gameNameField = new JTextField("select game file -->");
     private CheckboxWithInfoPanel realAudiencePanel = new CheckboxWithInfoPanel("Real Audience", REAL_AUDIENCE_HINT);
@@ -73,7 +75,6 @@ public class GameSettingsFrame extends JFrame {
         gameFileButton.setFocusable(false);
 
         startButton.setEnabled(false);
-        startButton.setForeground(SkinManager.getSkin().defaultTextColor());
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -83,13 +84,16 @@ public class GameSettingsFrame extends JFrame {
         startButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println("Mouse clicked!");
+                if (!startButton.isEnabled()) {
+                    JOptionPane.showMessageDialog(GameSettingsFrame.this, "Please select Game File first.",
+                            "No Game File", JOptionPane.INFORMATION_MESSAGE);
+                }
             }
         });
 
         JPanel gamePanel = new JPanel(new BorderLayout(ITEMS_MARGIN, ITEMS_MARGIN));
-        gamePanel.add(gameNameField, BorderLayout.CENTER);
-        gamePanel.add(gameFileButton, BorderLayout.EAST);
+        gamePanel.add(setSkin(gameNameField), BorderLayout.CENTER);
+        gamePanel.add(setSkin(gameFileButton), BorderLayout.EAST);
 
         JPanel mainPanel = new JPanel(new GridLayout(5, 1, ITEMS_MARGIN, ITEMS_MARGIN));
         mainPanel.setBorder(new EmptyBorder(ITEMS_MARGIN, ITEMS_MARGIN, ITEMS_MARGIN, ITEMS_MARGIN));
@@ -97,7 +101,7 @@ public class GameSettingsFrame extends JFrame {
         mainPanel.add(realAudiencePanel);
         mainPanel.add(realPhoneFriendPanel);
         mainPanel.add(skipIntroPanel);
-        mainPanel.add(startButton);
+        mainPanel.add(setSkin(startButton));
         add(mainPanel);
     }
 
@@ -131,7 +135,9 @@ public class GameSettingsFrame extends JFrame {
         private CheckboxWithInfoPanel(final String label, final String infoHint) {
             setLayout(new BorderLayout(ITEMS_MARGIN, ITEMS_MARGIN));
             JPanel innerRightPanel = new JPanel(new BorderLayout(ITEMS_MARGIN, ITEMS_MARGIN));
-            innerRightPanel.add(new JLabel(label), BorderLayout.CENTER);
+            JLabel textLabel = new JLabel(label);
+            setSkin(textLabel);
+            innerRightPanel.add(textLabel, BorderLayout.CENTER);
             innerRightPanel.add(checkBox, BorderLayout.EAST);
             add(innerRightPanel, BorderLayout.CENTER);
 
@@ -149,5 +155,15 @@ public class GameSettingsFrame extends JFrame {
         private boolean isCheckboxSelected() {
             return checkBox.isSelected();
         }
+    }
+
+    private JComponent setSkin(JComponent component) {
+        if (component instanceof JButton) {
+            component.setForeground(skin.formsButtonsText());
+        } else {
+            component.setForeground(skin.formsComponentsText());
+        }
+        component.setFont(skin.formsFont());
+        return component;
     }
 }

@@ -10,6 +10,27 @@ import java.awt.*;
 public interface Skin {
 
     /**
+     * Gets a font for forms' components (game settings and game creator).
+     *
+     * @return font for forms' components
+     */
+    Font formsFont();
+
+    /**
+     * Gets a color for text of forms' components (game settings and game creator).
+     *
+     * @return color for forms' components
+     */
+    Color formsComponentsText();
+
+    /**
+     * Gets a color for text of buttons of forms (game settings and game creator).
+     *
+     * @return color of buttons of forms
+     */
+    Color formsButtonsText();
+
+    /**
      * Gets a default font of GUI.
      *
      * @return default font

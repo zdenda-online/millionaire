@@ -29,6 +29,30 @@ public class DefaultSkin implements Skin {
      * {@inheritDoc}
      */
     @Override
+    public Font formsFont() {
+        return new Font(Font.SANS_SERIF, Font.PLAIN, 17);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Color formsComponentsText() {
+        return Color.WHITE;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Color formsButtonsText() {
+        return YELLOW;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Font normalFont() {
         return new Font(Font.SANS_SERIF, Font.PLAIN, 20);
     }
