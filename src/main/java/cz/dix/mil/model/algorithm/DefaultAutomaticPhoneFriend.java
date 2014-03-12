@@ -39,33 +39,33 @@ public class DefaultAutomaticPhoneFriend implements AutomaticPhoneFriend {
                 if (answersCount == 4) {
                     answer = chooseAnswer(possibleAnswers, 5, 90);
                     assurance = (answer == null) ? null : // no answer was chosen, assurance is not needed
-                            (answer.isCorrect()) ? chooseAssurance(90, 80, 70) : chooseAssurance(5, 10, 15);
+                            (answer.isCorrect()) ? chooseAssurance(90, 80, 70) : chooseAssurance(3, 10, 15);
                 } else { // 2 answers
                     answer = chooseAnswer(possibleAnswers, 5, 95);
                     assurance = (answer == null) ? null : // no answer was chosen, assurance is not needed
-                            (answer.isCorrect()) ? chooseAssurance(95, 85, 75) : chooseAssurance(5, 10, 15);
+                            (answer.isCorrect()) ? chooseAssurance(95, 85, 75) : chooseAssurance(3, 10, 15);
                 }
                 break;
             case MID:
                 if (answersCount == 4) {
                     answer = chooseAnswer(possibleAnswers, 25, 65);
                     assurance = (answer == null) ? null : // no answer was chosen, assurance is not needed
-                            (answer.isCorrect()) ? chooseAssurance(60, 60, 60) : chooseAssurance(8, 16, 25);
+                            (answer.isCorrect()) ? chooseAssurance(60, 60, 60) : chooseAssurance(4, 15, 25);
                 } else { // 2 answers
                     answer = chooseAnswer(possibleAnswers, 20, 75);
                     assurance = (answer == null) ? null : // no answer was chosen, assurance is not needed
-                            (answer.isCorrect()) ? chooseAssurance(65, 65, 65) : chooseAssurance(8, 16, 25);
+                            (answer.isCorrect()) ? chooseAssurance(65, 65, 65) : chooseAssurance(4, 15, 25);
                 }
                 break;
             case HARD:
                 if (answersCount == 4) {
                     answer = chooseAnswer(possibleAnswers, 60, 55);
                     assurance = (answer == null) ? null : // no answer was chosen, assurance is not needed
-                            (answer.isCorrect()) ? chooseAssurance(30, 40, 50) : chooseAssurance(10, 20, 30);
+                            (answer.isCorrect()) ? chooseAssurance(30, 40, 50) : chooseAssurance(5, 20, 30);
                 } else { // 2 answers
                     answer = chooseAnswer(possibleAnswers, 40, 65);
                     assurance = (answer == null) ? null : // no answer was chosen, assurance is not needed
-                            (answer.isCorrect()) ? chooseAssurance(35, 45, 55) : chooseAssurance(10, 20, 30);
+                            (answer.isCorrect()) ? chooseAssurance(35, 45, 55) : chooseAssurance(5, 20, 30);
                 }
                 break;
             default:
