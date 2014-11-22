@@ -1,8 +1,22 @@
-*~
-.idea
-*.ipr
-*.iws
-*.iml
-target
+# Testing source files
 **/TestMain.java
 **/personal-*.game
+
+# Compiled output
+/target
+*.class
+*.jar
+*.war
+*.ear
+
+# IDE files
+.idea
+*.iml
+*.ipr
+*.iws
+
+# VM crash logs
+hs_err_pid*
+
+# Other files
+*~
