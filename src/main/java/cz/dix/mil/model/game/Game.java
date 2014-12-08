@@ -81,4 +81,25 @@ public class Game {
     public List<Question> getQuestions() {
         return questions;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Game other = (Game) o;
+        if (getQuestionsCount() != other.getQuestionsCount() || !getName().equals(other.getName())) {
+            return false;
+        }
+
+        for (int i = 0; i < questions.size(); i++) {
+            Question origQuestion = questions.get(i);
+            Question otherQuestion = other.questions.get(i);
+            if (!origQuestion.equals(otherQuestion)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

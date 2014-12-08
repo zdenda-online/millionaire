@@ -14,6 +14,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +43,7 @@ public class CreatorFrame extends JFrame {
     private final Map<Integer, Question> questionsMap = new HashMap<>();
 
     private int selectedQuestionIdx = 0;
+    private Game lastExportedGame;
 
     public CreatorFrame(Game initialGame) {
         super("Game Creator");
@@ -49,11 +52,28 @@ public class CreatorFrame extends JFrame {
         this.questionButtons = new JButton[initialGame.getQuestionsCount()];
         init();
         setGame(initialGame);
+        this.lastExportedGame = initialGame;
     }
 
     private void init() {
         setSize(WIDTH, HEIGHT);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent we) {
+                if (isActualGameExported()) {
+                    System.exit(0);
+                }
+
+                int yesNo = JOptionPane.showConfirmDialog(CreatorFrame.this, "The current game was not exported yet!\n" +
+                                "Do you really want to quit without exporting the game?",
+                        "Quit without export?", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                if (yesNo == JOptionPane.YES_OPTION) {
+                    System.exit(0);
+                }
+            }
+        });
+
         setIconImage(new ImageIcon(getClass().getResource("/imgs/icon.png")).getImage());
         setLayout(new BorderLayout());
         setLocationRelativeTo(null);
@@ -72,7 +92,7 @@ public class CreatorFrame extends JFrame {
      *
      * @param game game to be set
      */
-    public void setGame(Game game) {
+    private void setGame(Game game) {
         initMap(game.getQuestions());
         gameNameField.setText(game.getName());
         questionPanel.setQuestion(questionsMap.get(selectedQuestionIdx));
@@ -159,14 +179,19 @@ public class CreatorFrame extends JFrame {
      * Loads new game from the given file.
      */
     private void importGame() {
-        int yesNo = JOptionPane.showConfirmDialog(this, "By importing game file, " +
-                "you will overwrite current game data (questions etc.)\nDo you want to continue?",
-                "Import Game", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-        if (yesNo == JOptionPane.YES_OPTION) {
-            Game game = new GameFileChooser(GAME_VALIDATION).importGame();
-            if (game != null) {
-                setGame(game);
+        if (!isActualGameExported()) {
+            int yesNo = JOptionPane.showConfirmDialog(this, "The current game was not exported yet!\n" +
+                            "Do you really want to overwrite current game (questions etc.) by importing another game?",
+                    "Import Game", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            if (yesNo == JOptionPane.NO_OPTION) {
+                return;
             }
+        }
+
+        Game game = new GameFileChooser(GAME_VALIDATION).importGame();
+        if (game != null) {
+            lastExportedGame = game;
+            setGame(game);
         }
     }
 
@@ -174,15 +199,22 @@ public class CreatorFrame extends JFrame {
      * Stores game to the file.
      */
     private void exportGame() {
-        questionsMap.put(selectedQuestionIdx, questionPanel.getQuestion()); // save currently selected question
+        Game game = actualGame();
+        lastExportedGame = game;
+        new GameFileChooser(GAME_VALIDATION).exportGame(game);
+    }
 
+    private Game actualGame() {
+        questionsMap.put(selectedQuestionIdx, questionPanel.getQuestion()); // save currently selected question
         List<Question> questions = new ArrayList<>();
         for (int i = 0; i < questionsMap.size(); i++) {
             questions.add(questionsMap.get(i));
         }
-        Game game = new Game(gameNameField.getText(), questions);
+        return new Game(gameNameField.getText(), questions);
+    }
 
-        new GameFileChooser(GAME_VALIDATION).exportGame(game);
+    private boolean isActualGameExported() {
+        return actualGame().equals(lastExportedGame);
     }
 
     private void initMap(List<Question> questions) {

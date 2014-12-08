@@ -46,6 +46,16 @@ public class Answer {
      * @return true if answer is correct, otherwise false
      */
     public boolean isCorrect() {
-        return (isCorrect == null) ? false : isCorrect;
+        return isCorrect != null && isCorrect;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Answer other = (Answer) o;
+        return isCorrect() == other.isCorrect() && getText().equals(other.getText());
+
     }
 }

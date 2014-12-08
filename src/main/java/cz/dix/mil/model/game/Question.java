@@ -77,4 +77,28 @@ public class Question {
     public String getAnswersDescription() {
         return answersDescription;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Question other = (Question) o;
+        if (answersDescription != null ? !answersDescription.equals(other.answersDescription) : other.answersDescription != null) {
+            return false;
+        }
+        if (reward != null ? !reward.equals(other.reward) : other.reward != null) return false;
+        if (!text.equals(other.text)) return false;
+        if (answers.size() != other.answers.size()) return false;
+
+        for (int i = 0; i < answers.size(); i++) {
+            Answer origAnswer = answers.get(i);
+            Answer newAnswer = other.answers.get(i);
+            if (!origAnswer.equals(newAnswer)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
