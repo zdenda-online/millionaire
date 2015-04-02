@@ -2,6 +2,9 @@
 **/TestMain.java
 **/personal-*.game
 
+# Distribution dir
+/dist
+
 # Compiled output
 /target
 *.class
