@@ -3,6 +3,8 @@ package cz.dix.mil.model.algorithm;
 import cz.dix.mil.model.game.Answer;
 import cz.dix.mil.model.runtime.AudienceVotingResult;
 import cz.dix.mil.model.runtime.QuestionDifficulty;
+import cz.dix.mil.util.Log;
+import cz.dix.mil.util.LogFactory;
 
 import java.util.List;
 import java.util.Random;
@@ -21,6 +23,7 @@ import java.util.Random;
  */
 public class DefaultAutomaticAudience implements AutomaticAudience {
 
+    private static final Log LOG = LogFactory.instance();
     private final Random random = new Random();
 
     /**
